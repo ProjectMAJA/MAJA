@@ -174,131 +174,131 @@ const PlaylistCreate = ({ baseURL }) => {
 
 
 return (
-<div className="playlist-update">
+  <div className="playlist-update">
 
-<div className="playlist-update">
+    <div className="playlist-update">
 
-  <div className="playlist-update-header">
-    <h1 className="playlist-update-header-name">{playlistName}</h1>
-    <p className="playlist-update-header-desc">{playlistDesc}</p>
-  </div>
-
-  <div className="playlist-update-accord-container">
-    <div className="playlist-update-accord visible">
-
-
-      <section className="playlist-update-img">
-        {playlistImg ? (
-          <img className="playlist-update-img-content" src={playlistImg} alt="playlist-placeholder" />
-        ) : (
-          <img className="playlist-update-img-content" src={imgDefault} alt="playlist-placeholder" />
-        )}
-        <input
-          className="playlist-update-img-link"
-          type="text"
-          placeholder="URL de l'image"
-          onChange={(event) => {
-            setPlaylistImg(event.target.value);
-          }}
-        />
-      </section>
-
-      <section className="playlist-update-info">
-        <label className="playlist-update-name">
-          Nom
-          <input
-            type="text"
-            className="playlist-update-name-input"
-            placeholder={playlistName} 
-            onChange={(event) => {
-              changeName(event.target.value);
-            }}
-          />
-        </label>
-        {showTooLongName &&
-          <p className="too_long">Le nom doit faire 30 caractères au maximum</p>
-        }
-      
-        <label className="playlist-update-desc">
-          Description
-          <input
-            type="textarea"
-            className="playlist-update-desc-input"
-            placeholder={playlistDesc}
-            onChange={(event) => {
-              changeDesc(event.target.value);
-            }}
-          />
-        </label>
-        {showTooLongDesc &&
-          <p className="too_long">Votre description doit faire 100 caractères au maximum</p>
-        }
-
-      </section>
-      
-      <button
-      onClick={toggleState}
-       className="playlist-update-settings-button">
-        <img className="playlist-update-settings" src={settings} alt="" />
-      </button> 
-    </div>
-
-    {/* accordéon qui se déplie */}
-    <div className="playlist-update-accord animated">
-      <div className="playlist-update-accord-header">
-          <input 
-            className="playlist-update-accord-header-search" 
-            type="search"
-            onChange={e=>setSearch(e.target.value)} 
-            value={search}
-            placeholder="Rechercher sur Deezer"
-          />
-      </div>
-      <div className="playlist-update-accord-result">
-        {searchResults.map(track => (
-          <TrackSearchResult track={track} key={track.track} chooseTrack={chooseTrack} addNewTrack={addNewTrack} />
-        ))}
-      </div>
-      <div className="playlist-update-existing-tracks">
-        {}
+      <div className="playlist-update-header">
+        <h1 className="playlist-update-header-name">{playlistName}</h1>
+        <p className="playlist-update-header-desc">{playlistDesc}</p>
       </div>
 
+      <div className="playlist-update-accord-container">
+        <div className="playlist-update-accord visible">
 
-      { toggle &&
-      <div className="playlist-update-accord-body">          
-        {selectedTrack.map(song => (
-            <Item track={song} key={song.track} deleteTrack={deleteTrack} />
-          ))}
+
+          <section className="playlist-update-img">
+            {playlistImg ? (
+              <img className="playlist-update-img-content" src={playlistImg} alt="playlist-placeholder" />
+            ) : (
+              <img className="playlist-update-img-content" src={imgDefault} alt="playlist-placeholder" />
+            )}
+            <input
+              className="playlist-update-img-link"
+              type="text"
+              placeholder="URL de l'image"
+              onChange={(event) => {
+                setPlaylistImg(event.target.value);
+              }}
+            />
+          </section>
+
+          <section className="playlist-update-info">
+            <label className="playlist-update-name">
+              Nom
+              <input
+                type="text"
+                className="playlist-update-name-input"
+                placeholder={playlistName} 
+                onChange={(event) => {
+                  changeName(event.target.value);
+                }}
+              />
+            </label>
+            {showTooLongName &&
+              <p className="too_long">Le nom doit faire 30 caractères au maximum</p>
+            }
           
+            <label className="playlist-update-desc">
+              Description
+              <input
+                type="textarea"
+                className="playlist-update-desc-input"
+                placeholder={playlistDesc}
+                onChange={(event) => {
+                  changeDesc(event.target.value);
+                }}
+              />
+            </label>
+            {showTooLongDesc &&
+              <p className="too_long">Votre description doit faire 100 caractères au maximum</p>
+            }
+
+          </section>
+          
+          <button
+          onClick={toggleState}
+          className="playlist-update-settings-button">
+            <img className="playlist-update-settings" src={settings} alt="" />
+          </button> 
+        </div>
+
+        {/* accordéon qui se déplie */}
+        <div className="playlist-update-accord animated">
+          <div className="playlist-update-accord-header">
+              <input 
+                className="playlist-update-accord-header-search" 
+                type="search"
+                onChange={e=>setSearch(e.target.value)} 
+                value={search}
+                placeholder="Rechercher sur Deezer"
+              />
+          </div>
+          <div className="playlist-update-accord-result">
+            {searchResults.map(track => (
+              <TrackSearchResult track={track} key={track.track} chooseTrack={chooseTrack} addNewTrack={addNewTrack} />
+            ))}
+          </div>
+          <div className="playlist-update-existing-tracks">
+            {}
+          </div>
+
+
+          { toggle &&
+          <div className="playlist-update-accord-body">          
+            {selectedTrack.map(song => (
+                <Item track={song} key={song.track} deleteTrack={deleteTrack} />
+              ))}
+              
+          </div>
+          }
+          <div>
+
+              <input
+                className="playlist-update-delete"
+                type="button"
+                value="Supprimer cette playlist"
+                onClick={() => {
+                  deletePlaylist();
+                  history.push({
+                    pathname: '/user/playlists'
+                  })
+                }}
+              />
+              <button className="playlist-update-save" onClick={(event) => {
+                event.preventDefault();
+                savePlaylist();
+              }}>
+                Sauvegarder
+              </button>
+
+
+          </div>
+        </div>
       </div>
-      }
-      <div>
-
-          <input
-            className="playlist-update-delete"
-            type="button"
-            value="Supprimer cette playlist"
-            onClick={() => {
-              deletePlaylist();
-              history.push({
-                pathname: '/user/playlists'
-              })
-            }}
-          />
-          <button className="playlist-update-save" onClick={(event) => {
-            event.preventDefault();
-            savePlaylist();
-          }}>
-            Sauvegarder
-          </button>
-
 
       </div>
     </div>
-  </div>
-
-  </div>
-  </div>
   );
 };
 

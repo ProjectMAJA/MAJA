@@ -1,5 +1,6 @@
 // Import de la lib React
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Imports NPM
@@ -8,7 +9,6 @@ import axios from 'axios';
 // Imports locaux
 import './styles.scss';
 import cancel from '../../../public/img/icons/cancel.svg';
-
 
 const PlaylistInfo = ({ baseURL, playlistLink, setShowDetails }) => {
 
@@ -72,15 +72,15 @@ const PlaylistInfo = ({ baseURL, playlistLink, setShowDetails }) => {
             </div>
     
             <div className="info-bloc-right-bottom-button">
-              <a
-                href="/game"
+              <NavLink
+                exact to="/game"
                 className="info-bloc-right-bottom-button-link"
                 onClick={() => {
                   localStorage.setItem('playlist_id', playlistLink);
                 }}
               >
                 <span>JOUER</span>
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>

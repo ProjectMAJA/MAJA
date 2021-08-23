@@ -38,12 +38,12 @@ const Game = ({ baseURL }) => {
   const [deezerIDs, setDeezerIDs] = useState([]);
   const [musicVolume, setMusicVolume] = useState(20);
 
-  const [countdown, setCountdown] = useState(2);
-  const [timer, setTimer] = useState(10);
+  const [countdown, setCountdown] = useState(5);
+  const [timer, setTimer] = useState(30);
 
   // Init cooldown beetwen every song played (in s) & number of tracks for a game
   const cooldown = 2;
-  const nbOfTracks = 3;
+  const nbOfTracks = 10;
   
   // We will need the token & the playlistID for some functions
   const playlistID = localStorage.getItem('playlist_id');
@@ -56,8 +56,6 @@ const Game = ({ baseURL }) => {
 
   // Init Deezer's SDK
   useEffect ( () => {
-    
-
     api.get(`/playlist/${playlistID}`)
       .then((res) => {
         let data = res.data.deezer_ids;

@@ -1,5 +1,6 @@
 // Packages
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Components
@@ -25,24 +26,25 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
   return (
     <section className="menu">
 
-      <a href="/">
+      <NavLink exact to="/" activeClassName="navActive">
         <img src={logo} alt="Logo" className="menu-logo" />
-      </a>
+      </NavLink>
 
       <nav className="menu-buttons">
 
         <div className="menu-buttons-item">
           <img src={search} alt="Rechercher" className="menu-buttons-logo nav-closed"/>
-          <a href="/search" className="menu-buttons-link nav-open">
+          <NavLink exact to="/search" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={search} alt="Rechercher" className="menu-buttons-logo"/>
             Rechercher
-          </a>
+          </NavLink>
         </div>
 {!logged && (         
         <div className="menu-buttons-item">
           <img src={avatar} alt="Connexion" className="menu-buttons-logo nav-closed"/>
-          <a
-            href="#"
+          <NavLink
+            exact to="#"
+            activeClassName="navActive"
             className="menu-buttons-link nav-open"
             onClick={() => {
               setShowModal(true);
@@ -50,50 +52,51 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
           >
           <img src={avatar} alt="Connexion" className="menu-buttons-logo"/>
             Connexion
-          </a>
+          </NavLink>
         </div>
 )}
 {logged && (
         <div className="menu-buttons-item">
           <img src={avatar} alt="Profil" className="menu-buttons-logo nav-closed"/>
-          <a href="/user" className="menu-buttons-link nav-open">
+          <NavLink exact to="/user" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={avatar} alt="Profil" className="menu-buttons-logo"/>
             Profil
-          </a>
+          </NavLink>
         </div>
 )}
 {logged && (
         <div className="menu-buttons-item">
           <img src={musicalnote} alt="Playlists" className="menu-buttons-logo nav-closed"/>
-          <a href="/user/playlists" className="menu-buttons-link nav-open">
+          <NavLink exact to="/user/playlists" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={musicalnote} alt="Playlists" className="menu-buttons-logo"/>
             Playlists
-          </a>
+          </NavLink>
         </div>
 )}
 {isAdmin && (
         <div className="menu-buttons-item">
           <img src={admin} alt="Administration" className="menu-buttons-logo nav-closed"/>
-          <a href="/admin" className="menu-buttons-link nav-open">
+          <NavLink exact to="/admin" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={admin} alt="Administration" className="menu-buttons-logo"/>
             Administration
-          </a>
+          </NavLink>
         </div>
 )} 
         <div className="menu-buttons-item">
           <img src={glasses} alt="L'équipe" className="menu-buttons-logo nav-closed"/>
-          <a href="/team" className="menu-buttons-link nav-open">
+          <NavLink exact to="/team" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={glasses} alt="L'équipe" className="menu-buttons-logo"/>
             L'équipe
-          </a>
+          </NavLink>
         </div>
 
 {logged && (
         <div className="menu-buttons-item">
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo nav-closed"/>
-          <a 
-            href="/"
+          <NavLink 
+            exact to="/"
             className="menu-buttons-link nav-open"
+            activeClassName="navActive"
             onClick={() => {
               localStorage.clear();
               setLogged(false);
@@ -101,15 +104,15 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
           >
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo"/>
             Déconnexion
-          </a>
+          </NavLink>
         </div>
 )}
       </nav>
 
-      <a href="/" className="menu-deezer">
+      <NavLink exact to="/" className="menu-deezer">
 
         <img src={deezer} className="menu-deezer-logo" alt="Deezer" />
-      </a>
+      </NavLink>
 
 {showModal && (
       <Modal baseURL={baseURL} setShowModal={setShowModal} setLogged={setLogged} setIsAdmin={setIsAdmin} />
