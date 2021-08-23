@@ -42,7 +42,7 @@ const Game = ({ baseURL }) => {
   const [timer, setTimer] = useState(30);
 
   // Init cooldown beetwen every song played (in s) & number of tracks for a game
-  const cooldown = 2;
+  const cooldown = 5;
   const nbOfTracks = 10;
   
   // We will need the token & the playlistID for some functions
