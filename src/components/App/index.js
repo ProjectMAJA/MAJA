@@ -23,7 +23,7 @@ const App = () => {
   const [logged, setLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const baseURL = "http://3.238.70.69/v1";
+  const baseURL = "https://api-maja.herokuapp.com/v1";
 
   useEffect(() => {
 
