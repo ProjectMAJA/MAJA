@@ -1,0 +1,294 @@
+@use 'src/styles/vars';
+
+iframe {
+  display: none;
+}
+
+.game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  &-before {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &-button {
+      font-size: 2em;
+      margin-top: 2em;
+      padding: 0.5em;
+      color: vars.$secondaryColor;
+      background-color: vars.$buttonColor;
+      border-top: 0.3em solid vars.$buttonColor;
+      border-bottom: 0.3em solid vars.$buttonColor;
+      border-left: 1em solid vars.$buttonColor;
+      border-right: 1em solid vars.$buttonColor;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+    
+    &-rules {
+      background-color: vars.$menuColor;
+      margin-top: 20vh;
+      border-radius: 10px;
+      padding: 2em;
+
+      &-title {
+        font-size: 2em;
+        font-weight: bold;
+      }
+
+      &-description {
+        font-size: 1.5em;
+        margin-top: 1em;
+        font-weight: bold;
+      }
+    }
+
+    &-warning {
+      margin-top: 10vh;
+      width: 80%;
+    }
+  }
+
+  &-countdown {
+    font-size: 10em;
+    font-weight: 900;
+    margin-top: 20vh;
+    padding-top: 0.38em;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    transition-property: border-radius;
+    transition-duration: 10s;
+    border: 30px solid red;
+  }
+
+  &-input {
+    height: 10vh;
+    font-size: 2em;
+    padding: 1.5em;
+    text-align: center;
+    position: fixed;
+    bottom: 5%;
+    right: 20%;
+    width: 60%;
+    border-radius: 5px;
+  }
+
+  &-timer {
+    font-size: 10em;
+    font-weight: 900;
+    margin-top: 20vh;
+    padding-top: 0.38em;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    transition-property: border-radius;
+    transition-duration: 10s;
+    border: 30px solid vars.$buttonColor;
+  }
+
+  &-previous {
+    position: fixed;
+    top: 0%;
+    right: 0%;
+    width: 25em;
+    height: 10em;
+    padding: 1em;
+    background-color: vars.$buttonColor;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom-left-radius: 5px;
+
+    &-song {
+      margin-bottom: 1em;
+    }
+
+    &-content {
+      display: flex;
+
+      &-img {
+        height: 4em;
+        margin: 1em;
+      }
+
+      &-description {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 1em;
+      }
+    }
+  }
+
+  &-answer {
+    padding: 1em;
+    color: vars.$menuColor;
+    margin-top: 20vh;
+    width: 30vw;
+    height: 8em;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: vars.$buttonColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+
+    &-img {
+      height: 5em;
+      margin-right: 1em;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+
+      &-track {
+        font-style: italic;
+        font-size: 1.1em;
+        color: vars.$mainColor;
+        margin-top: 5vh;
+      }
+    }
+  }
+
+  &-score {
+    position: fixed;
+    top: 40%;
+    right: 0%;
+    width: 4em;
+    padding: 1em;
+    font-size: 3em;
+    font-weight: bold;
+    background-color: vars.$buttonColor;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  &-result {
+    margin-top: 20vh;
+    padding: 5em;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: vars.$buttonColor;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    border-radius: 100%;
+
+    &-score {
+      margin: 2em;
+    }
+
+    &-redirect {
+      font-size: 0.6em;
+      padding: 1em;
+      margin-top: 10vh;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+
+  &-volume {
+    position: fixed;
+    right: 0%;
+    bottom: 0%;
+    background-color: black;
+    padding: 1em;
+    border-top-left-radius: 10px;
+
+    &-value {
+      margin-bottom: 0.5em;
+    }
+
+    &-button {
+      margin: 0.2em;
+      font-size: 1.5em;
+      border: none;
+      width: 1.3em;
+    }
+  }
+  
+  &-rating {
+    position: fixed;
+    top: 0%;
+    left: 20em;
+    background-color: vars.$buttonColor;
+    padding: 1em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    &-stars {
+      margin-top: 0.5em;
+
+      &-item {
+        font-size: 1.5em;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        background-color: vars.$buttonColor;
+
+        &:hover {
+          color: rgb(255, 227, 66);
+        }
+      }
+    }
+  }
+
+  &-title_found {
+    padding: 0.8em;
+    font-size: 1.5em;
+    border-radius: 25px;
+    position: fixed;
+    bottom: 20%;
+    left: 20%;
+    background-color: green;
+  }
+
+  &-artist_found {
+    padding: 0.8em;
+    font-size: 1.5em;
+    border-radius: 25px;
+    position: fixed;
+    bottom: 20%;
+    right: 20%;
+    background-color: green;
+  }
+
+  &-try_again {
+    padding: 0.8em;
+    font-size: 1.5em;
+    border-radius: 25px;
+    position: fixed;
+    bottom: 20%;
+    background-color: red;
+  }
+
+  &-wait_message {
+    padding: 0.8em;
+    font-size: 1.5em;
+    border-radius: 25px;
+    position: fixed;
+    bottom: 20%;
+    background-color: red;
+  }
+}
+
+hr {
+  width: 50%;
+  color: white;
+}

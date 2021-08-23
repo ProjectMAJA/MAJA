@@ -1,0 +1,121 @@
+@use 'src/styles/vars';
+
+body {
+  color: vars.$secondaryColor;
+}
+h1 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2em;
+}
+h2 {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.1em;
+  margin: 0.5em 0;
+}
+a {
+  cursor: pointer;
+}
+.home-playlist {
+  &-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  &-row {
+    margin: 3em 0 3em 20em;
+    display:flex;
+    flex-direction: column;
+  }
+  &-cards {
+    // scroll horizontal des cards
+    display: flex;
+    // scroll horizontal du container
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    flex: 0 0 auto;
+    // cacher la scrollbar
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  &-card {
+    margin: 1em;
+    display: inline-block;
+    &-logo {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 2%;
+    }
+    &-rating {
+      width: 100px;
+    }
+  }
+}
+@media (max-width: 800px) {
+  .home-playlist {
+    &-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    &-row {
+      margin: 3em 0 3em 5em;
+      display:flex;
+      flex-direction: column;
+    }
+    &-cards {
+      // scroll horizontal des cards
+      display: flex;
+      // scroll horizontal du container
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      flex: 0 0 auto;
+      // cacher la scrollbar
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    &-card {
+      margin: 1em;
+      display: inline-block;
+      &-logo {
+        width: 150px;
+        border-radius: 2%;
+      }
+      &-rating {
+        width: 100px;
+      }
+    }
+  }
+}
+@media (max-width: 500px) {
+  h1 {
+    font-family: ‘Nunito Sans’, sans-serif;
+    font-size: 1.5em;
+  }
+  .home-playlist {
+    &-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    &-row {
+      margin: 3em 0 3em 7em;
+      display:flex;
+      flex-direction: column;
+    }
+    &-cards {
+      // scroll horizontal des cards
+      display: flex;
+      // scroll horizontal du container
+      flex-wrap: wrap;
+      overflow-x: auto;
+      flex: 0 0 auto;
+      // cacher la scrollbar
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

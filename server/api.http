@@ -1,0 +1,74 @@
+### GET all user (only for admin)
+
+GET http://localhost:3333/v1/playlists/bests/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNhZG1pbiI6ZmFsc2UsImlhdCI6MTYyNzQ4OTA4MSwiZXhwIjoxNjI3NTc1NDgxfQ.QOm2KYXPh23e9bjAc-fK02k9MAeYY1JVsVsYZgFsCXw
+
+### GET one user by id
+
+GET http://localhost:3333/v1//playlist/1
+
+### POST for signIn
+
+POST http://localhost:3333/v1/login
+Content-Type: application/json
+
+{
+    "pseudo": "admin",
+    "password": "admin"
+}
+### POST for signIn
+
+POST http://localhost:3333/v1/login
+Content-Type: application/json
+
+{
+    "pseudo": "User1",
+    "password": "User1"
+}
+
+### POST for save modification
+
+POST http://localhost:3333/v1/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNhZG1pbiI6ZmFsc2UsImlhdCI6MTYyNzQ4OTA4MSwiZXhwIjoxNjI3NTc1NDgxfQ.QOm2KYXPh23e9bjAc-fK02k9MAeYY1JVsVsYZgFsCXw
+
+{
+    "email": "1@user.com",
+    "pseudo": "User1"
+}
+
+### POST for save inscription
+
+POST http://localhost:3333/v1/user
+Content-Type: application/json
+
+{
+    "pseudo": "User6",
+    "email": "email1@mail.com",
+    "password": "User5"
+}
+
+### DELETE a user
+
+DELETE  http://localhost:3333/v1/user/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaXNhZG1pbiI6ZmFsc2UsImlhdCI6MTYyNzQ4OTA4MSwiZXhwIjoxNjI3NTc1NDgxfQ.QOm2KYXPh23e9bjAc-fK02k9MAeYY1JVsVsYZgFsCXw
+
+
+### POST a playlist
+POST http://localhost:3333/v1/playlist/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNhZG1pbiI6dHJ1ZSwiaWF0IjoxNjI3NTcxMTQ5LCJleHAiOjE2Mjc2NTc1NDl9.413bAt85UxQsLRcSE20IHWRxgIlkcTX2QmBxNsEzmH0
+
+{
+    "image": ""
+}
+
+### DELETE a playlist
+DELETE http://localhost:3333/v1/playlist/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaXNhZG1pbiI6dHJ1ZSwiaWF0IjoxNjI3NTcxMDI4LCJleHAiOjE2Mjc2NTc0Mjh9.cYRNSVWHSHzOjKSe_vK-9Xf0KAa5EFUDZgkQpcTZWJ0
+
+{
+    "id": "15",
+    "user_id": "2"
+}

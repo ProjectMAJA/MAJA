@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=maja
+
+init 2021-07-19T13:52:51Z MathieuF,,, <mathieuf@mathieu-laptop> # database initialisation
+view_rating 2021-07-27T19:30:39Z bybelot <mathieu.frays@gmail.com> # Creation of view average rating and nb of ratings
