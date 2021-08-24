@@ -1,0 +1,21 @@
+// Ajout du fichier de variables
+@use 'src/styles/vars';
+
+.search-result {
+  display: flex;
+  margin: 1em;
+  align-items: center;
+  cursor: pointer;
+
+  &-img {
+    height: 64px;
+    width: 64px;
+  }
+
+  &-suggestions {
+    display: flex;
+    color: vars.$secondaryColor;
+    flex-direction: column;
+    margin-left: 1em;
+  }
+}

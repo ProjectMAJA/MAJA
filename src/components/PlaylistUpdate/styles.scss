@@ -1,0 +1,225 @@
+@use 'src/styles/vars';
+
+.playlist-update {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15em;
+  margin-right: 5em;
+  justify-content: center;
+
+  &-info {
+    display: flex;
+    margin-top: 1.7em;
+    flex-direction: column;
+  }
+
+  &-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 3em;
+    margin: 1em auto 0;
+    margin-bottom: 0.2em;
+
+    &-name {
+      margin-bottom: 0.2em;
+    }
+
+    &-desc {
+      font-size: 0.5em;
+    }
+  }
+
+  &-accord {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1em;
+    justify-content: space-evenly;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 2em;
+    border-radius: 5px;
+
+    &-container {
+      border-radius: 5px;
+      padding-bottom: 2.5em;
+      background-color: vars.$thirdColor;
+    }
+
+    &.visible {
+      justify-content: space-evenly;
+    }
+
+    &.toggle {
+      font-size: 1.5em;
+      opacity: 0;
+      transition: 
+      opacity 0.2s ease-in-out,
+      height 0.2s 0.2s ease-in-out;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+
+      &-search {
+        font-family: inherit;
+        font-size: 2em;
+        line-height: 1;
+        display: inline-block;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.05em;
+        color: vars.$secondaryColor;
+        border-bottom: 2px solid;
+        border: 0;
+        background: transparent;
+        border-radius: 0;
+        -webkit-appearance: none;
+      }
+    }
+
+    &-result {
+      display: flex;
+      flex-direction: column;
+      color: vars.$secondaryColor;
+      max-height: 200px;
+      max-width: 400px;
+      overflow-y: scroll;
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      width: 100%;
+      img {
+        width: 75px;
+      }
+    }
+  }
+
+  &-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    &-content {
+      width: 150px;
+      height: 150px;
+      border-radius: 2%;
+      object-fit: cover;
+      margin: 1em;
+    }
+
+    &-link {
+      width: 20em;
+      height: 3em;
+      margin-top: 1em;
+      border: none;
+      background-color: vars.$mainColor;
+      color: white;
+      padding: 1em;
+    }
+  }
+
+  &-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8em;
+
+    &-input {
+      width: 20em;
+      height: 3em;
+      margin-top: 1em;
+      border: none;
+      background-color: vars.$mainColor;
+      color: white;
+      padding: 1em;
+    }
+  }
+
+  &-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 2em;
+    
+    &-input {
+      width: 20em;
+      height: 3em;
+      margin-top: 1em;
+      border: none;
+      background-color: vars.$mainColor;
+      color: white;
+      padding: 1em;
+    }
+  }
+
+  .animated {
+    flex-basis: fit-content;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.5em;
+    opacity: 1;
+    transition: 
+    height 0.2s ease-in-out,
+    opacity 0.2s 0.2s ease-in-out;
+  }
+
+  &-settings {
+    width: 50px;
+
+    &-button {
+      background: vars.$thirdColor;
+      border: none;
+    }
+  }
+
+  &-delete {
+    font-size: 1em;
+    position: fixed;
+    bottom: 2%;
+    right: 20%;
+    background-color: vars.$buttonColor;
+    border-top: 0.3em solid vars.$buttonColor;
+    border-bottom: 0.3em solid vars.$buttonColor;
+    border-left: 1em solid vars.$buttonColor;
+    border-right: 1em solid vars.$buttonColor;
+    border-radius: 25px;
+    cursor: pointer;
+    color: vars.$secondaryColor;
+  }
+
+  &-save {
+    font-size: 1em;
+    position: fixed;
+    bottom: 2%;
+    right: 50%;
+    background-color: vars.$buttonColor;
+    border-top: 0.3em solid vars.$buttonColor;
+    border-bottom: 0.3em solid vars.$buttonColor;
+    border-left: 1em solid vars.$buttonColor;
+    border-right: 1em solid vars.$buttonColor;
+    border-radius: 25px;
+    cursor: pointer;
+    color: vars.$secondaryColor;
+  }
+}
+
+.too_long {
+  color: red;
+  font-style: italic;
+}

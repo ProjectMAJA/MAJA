@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Adrien",
+    "role": "Lead Dev Front",
+    "link": "https://www.linkedin.com/in/adrien-lacourpaille/",
+    "img": "../public/img/team/Adrien.svg"
+  },
+  {
+    "id": 2,
+    "name": "Mathieu",
+    "role": "Scrum Master & Lead Dev Back",
+    "link": "https://www.linkedin.com/in/mathieu-frayssinet-091660116/",
+    "img": "../src/components/team/images/jojoh.png"
+  },
+  {
+    "id": 3,
+    "name": "Johanna",
+    "role": "Product Owner",
+    "link": "https://www.linkedin.com/in/johanna-g",
+    "img": "../src/components/team/images/jojoh.png"
+  },
+  {
+    "id": 4,
+    "name": "Axel",
+    "role": "Git Master",
+    "link": "https://www.linkedin.com/in/axel-lgt/",
+    "img": "../src/components/team/images/jojoh.png"
+  }
+]

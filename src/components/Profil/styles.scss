@@ -1,0 +1,122 @@
+@use 'src/styles/vars';
+
+.profil {
+  margin-left: 20em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: vars.$mainColor;
+  width: 70%;
+
+  &-header {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2em;
+
+    &-left {
+      display: flex;
+      width: 250px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      h2 {
+        font-family: 'HK Grotesk SemiBold', sans-serif;
+        font-size: 2em;
+        font-weight: bold;
+      }
+    }
+
+    &-avatar {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+
+    &-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 1em;
+    }
+    
+    &-form {
+      margin-top: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      &-input {
+        margin: 0.2em;
+        font-size: 1.2em;
+        padding: 0.8em;
+        width: 20em;
+      }
+      
+      &-check {
+        margin-top: 0.2em;
+        margin-bottom: 1em;
+        color: white;
+
+        & input {
+          margin: 0.6em;
+        }
+      }
+
+      &-button {
+        font-size: 1em;
+        margin-top: 2em;
+        padding: 0.5em;
+        color: vars.$secondaryColor;
+        background-color: vars.$buttonColor;
+        border-top: 0.3em solid vars.$buttonColor;
+        border-bottom: 0.3em solid vars.$buttonColor;
+        border-left: 1em solid vars.$buttonColor;
+        border-right: 1em solid vars.$buttonColor;
+        border-radius: 25px;
+        cursor: pointer;
+      }
+    }
+
+    &-delete {
+      margin-top: 5em;
+      
+      &-button {
+        font-size: 1em;
+        margin-top: 2em;
+        padding: 0.5em;
+        color: vars.$secondaryColor;
+        background-color: vars.$buttonColor;
+        border-top: 0.3em solid vars.$buttonColor;
+        border-bottom: 0.3em solid vars.$buttonColor;
+        border-left: 1em solid vars.$buttonColor;
+        border-right: 1em solid vars.$buttonColor;
+        border-radius: 25px;
+        cursor: pointer;
+
+      }
+    }
+  }
+}
+
+.error {
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+  margin: 0.5em;
+}
+
+

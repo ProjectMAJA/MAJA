@@ -1,0 +1,80 @@
+@use 'src/styles/vars';
+
+.menu {
+  font-family: 'Nunito Sans', sans-serif;
+  position: fixed;
+  left: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 5em;
+  height: 100%;
+  background-color: vars.$menuColor;
+  transition: 0.2s;
+  
+  &-logo {
+    width: 40%;
+    margin-top: 5vw;
+    margin-left: 30%;
+  }
+
+  &-buttons {
+    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+
+    &-item {
+      display: flex;
+      align-items: center;
+    }
+
+    &-logo {
+      margin: 0.8vh;
+      height: 1em;
+    }
+  }
+
+  &-deezer {
+    font-size: 1em;
+    position: fixed;
+    bottom: 1%;
+
+    &-logo {
+      height: 2em;
+    }
+  }
+}
+
+.nav-open {
+  display: none;
+}
+
+.menu:hover {
+  width: 15em;
+
+  .nav-closed {
+    display: none;
+  }
+
+  .nav-open {
+    display: contents;
+  }
+
+  .menu-buttons-item {
+    padding-right: 2vw;
+  }
+
+  .menu-buttons-link {
+    color: vars.$secondaryColor;
+
+    &:hover {
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+  }
+}
+
+
+
+
+

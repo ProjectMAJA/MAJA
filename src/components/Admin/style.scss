@@ -1,0 +1,62 @@
+@use 'src/styles/vars';
+
+.admin {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1em;
+  padding-right: 10%;
+  padding-left: 5%;
+
+  &-container {
+    background-color: vars.$menuColor;
+    height: 98vh;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+    overflow: auto;
+
+    &-input {
+      margin: 1em;
+      padding: 1em;
+      width: 30%;
+      height: 2em;
+    }
+
+    &-section {
+      margin: 1em;
+      width: 95%;
+      background-color: vars.$mainColor;
+      display: flex;
+
+      &-img {
+        margin: 1em;
+        width: 5em;
+        border-radius: 2px;
+      }
+
+      &-content {
+        padding: 0.5em;
+        width: 70%;
+        
+        &-title {
+          margin-top: 0.5em;
+          font-size: 1.5em;
+        }
+
+        &-description {
+          margin-top: 0.5em;
+          font-style: italic;
+        }
+      }
+
+      &-button {
+        height: 4vh;
+        width: 2vw;
+        font-size: 1.5em;
+        margin: auto;
+      }
+    }
+  }
+}
