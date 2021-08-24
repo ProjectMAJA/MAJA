@@ -24,7 +24,7 @@ const Admin = ({ baseURL }) => {
   useEffect(() => {
 
     if (DZ.player.isPlaying()) {
-      DZ.player.setMute();
+      DZ.player.setMute(true);
     };
 
     document.title = "MAJA - Administration";

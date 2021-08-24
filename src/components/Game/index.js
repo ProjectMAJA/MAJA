@@ -45,8 +45,6 @@ const Game = ({ baseURL }) => {
   const cooldown = 5;
   const nbOfTracks = 10;
   
-
-
   // Init axios requests
   const api = axios.create({
     baseURL: baseURL
@@ -56,7 +54,7 @@ const Game = ({ baseURL }) => {
   useEffect ( () => {
 
     if (DZ.player.isPlaying()) {
-      DZ.player.setMute();
+      DZ.player.setMute(true);
     };
 
     document.title = "MAJA - Blind test";
@@ -223,9 +221,6 @@ const Game = ({ baseURL }) => {
     if (token) {
       setShowRating(true);
     };
-
-    // Set volume
-    DZ.player.setVolume(musicVolume);
     
     let countLeft = countdown;
     let countId = setInterval(() => {
@@ -256,7 +251,7 @@ const Game = ({ baseURL }) => {
         setPreviousArtist(currentTrack.artist.name);
         setPreviousTrack(currentTrack.title);
 
-        axios.get(`http://3.238.70.69:6969/https://api.deezer.com/track/${currentTrack.id}`)
+        axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${currentTrack.id}`)
           .then((res) => {
             setPreviousImg(res.data.artist.picture_medium);
           })
@@ -266,6 +261,7 @@ const Game = ({ baseURL }) => {
 
         // The game is over
         endGame();
+        DZ.player.setVolume(0);
         clearTimeout(nextTrack);
       } else {
         // Get the current track
@@ -278,7 +274,7 @@ const Game = ({ baseURL }) => {
         setPreviousArtist(currentTrack.artist.name);
         setPreviousTrack(currentTrack.title);
 
-        axios.get(`http://3.238.70.69:6969/https://api.deezer.com/track/${currentTrack.id}`)
+        axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${currentTrack.id}`)
           .then((res) => {
             setPreviousImg(res.data.artist.picture_medium);
           })
@@ -319,12 +315,17 @@ const Game = ({ baseURL }) => {
   const launchTimer = () => {
     // Show timer
     setShowTimer(true);
+
+    // Set volume
+    DZ.player.setVolume(musicVolume);
     
     let timeLeft = timer;
     let timerId = setInterval(() => {
       if (timeLeft === 1) {
         setShowTimer(false);
         setTimer(timer);
+        // Set volume
+        DZ.player.setVolume(0);
         // Reset the timer state
         clearTimeout(timerId);
       } else {

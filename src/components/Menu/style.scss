@@ -62,14 +62,18 @@
 
   .menu-buttons-item {
     padding-right: 2vw;
+
+    &:hover {
+      transform: translateX(5px);
+      transition: .3s;
+    }
   }
 
   .menu-buttons-link {
     color: vars.$secondaryColor;
 
     &:hover {
-      font-size: 0.9em;
-      font-weight: bold;
+      color: rgb(173, 173, 173);
     }
   }
 }

@@ -35,7 +35,7 @@ const Profil = ({ baseURL }) => {
   useEffect(() => {
 
     if (DZ.player.isPlaying()) {
-      DZ.player.setMute();
+      DZ.player.setMute(true);
     };
 
     document.title = "MAJA - Mon profil";

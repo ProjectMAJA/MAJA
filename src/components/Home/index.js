@@ -35,7 +35,7 @@ const Home = ({ baseURL, setLogged }) => {
     useEffect(async () => {
 
       if (DZ.player.isPlaying()) {
-        DZ.player.setMute();
+        DZ.player.setMute(true);
       };
   
       document.title = "MAJA";
