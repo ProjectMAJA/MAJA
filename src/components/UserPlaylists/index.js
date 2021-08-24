@@ -29,7 +29,7 @@ const UserPlaylists = ({ baseURL }) => {
   useEffect(() => {
 
     if (DZ.player.isPlaying()) {
-      DZ.player.mute();
+      DZ.player.setMute();
     };
 
     document.title = "MAJA - Mes playlist";
