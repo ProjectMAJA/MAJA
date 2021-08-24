@@ -24,7 +24,7 @@ const Search = ({ baseURL }) => {
   useEffect(async() => {
 
     if (DZ.player.isPlaying()) {
-      DZ.player.setMute();
+      DZ.player.setMute(true);
     };
 
     document.title = "MAJA - Rechercher une playlist";

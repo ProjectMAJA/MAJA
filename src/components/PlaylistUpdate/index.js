@@ -63,7 +63,7 @@ const PlaylistUpdate = ({ baseURL }) => {
   useEffect(() => {
 
     if (DZ.player.isPlaying()) {
-      DZ.player.setMute();
+      DZ.player.setMute(true);
     };
 
     document.title = "MAJA - Éditer une playlist";
