@@ -21,119 +21,126 @@ let deezerApi = new DeezerPublicApi();
 
 const PlaylistCreate = ({ baseURL }) => {
 
- let history = useHistory();
+  let history = useHistory();
 
- const location = useLocation();
+  const location = useLocation();
 
- const api = axios.create({
-   baseURL: baseURL
- });
+  const api = axios.create({
+    baseURL: baseURL
+  });
 
- {/* useState pour l'accordéon */}
- const [toggle, setToggle] = useState(false);
- const [heightEl, setHeightEl] = useState();
- {/* useState pour la barre de recherche */}
-  const [search, setSearch] = useState('');
- const [searchResults, setSearchResults] = useState([]);
- {/* useState pour l'ajout de track dans la liste */}
- const [dataArr, setDataArr] = useState([]);
- {/* useState pour sélectionner la musique */}
- const [selectedTrack, setSelectedTrack] = useState([]);
- {/* useState pour afficher les musiques d'une playlist */}
+  {/* useState pour l'accordéon */}
+  const [toggle, setToggle] = useState(false);
+  const [heightEl, setHeightEl] = useState();
+  {/* useState pour la barre de recherche */}
+    const [search, setSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  {/* useState pour l'ajout de track dans la liste */}
+  const [dataArr, setDataArr] = useState([]);
+  {/* useState pour sélectionner la musique */}
+  const [selectedTrack, setSelectedTrack] = useState([]);
+  {/* useState pour afficher les musiques d'une playlist */}
 
- const [playlistID, setPlaylistID] = useState(null);
- const [userID, setUserID] = useState(null);
- const [playlistName, setPlaylistName] = useState('');
- const [playlistDesc, setPlaylistDesc] = useState('');
- const [playlistImg, setPlaylistImg] = useState('');
+  const [playlistID, setPlaylistID] = useState(null);
+  const [userID, setUserID] = useState(null);
+  const [playlistName, setPlaylistName] = useState('');
+  const [playlistDesc, setPlaylistDesc] = useState('');
+  const [playlistImg, setPlaylistImg] = useState('');
 
- const [showTooLongDesc, setShowTooLongDesc] = useState(false);
- const [showTooLongName, setShowTooLongName] = useState(false);
+  const [showTooLongDesc, setShowTooLongDesc] = useState(false);
+  const [showTooLongName, setShowTooLongName] = useState(false);
 
- const [deezerIds, setDeezerIds] = useState([]);
+  const [deezerIds, setDeezerIds] = useState([]);
 
- const toggleState = () => {
-   setToggle(!toggle);
- }
+  const toggleState = () => {
+    setToggle(!toggle);
+  }
 
- const refHeight = useRef();
+  const refHeight = useRef();
 
- // useEffect that gets playlist info
+  // useEffect that gets playlist info
 
- // useEffect that fetches data from Deezer API
- useEffect(() => {
-   if (!search) return setSearchResults([]);
+  // useEffect that fetches data from Deezer API
+  useEffect(() => {
 
-   {/* cela permet de faire la requête seulement quand on a fini d'écrire, au lieu d'en faire une à chaque lettre tapée */}
-   let cancel = false;
-   {/* cette méthode permet de fetch le titre d'une musique sur l'api de Deezer grâce au deezer-public-api */}
-    deezerApi.search.track(search).then(function(res) {
-      if (cancel) return;
-    
-      setSearchResults(
-       res.data.map(track => {
-          return {
-            id: track.id,
-            artist: track.artist.name,
-            title : track.title,
-            track: track.link,
-            cover: track.album.cover_medium,
-           preview: track.preview,
-          }
-       }));
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Créer une playlist";
+
+    if (!search) return setSearchResults([]);
+
+    {/* cela permet de faire la requête seulement quand on a fini d'écrire, au lieu d'en faire une à chaque lettre tapée */}
+    let cancel = false;
+    {/* cette méthode permet de fetch le titre d'une musique sur l'api de Deezer grâce au deezer-public-api */}
+      deezerApi.search.track(search).then(function(res) {
+        if (cancel) return;
+      
+        setSearchResults(
+        res.data.map(track => {
+            return {
+              id: track.id,
+              artist: track.artist.name,
+              title : track.title,
+              track: track.link,
+              cover: track.album.cover_medium,
+            preview: track.preview,
+            }
+        }));
+      })
+
+      return() => cancel = true
+  }, [search]);
+
+  function chooseTrack(track) {
+    const tracks = [...selectedTrack, track];
+      setSelectedTrack(tracks);
+    setSearch('');
+
+    const newIDs = [...deezerIds, track.id];
+    setDeezerIds(newIDs);
+  };
+  function addNewTrack() {
+    chooseTrack(track);
+  };
+
+  async function savePlaylist() {
+
+    const token = localStorage.getItem('token');
+
+    console.log("deezerIds dans  : ", deezerIds);
+
+    await api.post('/playlist', {
+      name: playlistName,
+      description: playlistDesc,
+      image: playlistImg,
+      deezer_ids: deezerIds
+    },{
+      headers: {
+        Authorization: token
+      }
     })
+      .then((res) => {
+        history.push({
+          pathname: '/user/playlists',
+        })
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
+  };
 
-     return() => cancel = true
- }, [search]);
+  const deleteTrack = (id) => {
 
- function chooseTrack(track) {
-   const tracks = [...selectedTrack, track];
-    setSelectedTrack(tracks);
-   setSearch('');
+    const newTracks = selectedTrack.filter(track => track.id != id);
+    setSelectedTrack(newTracks);
 
-   const newIDs = [...deezerIds, track.id];
-   setDeezerIds(newIDs);
- };
- function addNewTrack() {
-   chooseTrack(track);
- };
+    const newIDs = deezerIds.filter(deezerId => deezerId != id);
+    setDeezerIds(newIDs);
 
- async function savePlaylist() {
-
-   const token = localStorage.getItem('token');
-
-   console.log("deezerIds dans  : ", deezerIds);
-
-   await api.post('/playlist', {
-     name: playlistName,
-     description: playlistDesc,
-     image: playlistImg,
-     deezer_ids: deezerIds
-   },{
-     headers: {
-       Authorization: token
-     }
-   })
-     .then((res) => {
-       history.push({
-         pathname: '/user/playlists',
-       })
-       console.log(res.data);
-     })
-     .catch((err) => {
-       console.log(err.response);
-     })
- };
-
- const deleteTrack = (id) => {
-
-   const newTracks = selectedTrack.filter(track => track.id != id);
-   setSelectedTrack(newTracks);
-
-   const newIDs = deezerIds.filter(deezerId => deezerId != id);
-   setDeezerIds(newIDs);
-
- };
+  };
 
   const deletePlaylist = async () => {
     const token = localStorage.getItem('token');

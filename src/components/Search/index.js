@@ -23,6 +23,12 @@ const Search = ({ baseURL }) => {
 
   useEffect(async() => {
 
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Rechercher une playlist";
+
     await api.get('/playlists')
       .then((res) => {
         setPlaylists(res.data);
@@ -42,7 +48,7 @@ const Search = ({ baseURL }) => {
         <input
           className="search-header-input"
           type="text"
-          placeholder="Rechercher une playlist"
+          placeholder="Filtrer - Rechercher une playlist"
           onChange={(event) => {
             setSearchInput(event.target.value);
           }}

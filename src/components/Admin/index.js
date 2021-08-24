@@ -23,6 +23,12 @@ const Admin = ({ baseURL }) => {
   
   useEffect(() => {
 
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Administration";
+
     // Get playlists from database
     api.get('/playlists')
     .then((res) => {
@@ -63,6 +69,17 @@ const Admin = ({ baseURL }) => {
     })
       .then((res) => {
         console.log(res.data);
+        api.get('/playlist', {
+          headers: {
+            Authorization: token
+          }
+        })
+          .then((res) => {
+            setUsers(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
       })
       .catch((err) => {
         console.log(err.response);

@@ -21,14 +21,39 @@
     display: flex;
     flex-direction: column;
 
-    &-button {
-      border: none;
-      width: 45%;
+    &-buttons {
       height: 10vh;
       color: vars.$secondaryColor;
       background-color: vars.$thirdColor;
-      font-size: 1.2em;
-      font-weight: bold;
+      display: flex;
+
+      &-item {
+        width: 45%;
+        height: 100%;
+        border: none;
+        color: white;
+        background-color: vars.$thirdColor;
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      &-close {
+        width: 10%;
+        height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-left: 5px solid vars.$mainColor;
+
+        &-button {
+          border: none;
+          background-color: vars.$thirdColor;
+          margin: auto;
+          width: 25px;
+          height: 25px;
+          font-size: 1.3em;
+        }
+      }
     }
 
     &-form {
@@ -79,15 +104,6 @@
   }
 }
 
-.close_modal {
-  border: none;
-  background-color: vars.$thirdColor;
-  margin-left: 1.3em;
-  width: 25px;
-  height: 25px;
-  font-size: 1.3em;
-}
-
 .selected {
   border-bottom: none;
   color: vars.$secondaryColor;
@@ -98,8 +114,4 @@
   color: red;
   font-style: italic;
   margin-top: 2vh;
-}
-
-.hidden {
-  display: none;
 }

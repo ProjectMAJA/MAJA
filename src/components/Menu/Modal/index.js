@@ -108,10 +108,10 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
       <section className="modal">
         <div className="modal-display">
  
-          <section>
+          <section className="modal-display-buttons">
             <button
               id="sign-in-button"
-              className={ showSignInForm ? "modal-display-button selected" : "modal-display-button"}
+              className={ showSignInForm ? "modal-display-buttons-item selected" : "modal-display-buttons-item"}
               onClick={() => {
                 selectSignInForm();
               }}
@@ -121,7 +121,7 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
 
             <button
               id="sign-up-button"
-              className={ showSignUpForm ? "modal-display-button selected" : "modal-display-button"}
+              className={ showSignUpForm ? "modal-display-buttons-item selected" : "modal-display-buttons-item"}
               onClick={() => {
                 selectSignUpForm();
               }}
@@ -129,14 +129,18 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
               S'inscrire
             </button>
 
-            <input
-              type="image"
-              src={cancel} 
-              className="close_modal" 
+            <div
               onClick={() => {
                 setShowModal(false);
-              }}
-            />
+              }} className="modal-display-buttons-close"
+            >
+              <input
+                type="image"
+                src={cancel} 
+                className="modal-display-buttons-close-button"
+              />
+            </div>
+            
           </section>
 
           <section>

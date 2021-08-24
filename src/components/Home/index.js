@@ -34,6 +34,12 @@ const Home = ({ baseURL, setLogged }) => {
 
     useEffect(async () => {
 
+      if (DZ.player.isPlaying()) {
+        DZ.player.mute();
+      };
+  
+      document.title = "MAJA";
+
       const token = localStorage.getItem('token');
       if (token) {
         setLogged(true);

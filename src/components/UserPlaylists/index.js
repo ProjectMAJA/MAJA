@@ -28,6 +28,12 @@ const UserPlaylists = ({ baseURL }) => {
 
   useEffect(() => {
 
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Mes playlist";
+
     const token = localStorage.getItem('token');
 
     api.get(`/user/playlists`, {

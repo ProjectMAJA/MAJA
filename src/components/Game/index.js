@@ -27,7 +27,6 @@ const Game = ({ baseURL }) => {
   const [showWaitMessage, setShowWaitMessage] = useState(false);
 
   // DOM values
-  const [tracks, setTracks] = useState(3);
   const [proposal, setProposal] = useState('');
   const [score, setScore] = useState(0);
   const [previousTrack, setPreviousTrack] = useState('');
@@ -37,6 +36,7 @@ const Game = ({ baseURL }) => {
   const [titleFound, setTitleFound] = useState(false);
   const [deezerIDs, setDeezerIDs] = useState([]);
   const [musicVolume, setMusicVolume] = useState(20);
+  const [tracks, setTracks] = useState(10);
 
   const [countdown, setCountdown] = useState(5);
   const [timer, setTimer] = useState(30);
@@ -45,9 +45,7 @@ const Game = ({ baseURL }) => {
   const cooldown = 5;
   const nbOfTracks = 10;
   
-  // We will need the token & the playlistID for some functions
-  const playlistID = localStorage.getItem('playlist_id');
-  const token = localStorage.getItem('token');
+
 
   // Init axios requests
   const api = axios.create({
@@ -56,6 +54,15 @@ const Game = ({ baseURL }) => {
 
   // Init Deezer's SDK
   useEffect ( () => {
+
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Blind test";
+
+    const playlistID = localStorage.getItem('playlist_id');
+
     api.get(`/playlist/${playlistID}`)
       .then((res) => {
         let data = res.data.deezer_ids;
@@ -210,6 +217,8 @@ const Game = ({ baseURL }) => {
     setShowScore(true);
     setShowVolume(true);
     setShowCountdown(true);
+
+    const token = localStorage.getItem('token');
 
     if (token) {
       setShowRating(true);

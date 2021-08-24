@@ -34,6 +34,12 @@ const Profil = ({ baseURL }) => {
 
   useEffect(() => {
 
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Mon profil";
+
     // Get user informations with his token
     api.get('/user', {
       headers: {
@@ -154,7 +160,7 @@ const Profil = ({ baseURL }) => {
             <input
               className="profil-info-form-input"
               type="text"
-              placeholder={avatar}
+              placeholder={avatar ? avatar : 'URL de votre image'}
               onChange={(event) => {
                 setAvatar(event.target.value);
               }}

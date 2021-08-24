@@ -61,6 +61,13 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   // useEffect that gets playlist info
   useEffect(() => {
+
+    if (DZ.player.isPlaying()) {
+      DZ.player.mute();
+    };
+
+    document.title = "MAJA - Éditer une playlist";
+
     setPlaylistID(location.state.playlist.id);
     setUserID(location.state.playlist.user_id);
     setPlaylistName(location.state.playlist.name);
@@ -74,7 +81,7 @@ const PlaylistUpdate = ({ baseURL }) => {
     const fetchedTracks = [];
 
     tracksId.map(trackId => {
-      axios.get(`http://3.238.70.69:6969/https://api.deezer.com/track/${trackId}`)
+      axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${trackId}`)
           .then((res) => {
             fetchedTracks.push({
               id: res.data.id,
