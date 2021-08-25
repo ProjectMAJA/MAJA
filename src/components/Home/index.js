@@ -132,9 +132,9 @@ const Home = ({ baseURL, setLogged }) => {
         })
       }
 
-    }, []);
+  }, []);
 
-    return (
+  return (
       <div className="home-playlist-container">
         <Playlist
           title='Les intemporelles'
