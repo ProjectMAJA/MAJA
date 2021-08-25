@@ -36,7 +36,7 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
           <img src={search} alt="Rechercher" className="menu-buttons-logo nav-closed"/>
           <NavLink exact to="/search" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={search} alt="Rechercher" className="menu-buttons-logo"/>
-            Rechercher
+            <p className="menu-buttons-name">Rechercher</p>
           </NavLink>
         </div>
 {!logged && (         
@@ -51,7 +51,7 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
             }}
           >
           <img src={avatar} alt="Connexion" className="menu-buttons-logo"/>
-            Connexion
+            <p className="menu-buttons-name">Connexion</p>
           </NavLink>
         </div>
 )}
@@ -60,7 +60,7 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
           <img src={avatar} alt="Profil" className="menu-buttons-logo nav-closed"/>
           <NavLink exact to="/user" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={avatar} alt="Profil" className="menu-buttons-logo"/>
-            Profil
+            <p className="menu-buttons-name">Profil</p>
           </NavLink>
         </div>
 )}
@@ -69,7 +69,7 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
           <img src={musicalnote} alt="Playlists" className="menu-buttons-logo nav-closed"/>
           <NavLink exact to="/user/playlists" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={musicalnote} alt="Playlists" className="menu-buttons-logo"/>
-            Playlists
+            <p className="menu-buttons-name">Playlists</p>
           </NavLink>
         </div>
 )}
@@ -78,15 +78,15 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
           <img src={admin} alt="Administration" className="menu-buttons-logo nav-closed"/>
           <NavLink exact to="/admin" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={admin} alt="Administration" className="menu-buttons-logo"/>
-            Administration
+            <p className="menu-buttons-name">Administration</p>
           </NavLink>
         </div>
 )} 
-        <div className="menu-buttons-item">
+        <div className="menu-buttons-item team">
           <img src={glasses} alt="L'équipe" className="menu-buttons-logo nav-closed"/>
           <NavLink exact to="/team" activeClassName="navActive" className="menu-buttons-link nav-open">
           <img src={glasses} alt="L'équipe" className="menu-buttons-logo"/>
-            L'équipe
+            <p className="menu-buttons-name">L'équipe</p>
           </NavLink>
         </div>
 
@@ -103,7 +103,7 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
             }}
           >
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo"/>
-            Déconnexion
+            <p className="menu-buttons-name">Déconnexion</p>
           </NavLink>
         </div>
 )}

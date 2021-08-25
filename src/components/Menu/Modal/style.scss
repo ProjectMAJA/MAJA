@@ -1,9 +1,7 @@
 @use 'src/styles/vars';
 
 .modal {
-
   position: fixed;
-  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -26,13 +24,13 @@
       display: flex;
 
       &-item {
-      padding: 2em;
+        padding: 2em;
         width: 40%;
         height: 100%;
         border: none;
         color: white;
         background-color: vars.$thirdColor;
-        font-size: 1.3em;
+        font-size: 1.2em;
         font-weight: bold;
       }
 
@@ -58,14 +56,6 @@
       align-items: center;
       justify-content: center;
       margin: 5vh 10vh 5vh 10vh;
-
-      &-sign-up {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 5vh 10vh 5vh 10vh;
-      }
 
       &-input {
         width: 20vw;
@@ -110,4 +100,27 @@
   color: red;
   font-style: italic;
   margin-top: 2vh;
+}
+
+@media screen and (max-width: 1730px) {
+  .modal-display-buttons {
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .modal-display {
+    position: fixed;
+    left: 22vw;
+    
+    &-form-input {
+      width: 40vw;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .modal-display {
+
+  }
 }

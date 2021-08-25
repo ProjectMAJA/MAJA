@@ -109,7 +109,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
  
           <section className="modal-display-buttons">
             <button
-              id="sign-in-button"
               className={ showSignInForm ? "modal-display-buttons-item selected" : "modal-display-buttons-item"}
               onClick={() => {
                 selectSignInForm();
@@ -119,7 +118,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
             </button>
 
             <button
-              id="sign-up-button"
               className={ showSignUpForm ? "modal-display-buttons-item selected" : "modal-display-buttons-item"}
               onClick={() => {
                 selectSignUpForm();
@@ -192,7 +190,7 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
             
 { showSignUpForm &&
             <form
-              className="modal-display-form-sign-up"
+              className="modal-display-form"
               onSubmit={(event) => {
                 event.preventDefault();
                 signUpSubmit(event.target);

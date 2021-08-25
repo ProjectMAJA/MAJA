@@ -11,6 +11,35 @@
   height: 100%;
   background-color: vars.$menuColor;
   transition: 0.2s;
+
+  &:hover {
+    width: 15em;
+  
+    .nav-closed {
+      display: none;
+    }
+  
+    .nav-open {
+      display: contents;
+    }
+  
+    .menu-buttons-item {
+      padding-right: 2vw;
+  
+      &:hover {
+        transform: translateX(5px);
+        transition: .3s;
+      }
+    }
+  
+    .menu-buttons-link {
+      color: vars.$secondaryColor;
+  
+      &:hover {
+        color: rgb(173, 173, 173);
+      }
+    }
+  }
   
   &-logo {
     width: 40%;
@@ -49,36 +78,60 @@
   display: none;
 }
 
-.menu:hover {
-  width: 15em;
+@media screen and (max-width: 850px) {
+  .menu {
+    position: fixed;
+    bottom: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 10vh;
 
-  .nav-closed {
+    &:hover {
+      width: 100%;
+      
+      .menu-buttons-name {
+        display: none;
+      }
+
+      .menu-buttons-item {
+        padding: 0;
+  
+        &:hover {
+          transform: translateX(0);
+          transform: translateY(-5px);
+          transition: .3s;
+        }
+      }
+    }
+
+    &-logo {
+      margin: auto;
+      height: 4vh;
+      width: auto;
+      margin-left: 5vw;
+    }
+    
+    &-buttons {
+      width: 100%;
+      flex-direction: row;
+      margin-top: 0;
+      display: flex;
+      justify-content: space-evenly;
+
+      &-logo {
+        height: 2.5vh;
+        width: auto;
+      }
+    }
+
+    &-deezer {
+      display: none;
+    }
+  }
+
+  .team {
     display: none;
   }
-
-  .nav-open {
-    display: contents;
-  }
-
-  .menu-buttons-item {
-    padding-right: 2vw;
-
-    &:hover {
-      transform: translateX(5px);
-      transition: .3s;
-    }
-  }
-
-  .menu-buttons-link {
-    color: vars.$secondaryColor;
-
-    &:hover {
-      color: rgb(173, 173, 173);
-    }
-  }
 }
-
-
-
-
-

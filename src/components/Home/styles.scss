@@ -90,33 +90,4 @@ a {
     }
   }
 }
-@media (max-width: 500px) {
-  h1 {
-    font-family: ‘Nunito Sans’, sans-serif;
-    font-size: 1.5em;
-  }
-  .home-playlist {
-    &-container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    &-row {
-      margin: 3em 0 3em 7em;
-      display:flex;
-      flex-direction: column;
-    }
-    &-cards {
-      // scroll horizontal des cards
-      display: flex;
-      // scroll horizontal du container
-      flex-wrap: wrap;
-      overflow-x: auto;
-      flex: 0 0 auto;
-      // cacher la scrollbar
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-  }
-}
+
