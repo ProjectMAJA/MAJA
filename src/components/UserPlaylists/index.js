@@ -41,14 +41,17 @@ const UserPlaylists = ({ baseURL }) => {
         authorization: token
       }
     })
-    .then((res) => {
-      setUserPlaylists(res.data)
-    })
+      .then((res) => {
+        setUserPlaylists(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
   }, []);
 
   const deletePlaylist = async (playlistID, userID) => {
     const token = localStorage.getItem('token');
-
+ 
     await api.delete(`/playlist`,
       {
       headers: {
@@ -61,35 +64,46 @@ const UserPlaylists = ({ baseURL }) => {
     })
       .then((res) => {
         console.log(res.data);
+        api.get('/user/playlists', {
+          headers: {
+            Authorization: token
+          }
+        })
+          .then((res) => {
+            setUserPlaylists(res.data);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          })
       })
       .catch((err) => {
         console.log(err.response);
-      });
+      })
   };
 
   return(
     <div className="user-playlist-container">
 
-    <div className="user-playlist-add">
-      <input 
-        className="user-playlist-add-logo"
-        name="create"
-        id="create"
-        type="image"
-        src={plus}
-        onClick={() => {
-          history.push({
-            pathname: '/create'
-          })
-        }}
-      />
-      <label className="user-playlist-add-label" htmlFor="create">
-        Créer une playlist
-      </label>
-    </div>
-    
-    
-    <ul>
+      <div className="user-playlist-add">
+        <input 
+          className="user-playlist-add-logo"
+          name="create"
+          id="create"
+          type="image"
+          src={plus}
+          onClick={() => {
+            history.push({
+              pathname: '/create'
+            })
+          }}
+        />
+        <label className="user-playlist-add-label" htmlFor="create">
+          Créer une playlist
+        </label>
+      </div>
+      
+      
+      <ul className="user-playlist-cards">
 
       {userPlaylists &&
         userPlaylists.map(playlist => {
@@ -107,29 +121,29 @@ const UserPlaylists = ({ baseURL }) => {
                 setPlaylistLink(playlist.id);
                 setShowDetails(true);
               }}>
-                  { playlist.image ? (
-                    <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
+                { playlist.image ? (
+                  <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
                   ) : (
-                    <img className="user-playlist-card-logo" src={imgDefault} alt="user-playlist placeholder" />
+                  <img className="user-playlist-card-logo" src={imgDefault} alt="user-playlist placeholder" />
                   )
+                }
+                <h2 className="user-playlist-card-title">{playlist.name}</h2>
+                <div>
+                  { blackStars &&
+                    blackStars.map(e=>{
+                      return(
+                        <em>&#9733;</em>
+                      )
+                    })
                   }
-                  <h2>{playlist.name}</h2>
-                  <div>
-                          {blackStars &&
-                            blackStars.map(e=>{
-                              return(
-                                <em>&#9733;</em>
-                              )
-                            })
-                          }
-                          {whiteStars &&
-                            whiteStars.map(e=>{
-                              return(
-                                <em>&#9734;</em>
-                              )
-                            })
-                          }
-                  </div>
+                  { whiteStars &&
+                    whiteStars.map(e=>{
+                      return(
+                        <em>&#9734;</em>
+                      )
+                    })
+                  }
+                </div>
               </a>
               
               <div className="user-playlist-options">
@@ -149,8 +163,6 @@ const UserPlaylists = ({ baseURL }) => {
                     }}
                 />
               </div>
-              
-              
             </li>
           )
         })}

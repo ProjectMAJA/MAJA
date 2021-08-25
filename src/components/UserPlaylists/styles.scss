@@ -1,25 +1,6 @@
 // Ajout du fichier de variables
 @use 'src/styles/vars';
 
-body {
-  color: vars.$secondaryColor;
-}
-
-h1 {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 2em;
-}
-
-h2 {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 1.1em;
-  margin: 0.5em 0;
-}
-
-a {
-  cursor: pointer;
-}
-
 .user-playlist {
 
   &-add {
@@ -43,53 +24,50 @@ a {
   }
 
   &-container {
-    margin-left: 20em;
+    margin-left: 15em;
     width: 80%;
     display: flex;
     flex-direction: column;
   }
 
   &-row {
-    margin: 3em 0 3em 20em;
+    margin: 3em 0 3em 10em;
     display:flex;
     flex-direction: column;
   }
 
   &-options {
+    margin-top: 1em;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    max-width: 35px;
-    max-height: 35px;
-    margin-left: 2.5em;
-    margin-top: 0.2em;
+    justify-content: space-evenly;
 
     &-edit {
+      height: 20px;
       margin: 0.5em;
     }
 
     &-delete {
+      height: 20px;
       margin: 0.5em;
     }
   }
 
   &-cards {
-    // scroll horizontal des cards
     display: flex;
     flex-wrap: wrap;
-    overflow-x: auto;
-    flex: 0 0 auto;
-    // cacher la scrollbar
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    justify-content: center;
   }
 
   &-card {
     margin: 1em;
+    padding: 1em;
     display: inline-block;
     text-align: center;
     justify-content: center;
+    width: 200px;
+    height: 320px;
+    border: 1px solid darkgrey;
 
     &-logo {
       width: 150px;
@@ -98,11 +76,17 @@ a {
       border-radius: 2%;
     }
 
+    &-title {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      height: 2.5em;
+    }
+
     &-rating {
       width: 100px;
     }
   }
 }
-
-
-

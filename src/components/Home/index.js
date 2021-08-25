@@ -9,9 +9,6 @@ import axios from 'axios';
 
 // Imports locaux
 import './styles.scss';
-import imgDefault from '../../../public/img/playlist/playlist-placeholder.png'
-import playlist from '../../../public/img/playlist/playlist-placeholder.png';
-import rating from '../../../public/img/playlist/rating.png';
 
 const Home = ({ baseURL, setLogged }) => {
 

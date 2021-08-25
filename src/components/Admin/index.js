@@ -69,13 +69,13 @@ const Admin = ({ baseURL }) => {
     })
       .then((res) => {
         console.log(res.data);
-        api.get('/playlist', {
+        api.get('/playlists', {
           headers: {
             Authorization: token
           }
         })
           .then((res) => {
-            setUsers(res.data);
+            setPlaylists(res.data);
           })
           .catch((err) => {
             console.log(err);

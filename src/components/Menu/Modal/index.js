@@ -31,7 +31,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
         localStorage.setItem('admin', res.data.isadmin);
         localStorage.setItem('token', `bearer ${res.data.access_token}`);
         setIsAdmin(res.data.isadmin);
-        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

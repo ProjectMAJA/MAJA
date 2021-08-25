@@ -3,12 +3,13 @@ import React, { useEffect } from 'react';
 // Imports NPM
 // Imports locaux
 import './styles.scss';
-import Jojoh from './images/jojoh.png';
-import Adrien from '../../../public/img/team/Adrien.svg';
-import Axel from '../../../public/img/team/axel.svg'
-import Mathieu from '../../../public/img/team/mathieu.svg'
-import Linkedin from './images/linkedin.png';
+// import Johanna from './images/jojoh.png';
+// import Adrien from '../../../public/img/team/Adrien.svg';
+// import Axel from '../../../public/img/team/axel.svg';
+// import Mathieu from '../../../public/img/team/mathieu.svg';
+import linkedin from './images/linkedin.png';
 
+import team from '../../../data/team.json';
 
 const Team = () => {
 
@@ -23,12 +24,52 @@ const Team = () => {
   }, []);
 
   return (
-    <div className="cards">
-      <div className="card-h1">
-        <h1>La team MAJA</h1>
-          </div>
-    <div className="card-block">
+    <div className="team">
 
+      <div className="team-container">
+        <section className="team-container-title">
+          <h1>La team MAJA</h1>
+        </section>
+
+        <ul className="team-container-list">
+
+          { team.map(member => {
+
+            const altImg = "Avatar de " + member.name;
+            const altLink = "Lien vers le Linkedin de " + member.name;
+
+            return (
+              <li key={member.id}>
+                <a 
+                  href={member.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="team-container-list-card"
+                >
+
+                  <img src={member.img} alt={altImg} className="team-container-list-card-img" />
+
+                  <section className="team-container-list-card-id">
+
+                    <p className="team-container-list-card-id-name">
+                      {member.name}
+                    </p>
+
+                    <p className="team-container-list-card-id-role">
+                      {member.role}
+                    </p>
+
+                  </section>
+
+                  <img src={linkedin} alt={altLink} className="team-container-list-card-link" />
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+
+      {/* <div className="card-block">
         <a href="http://www.linkedin.com/in/mathieu-frayssinet" className="card-linkedin">
         <div className="card-container">
           <div className="image-container">
@@ -105,7 +146,7 @@ const Team = () => {
         </div>
         </a>
 
-        </div>
+        </div> */}
       
         </div>
   )};

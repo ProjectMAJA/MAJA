@@ -1,9 +1,11 @@
 @use 'reset';
 @use 'vars';
 
+
 body {
-  font-family: 'Nunito Sans', sans-serif;
+  color: vars.$secondaryColor;
 }
+
 h1 {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 2em;
@@ -13,4 +15,8 @@ h2 {
   font-family: 'Nunito Sans', sans-serif;
   font-size: 1.1em;
   margin: 0.5em 0;
+}
+
+a {
+  cursor: pointer;
 }

@@ -3,19 +3,19 @@
 .admin {
   display: flex;
   justify-content: space-evenly;
-  padding: 1em;
-  padding-right: 10%;
-  padding-left: 5%;
+  overflow: hidden;
+  margin-left: 200px;
 
   &-container {
     background-color: vars.$menuColor;
-    height: 98vh;
-    width: 45%;
+    height: 95vh;
+    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1em;
-    overflow: auto;
+    padding: 2em;
+    margin: 1.5em;
+    overflow-y: auto;
 
     &-input {
       margin: 1em;
@@ -38,15 +38,16 @@
 
       &-content {
         padding: 0.5em;
-        width: 70%;
+        width: 60%;
         
         &-title {
-          margin-top: 0.5em;
+          margin: 1em;
           font-size: 1.5em;
+          font-weight: bold;
         }
 
         &-description {
-          margin-top: 0.5em;
+          margin: 1em;
           font-style: italic;
         }
       }
@@ -54,7 +55,6 @@
       &-button {
         height: 4vh;
         width: 2vw;
-        font-size: 1.5em;
         margin: auto;
       }
     }
