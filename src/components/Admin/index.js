@@ -117,7 +117,7 @@ const Admin = ({ baseURL }) => {
     <div className="admin">
       <section className="admin-container">
 
-        <h1>Playlists</h1>
+        <h1 className="admin-container-title">Playlists</h1>
         <hr />
         <input
           type="text"
@@ -127,45 +127,47 @@ const Admin = ({ baseURL }) => {
             setPlaylistInput(event.target.value);
           }}
         /> 
-
+        
 { playlists &&
-        playlists.map(playlist => {
-          const title = playlist.name.toLowerCase();
-          const search = playlistInput.toLowerCase();
+          playlists.map(playlist => {
+            const title = playlist.name.toLowerCase();
+            const search = playlistInput.toLowerCase();
+            const altImg = "Image de la playlist " + playlist.name;
 
-          if ( title.includes(search) ) {
-            return (
-              <div key={playlist.id} className="admin-container-section">
+            if ( title.includes(search) ) {
+              return (
+                <li key={playlist.id} className="admin-container-section">
 
-                {playlist.image ? (
-                            <img className="home-playlist-card-logo" src={playlist.image} alt="home-playlist placeholder" />
-                          ) : (
-                            <img className="home-playlist-card-logo" src={imgDefaultPlaylist} alt="home-playlist placeholder" />
-                          )
-                }
-                <div className="admin-container-section-content">
-                  <h2 className="admin-container-section-content-title"> {playlist.name} </h2>
-                  <p className="admin-container-section-content-description"> {playlist.description} </p>
-                </div>
+                  { playlist.image ? 
+                    (
+                    <img className="admin-container-section-img" src={playlist.image} alt={altImg} />
+                    ) : (
+                    <img className="admin-container-section-img" src={imgDefaultPlaylist} alt="Image par défaut de la playlist" />
+                    )
+                  }
+                  <div className="admin-container-section-content">
+                    <h2 className="admin-container-section-content-title"> {playlist.name} </h2>
+                    <p className="admin-container-section-content-description"> {playlist.description} </p>
+                  </div>
 
-                <input
-                  type="image"
-                  src={del}
-                  className="admin-container-section-button"
-                  onClick={() => {
-                    deletePlaylist(playlist.id);
-                  }}
-                />
-              </div>
-            )
-          }
-        })
+                  <input
+                    type="image"
+                    src={del}
+                    className="admin-container-section-button"
+                    onClick={() => {
+                      deletePlaylist(playlist.id);
+                    }}
+                  />
+                </li>
+              )
+            }
+          })
 }
       </section>
 
       <section className="admin-container">
 
-        <h1>Utilisateurs</h1>
+        <h1 className="admin-container-title">Utilisateurs</h1>
         <hr />
         <input
           type="text"
@@ -177,36 +179,38 @@ const Admin = ({ baseURL }) => {
         /> 
 
 { users &&
-        users.map(user => {
-          const name = user.pseudo.toLowerCase();
-          const search = userInput.toLocaleLowerCase();
+          users.map(user => {
+            const name = user.pseudo.toLowerCase();
+            const search = userInput.toLocaleLowerCase();
+            const altImg = "Avatar de " + user.pseudo;
 
-          if ( name.includes(search) ) {
-            return (
-              <div key={user.id} className="admin-container-section">
-                {user.avatar ? (
-                            <img className="home-playlist-card-logo" src={user.avatar} alt="home-playlist placeholder" />
-                          ) : (
-                            <img className="home-playlist-card-logo" src={imgDefaultUser} alt="home-playlist placeholder" />
-                          )
-                }
-                <div className="admin-container-section-content">
-                  <h2 className="admin-container-section-content-title"> {user.pseudo} </h2>
-                  <p className="admin-container-section-content-description"> {user.email} </p>
-                </div>
+            if ( name.includes(search) ) {
+              return (
+                <li key={user.id} className="admin-container-section">
+                  { user.avatar ? 
+                    (
+                    <img className="admin-container-section-img" src={user.avatar} alt={altImg} />
+                    ) : (
+                    <img className="admin-container-section-img" src={imgDefaultUser} alt="Avatar par défaut" />
+                    )
+                  }
+                  <div className="admin-container-section-content">
+                    <h2 className="admin-container-section-content-title"> {user.pseudo} </h2>
+                    <p className="admin-container-section-content-description"> {user.email} </p>
+                  </div>
 
-                <input
-                  type="image"
-                  src={del}
-                  className="admin-container-section-button"
-                  onClick={() => {
-                    deleteUser(user.id);
-                  }}
-                />
-              </div>
-            )
-          }
-        })
+                  <input
+                    type="image"
+                    src={del}
+                    className="admin-container-section-button"
+                    onClick={() => {
+                      deleteUser(user.id);
+                    }}
+                  />
+                </li>
+              )
+            }
+          })
 }
       </section>
     </div>
@@ -218,6 +222,3 @@ Admin.propTypes = {
 };
 
 export default Admin;
-
-
-

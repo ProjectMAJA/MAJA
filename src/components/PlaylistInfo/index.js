@@ -43,48 +43,46 @@ const PlaylistInfo = ({ baseURL, playlistLink, setShowDetails }) => {
   return (
     <div className="info">
       <div className="info-bloc">
-        
-        <div className="info-bloc-img">
-          <img src={playlistImg} className="info-bloc-img-playlist"/>
-        </div>
+        <section className="info-bloc-playlist">
 
-        <div className="info-bloc-right">
-          <div className="info-bloc-right-top">
-            <h1 className="info-bloc-right-top-title"> {playlistName} </h1>
-    
-            <div className="info-bloc-right-top-close">
-              <input
-                type="image"
-                src={cancel}
-                className="info-bloc-right-top-close-button" 
-                onClick={() => {
-                  setShowDetails(false);
-                }}
-              />
-            </div>
+          <img 
+            src={playlistImg}
+            className="info-bloc-playlist-img"
+            alt="Image de la playlist"
+          />
+
+          <div className="info-bloc-playlist-text">
+            <p className="info-bloc-playlist-text-title">{playlistName}</p>
+            <p className="info-bloc-playlist-text-description">{playlistDescription}</p>
           </div>
-  
-          <div className="info-bloc-right-bottom">
-            <div className="info-bloc-right-bottom-description">
-              <p>
-                {playlistDescription}
-              </p>
-            </div>
-    
-            <div className="info-bloc-right-bottom-button">
-              <NavLink
-                exact to="/game"
-                className="info-bloc-right-bottom-button-link"
-                onClick={() => {
-                  localStorage.setItem('playlist_id', playlistLink);
-                }}
-              >
-                <span>JOUER</span>
-              </NavLink>
-            </div>
+
+          <div className="info-bloc-playlist-close">
+            <input
+              type="image"
+              src={cancel}
+              className="info-bloc-playlist-close-button" 
+              onClick={() => {
+                setShowDetails(false);
+              }}
+            />
           </div>
-        </div>
-        
+
+        </section>
+
+        <section className="info-bloc-play">
+
+          <NavLink
+            exact to="/game"
+            className="info-bloc-play-button"
+            onClick={() => {
+              localStorage.setItem('playlist_id', playlistLink);
+            }}
+          >
+            JOUER
+          </NavLink>
+
+        </section>
+
       </div>
     </div>
   )
