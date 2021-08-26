@@ -1,11 +1,10 @@
 // Import de la lib React
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // Imports NPM
 import axios from 'axios';
-import DeezerPublicApi from 'deezer-public-api';
 
 // Imports locaux
 import './styles.scss';
@@ -13,17 +12,10 @@ import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import settings from '../../../public/img/profil/settings.svg';
-import edit from '../../../public/img/icons/edit.svg';
-import del from '../../../public/img/icons/delete.svg';
-import plus from '../../../public/img/icons/plus.svg';
-
-let deezerApi = new DeezerPublicApi();
 
 const PlaylistCreate = ({ baseURL }) => {
 
   let history = useHistory();
-
-  const location = useLocation();
 
   const api = axios.create({
     baseURL: baseURL
@@ -31,12 +23,9 @@ const PlaylistCreate = ({ baseURL }) => {
 
   {/* useState pour l'accordéon */}
   const [toggle, setToggle] = useState(false);
-  const [heightEl, setHeightEl] = useState();
   {/* useState pour la barre de recherche */}
     const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  {/* useState pour l'ajout de track dans la liste */}
-  const [dataArr, setDataArr] = useState([]);
   {/* useState pour sélectionner la musique */}
   const [selectedTrack, setSelectedTrack] = useState([]);
   {/* useState pour afficher les musiques d'une playlist */}
@@ -56,41 +45,39 @@ const PlaylistCreate = ({ baseURL }) => {
     setToggle(!toggle);
   }
 
-  const refHeight = useRef();
-
-  // useEffect that gets playlist info
+  useEffect(() => {
+    document.title = "MAJA - Créer une playlist";
+  }, []);
 
   // useEffect that fetches data from Deezer API
   useEffect(() => {
-
-    if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
-    };
-
-    document.title = "MAJA - Créer une playlist";
-
     if (!search) return setSearchResults([]);
 
-    {/* cela permet de faire la requête seulement quand on a fini d'écrire, au lieu d'en faire une à chaque lettre tapée */}
-    let cancel = false;
-    {/* cette méthode permet de fetch le titre d'une musique sur l'api de Deezer grâce au deezer-public-api */}
-      deezerApi.search.track(search).then(function(res) {
-        if (cancel) return;
+    let cancel = false
+
+    DZ.api('/search?q=' + search, (res) => {
+      console.log(res);
       
-        setSearchResults(
+      if (cancel) return;
+
+      setSearchResults(
         res.data.map(track => {
+          if (track.readable) {
             return {
               id: track.id,
               artist: track.artist.name,
               title : track.title,
               track: track.link,
               cover: track.album.cover_medium,
-            preview: track.preview,
+              preview: track.preview,
             }
-        }));
-      })
+          }
+          return;
+        })
+      )
+    })
 
-      return() => cancel = true
+    return() => cancel = true
   }, [search]);
 
   function chooseTrack(track) {
@@ -139,7 +126,6 @@ const PlaylistCreate = ({ baseURL }) => {
 
     const newIDs = deezerIds.filter(deezerId => deezerId != id);
     setDeezerIds(newIDs);
-
   };
 
   const deletePlaylist = async () => {
@@ -178,7 +164,6 @@ const PlaylistCreate = ({ baseURL }) => {
       setPlaylistDesc(newDesc);
     };
   };
-
 
 return (
   <div className="playlist-update">
@@ -298,8 +283,6 @@ return (
               }}>
                 Sauvegarder
               </button>
-
-
           </div>
         </div>
       </div>

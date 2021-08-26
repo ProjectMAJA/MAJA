@@ -5,7 +5,6 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 // Imports NPM
 import axios from 'axios';
-import DeezerPublicApi from 'deezer-public-api';
 
 // Imports locaux
 import './styles.scss';
@@ -13,11 +12,6 @@ import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import settings from '../../../public/img/profil/settings.svg';
-import edit from '../../../public/img/icons/edit.svg';
-import moins from '../../../public/img/icons/moins.svg';
-import plus from '../../../public/img/icons/plus.svg';
-
-let deezerApi = new DeezerPublicApi();
 
 const PlaylistUpdate = ({ baseURL }) => {
 
@@ -31,13 +25,10 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   {/* useState pour l'accordéon */}
   const [toggle, setToggle] = useState(false);
-  const [heightEl, setHeightEl] = useState();
   {/* useState pour la barre de recherche */}
   
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  {/* useState pour l'ajout de track dans la liste */}
-  const [dataArr, setDataArr] = useState([]);
   {/* useState pour sélectionner la musique */}
   const [selectedTrack, setSelectedTrack] = useState([]);
   {/* useState pour afficher les musiques d'une playlist */}
@@ -56,8 +47,6 @@ const PlaylistUpdate = ({ baseURL }) => {
   const toggleState = () => {
     setToggle(!toggle);
   }
-
-  const refHeight = useRef();
 
   // useEffect that gets playlist info
   useEffect(() => {
@@ -81,49 +70,52 @@ const PlaylistUpdate = ({ baseURL }) => {
     const fetchedTracks = [];
 
     tracksId.map(trackId => {
-      axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${trackId}`)
-          .then((res) => {
-            fetchedTracks.push({
-              id: res.data.id,
-              artist: res.data.artist.name,
-              title : res.data.title,
-              track: res.data.link,
-              cover: res.data.album.cover_medium,
-              preview: res.data.preview,
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+
+      DZ.api(`/track/${trackId}`, (res) => {
+
+        fetchedTracks.push({
+          id: res.id,
+          artist: res.artist.name,
+          title : res.title,
+          track: res.link,
+          cover: res.album.cover_medium,
+          preview: res.preview,
+        })
+      })
     })
+      
+      setSelectedTrack(fetchedTracks);
+  };
 
-    setSelectedTrack(fetchedTracks);
-  }
-
-  // useEffect that fetches data from Deezer API
   useEffect(() => {
     if (!search) return setSearchResults([]);
 
-    {/* cela permet de faire la requête seulement quand on a fini d'écrire, au lieu d'en faire une à chaque lettre tapée */}
-    let cancel = false;
-    {/* cette méthode permet de fetch le titre d'une musique sur l'api de Deezer grâce au deezer-public-api */}
-    deezerApi.search.track(search).then(function(res) {
-      if (cancel) return;
+    let cancel = false
+
+    DZ.api('/search?q=' + search, (res) => {
+      console.log(res);
       
+      if (cancel) return;
+
       setSearchResults(
         res.data.map(track => {
-          return {
-            id: track.id,
-            artist: track.artist.name,
-            title : track.title,
-            track: track.link,
-            cover: track.album.cover_medium,
-            preview: track.preview,
-          }
-        }))
-      ;})
 
-      return() => cancel = true
+          if (track.readable) {
+            return {
+              id: track.id,
+              artist: track.artist.name,
+              title : track.title,
+              track: track.link,
+              cover: track.album.cover_medium,
+              preview: track.preview,
+            }
+          }
+          return;
+        })
+      )
+    })
+
+    return() => cancel = true
   }, [search]);
 
   function chooseTrack(track) {
@@ -175,7 +167,6 @@ const PlaylistUpdate = ({ baseURL }) => {
 
     const newIDs = deezerIds.filter(deezerId => deezerId != id);
     setDeezerIds(newIDs);
-
   };
 
   const deletePlaylist = async () => {

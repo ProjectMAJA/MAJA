@@ -106,22 +106,18 @@ const Game = ({ baseURL }) => {
       const artist = currentTrack.artist.name.toLowerCase();
 
       checkAnswer(userProposal, title, artist);
-
-      if(title.includes('jean-jacques goldman') && userProposal.includes('jjg')) {
-        scoring+=3;
-        setScore(scoring);
-      };
-
-      if(artist.includes('jean-jacques goldman') && userProposal.includes('jjg')) {
-        scoring+=3;
-        setScore(scoring);
-      };
     };
 
-    function checkAnswer(answer, title, artist){
+    function checkAnswer(answer, title, artist) {
+      title = title.replace("-", " ");
+      artist = artist.replace("-", " ");
+      answer = answer.replace("-", " ");
+
       title = title.replace(/[^a-zA-Z +\d]/g, "");
       artist = artist.replace(/[^a-zA-Z +\d]/g, "");
       answer = answer.replace(/[^a-zA-Z +\d]/g, "");
+
+      console.log(artist);
 
       feat = false;
       title = ftCheck(title);
@@ -251,13 +247,9 @@ const Game = ({ baseURL }) => {
         setPreviousArtist(currentTrack.artist.name);
         setPreviousTrack(currentTrack.title);
 
-        axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${currentTrack.id}`)
-          .then((res) => {
-            setPreviousImg(res.data.artist.picture_medium);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+        DZ.api('/track/' + currentTrack.id, (res) => {
+          setPreviousImg(res.artist.picture_medium);
+        });
 
         // The game is over
         endGame();
@@ -274,13 +266,9 @@ const Game = ({ baseURL }) => {
         setPreviousArtist(currentTrack.artist.name);
         setPreviousTrack(currentTrack.title);
 
-        axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${currentTrack.id}`)
-          .then((res) => {
-            setPreviousImg(res.data.artist.picture_medium);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        DZ.api('/track/' + currentTrack.id, (res) => {
+          setPreviousImg(res.artist.picture_medium);
+        });
 
         // We hide the timer, show what the good answer was
         setShowTimer(false);
