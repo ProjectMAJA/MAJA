@@ -91,9 +91,7 @@ iframe {
     width: 2em;
     height: 2em;
     border-radius: 50%;
-    transition-property: border-radius;
-    transition-duration: 10s;
-    border: 30px solid vars.$buttonColor;
+    border: 25px solid vars.$buttonColor;
   }
 
   &-previous {

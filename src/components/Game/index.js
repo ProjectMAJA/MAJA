@@ -267,6 +267,17 @@ const Game = ({ baseURL }) => {
           setPreviousImg(res.artist.picture_medium);
         });
 
+        // We hide the timer, show what the good answer was
+        setShowTimer(false);
+        setShowAnswer(true);
+
+        // Hide messages and input
+        setShowArtistFound(false);
+        setShowTitleFound(false);
+        setShowTryAgain(false);
+        setShowWaitMessage(false);
+        setShowInput(false);
+
         // The game is over
         endGame();
         clearInterval(nextTrack);
@@ -364,12 +375,8 @@ const Game = ({ baseURL }) => {
       };
 
       // Show the score & the redirect button
-      setShowArtistFound(false);
-      setShowTitleFound(false);
-      setShowTryAgain(false);
-      setShowWaitMessage(false);
-      setShowInput(false);
       setShowVolume(false);
+      setShowAnswer(false);
       setShowEndgame(true);
     }, cooldown*1000);
   };
