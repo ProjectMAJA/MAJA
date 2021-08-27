@@ -9,11 +9,10 @@ import arrow from '../../../public/img/icons/arrow.png';
 
 const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
 
-  const [playlistWidth, setPlaylistWidth] = useState(null);
   const [rightArrow, setRightArrow] = useState(false);
   const [leftArrow, setLeftArrow] = useState(false);
   const [userWidth, setUserWidth] = useState(null);
-  const [scroll, setScroll] = useState(0);
+  const [positionScroll, setPositionScroll] = useState(0);
 
   const rowCards = useRef(0);
   const rowContainer = useRef(0);
@@ -28,38 +27,49 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
     const length = playlists.length;
 
     // Number of playlist * their own width (in px);
-    const divWidth = (length * 190) + 320;
+    const rowWidth = (length * 190) + 320;
 
     // If a playlist row is larger than the client's navigator, 
-    if ( divWidth > width) {
+    if ( rowWidth > width) {
       // We show the arrow for the horizontal scroll
       setRightArrow(true);
     };
   }, []);
+
+  useEffect(() => {
+    if (positionScroll === 0) {
+      setLeftArrow(false);
+    }
+  }, [positionScroll]);
   
   const scrollToRight = () => {
     
-    console.log(rowContainer.current.offsetWidth)
-    console.log(rowCards.current.offsetWidth)
-    
-    const newScroll = scroll + userWidth/2;
-    setScroll(scroll + userWidth/2);
-    
-    console.log()
+    const newScroll = positionScroll + userWidth / 2;
+
+    setPositionScroll(newScroll);
 
     rowCards.current.style.transform = `translateX(-${newScroll}px)`;
 
     setLeftArrow(true);
+
+    // We want to know the width for this row
+    const rowWidth = (playlists.length * 190);
+    
+    // If the position goes too far, we hide the right arrow
+    if ( positionScroll > rowWidth / 2 ) {
+      setRightArrow(false);
+    };
   };
 
   const scrollToLeft = () => {
     
-    const newScroll = scroll + userWidth/2;
-    setScroll(scroll + userWidth/2);
-    
-    rowCards.current.style.transform = `translateX(${newScroll}px)`;
+    const newScroll = positionScroll - userWidth / 2;
 
+    setPositionScroll(newScroll);
 
+    rowCards.current.style.transform = `translateX(-${newScroll}px)`;
+
+    setRightArrow(true);
   };
 
   return(

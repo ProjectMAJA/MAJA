@@ -13,7 +13,7 @@
     margin: 3em 0 3em 20em;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100000000%;
 
     &-title {
       font-size: 2em;
@@ -21,24 +21,17 @@
   }
 
   &-cards {
-    // scroll horizontal des cards
     display: flex;
-    // scroll horizontal du container
     flex-wrap: nowrap;
-    overflow-x: auto;
     flex: 0 0 auto;
     transition: .5s;
-    width: 100000000000000000000000000000000000000000000000000000000000%;
-    // cacher la scrollbar
-    &::-webkit-scrollbar {
-      display: none;
-    }
+    width: 100%;
 
     &-blur {
       position: absolute;
       right: 0vw;
       width: 150px;
-      height: 250px;
+      height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -53,7 +46,7 @@
         transition: .3s;
         z-index: 5;
         cursor: pointer;
-        margin-left: 10px;
+        margin-left: 40px;
     
         &:hover {
           transform: translateX(5px);
@@ -63,16 +56,17 @@
 
     &-leftblur {
       position: absolute;
-      left: 0vw;
-      width: 150px;
-      height: 250px;
+      left: 0;
+      width: 300px;
+      height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(270deg, rgba(vars.$mainColor, 0) 0%, rgba(rgba(vars.$mainColor, 0), 1) 100%, rgba(rgba(vars.$mainColor, 0), 1) 100%);
+      background: linear-gradient(270deg, rgba(vars.$mainColor, 0) 0%, rgba(rgba(vars.$mainColor, 1), 100) 100%, rgba(rgba(vars.$mainColor, 0), 1) 100%);
       z-index: 3;
 
       &-arrow {
+        margin-left: 250px;
         height: 50px;
         background: rgba(vars.$secondaryColor, 0.9);
         border-radius: 50%;
@@ -80,7 +74,6 @@
         transition: .3s;
         z-index: 5;
         cursor: pointer;
-        margin-left: 100px;
         transform: rotate(180deg);
     
         &:hover {
@@ -137,6 +130,10 @@
       }
 
       &-blur {
+        display: none;
+      }
+
+      &-leftblur {
         display: none;
       }
     }
