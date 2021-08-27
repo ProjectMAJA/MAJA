@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -50,12 +50,23 @@ const Game = ({ baseURL }) => {
     baseURL: baseURL
   });
 
+  const interval = useRef();
+  const countInterval = useRef();
+  const timerInterval = useRef();
+
   // Init Deezer's SDK
   useEffect ( () => {
 
-    if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
+    const wasPlaying = localStorage.getItem('playlist_id');
+
+    if (wasPlaying) {
+      window.location.reload();
+      localStorage.removeItem('playlist_id');
     };
+
+    const intervalId = interval.current;
+    const countdownInterval = countInterval.current;
+    const timerSong = timerInterval.current;
 
     document.title = "MAJA - Blind test";
 
@@ -78,6 +89,18 @@ const Game = ({ baseURL }) => {
       .catch((err) => {
         console.log(err.response);
       });
+
+      return () => {
+        DZ.player.playTracks([], function(response){
+        console.log("List of track objects", response.tracks);
+        });
+        window.clearInterval();
+        DZ.player.pause();
+        clearInterval(intervalId);
+        clearInterval(countdownInterval);
+        clearInterval(timerSong);
+        console.log('composant démonté');
+      }
   }, []);
 
   const handleChange = (value) => {
@@ -233,6 +256,8 @@ const Game = ({ baseURL }) => {
       }
     }, 1000);
 
+    countInterval.current = countId;
+
     let tracksLeft = tracks;
     // Go to the next track after timer
     const nextTrack = setInterval(() => {
@@ -254,7 +279,7 @@ const Game = ({ baseURL }) => {
         // The game is over
         endGame();
         DZ.player.setVolume(0);
-        clearTimeout(nextTrack);
+        clearInterval(nextTrack);
       } else {
         // Get the current track
         const currentTrack = DZ.player.getCurrentTrack();
@@ -295,6 +320,7 @@ const Game = ({ baseURL }) => {
             setShowPrevious(true);
           }
         }, cooldown*1000);
+        interval.current = nextTrack;
       }
       return true;
     }, timer*1000 + cooldown*1000);
@@ -321,9 +347,12 @@ const Game = ({ baseURL }) => {
         setTimer(timeLeft);
       }
     }, 1000);
+    timerInterval.current = timerId;
   };
   
   const endGame = () => {
+
+    const token = localStorage.getItem('token');
 
     setTimeout(() => {
 

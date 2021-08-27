@@ -28,9 +28,13 @@ const UserPlaylists = ({ baseURL }) => {
 
   useEffect(() => {
 
-    if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
+    const wasPlaying = localStorage.getItem('playlist_id');
+
+    if (wasPlaying) {
+      window.location.reload();
+      localStorage.removeItem('playlist_id');
     };
+
 
     document.title = "MAJA - Mes playlist";
 
