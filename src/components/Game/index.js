@@ -56,12 +56,8 @@ const Game = ({ baseURL }) => {
 
   // Init Deezer's SDK
   useEffect ( () => {
-
-    const wasPlaying = localStorage.getItem('playlist_id');
-
-    if (wasPlaying) {
-      window.location.reload();
-      localStorage.removeItem('playlist_id');
+    if (DZ.player.isPlaying()) {
+      DZ.player.pause();
     };
 
     const intervalId = interval.current;
@@ -91,15 +87,12 @@ const Game = ({ baseURL }) => {
       });
 
       return () => {
-        DZ.player.playTracks([], function(response){
-        console.log("List of track objects", response.tracks);
-        });
+        DZ.player.playTracks([]);
         window.clearInterval();
         DZ.player.pause();
         clearInterval(intervalId);
         clearInterval(countdownInterval);
         clearInterval(timerSong);
-        console.log('composant démonté');
       }
   }, []);
 
@@ -139,8 +132,6 @@ const Game = ({ baseURL }) => {
       title = title.replace(/[^a-zA-Z +\d]/g, "");
       artist = artist.replace(/[^a-zA-Z +\d]/g, "");
       answer = answer.replace(/[^a-zA-Z +\d]/g, "");
-
-      console.log(artist);
 
       feat = false;
       title = ftCheck(title);
@@ -329,9 +320,6 @@ const Game = ({ baseURL }) => {
   const launchTimer = () => {
     // Show timer
     setShowTimer(true);
-
-    // Set volume
-    DZ.player.setVolume(musicVolume);
     
     let timeLeft = timer;
     let timerId = setInterval(() => {
@@ -388,6 +376,8 @@ const Game = ({ baseURL }) => {
 
   const giveRate = (rate) => {
 
+    const playlistID = localStorage.getItem('playlist_id');
+    
     // Send rating to back
     api.post('/playlist/rating', {
       playlist_id: playlistID,
