@@ -269,7 +269,6 @@ const Game = ({ baseURL }) => {
 
         // The game is over
         endGame();
-        DZ.player.setVolume(0);
         clearInterval(nextTrack);
       } else {
         // Get the current track
@@ -327,7 +326,7 @@ const Game = ({ baseURL }) => {
         setShowTimer(false);
         setTimer(timer);
         // Set volume
-        DZ.player.setVolume(0);
+        DZ.player.pause();
         // Reset the timer state
         clearTimeout(timerId);
       } else {
@@ -341,6 +340,7 @@ const Game = ({ baseURL }) => {
   const endGame = () => {
 
     const token = localStorage.getItem('token');
+    const playlistID = localStorage.getItem('playlist_id');
 
     setTimeout(() => {
 
@@ -377,7 +377,7 @@ const Game = ({ baseURL }) => {
   const giveRate = (rate) => {
 
     const playlistID = localStorage.getItem('playlist_id');
-    
+
     // Send rating to back
     api.post('/playlist/rating', {
       playlist_id: playlistID,
