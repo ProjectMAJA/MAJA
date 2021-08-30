@@ -1,5 +1,5 @@
 // Import de la lib React
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
 
@@ -47,8 +47,16 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   const [deezerIds, setDeezerIds] = useState([]);
 
+  const showTracks = useRef(0);
+ 
   const toggleState = () => {
     setToggle(!toggle);
+    
+    if (toggle) {
+      showTracks.current.style.transform = "rotate(0deg)";
+    } else {
+      showTracks.current.style.transform = "rotate(180deg)";
+    };
   };
 
   // useEffect that gets playlist info
@@ -287,6 +295,7 @@ const PlaylistUpdate = ({ baseURL }) => {
             className="playlist-update-songs-button-img"
             src={downArrow} 
             alt="Ajouter / Supprimer des musiques"
+            ref={showTracks}
           />
           <p className="playlist-update-songs-button-label">Ajouter / Supprimer des musiques</p>
         </button>
