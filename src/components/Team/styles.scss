@@ -68,3 +68,14 @@
     }
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .team-container {
+    margin-top: 20em;
+    margin-bottom: 20em;
+  
+    &-list {
+      flex-direction: column;
+    }
+  }
+}

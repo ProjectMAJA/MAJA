@@ -101,7 +101,7 @@
   }
 }
 
-@media (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .home-playlist {
 
     &-container {
@@ -154,7 +154,7 @@
   }
 }
 
-@media (max-width: 450px) {
+@media screen and (max-width: 450px) {
   .home-playlist {
 
     &-row {

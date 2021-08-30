@@ -30,7 +30,6 @@ const Search = ({ baseURL }) => {
       localStorage.removeItem('playlist_id');
     };
 
-
     document.title = "MAJA - Rechercher une playlist";
 
     await api.get('/playlists')

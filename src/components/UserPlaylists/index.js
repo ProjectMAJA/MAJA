@@ -15,16 +15,17 @@ import PlaylistInfo from '../PlaylistInfo';
 
 const UserPlaylists = ({ baseURL }) => {
 
- let history = useHistory();
+  let history = useHistory();
 
- // Init axios requests
- const api = axios.create({
-   baseURL: baseURL
- });
+  // Init axios requests
+  const api = axios.create({
+    baseURL: baseURL
+  });
 
- const [userPlaylists, setUserPlaylists] = useState([]);
- const [showDetails, setShowDetails] = useState(false);
- const [playlistLink, setPlaylistLink] = useState('');
+  const [userPlaylists, setUserPlaylists] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [playlistLink, setPlaylistLink] = useState('');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
 
@@ -105,12 +106,26 @@ const UserPlaylists = ({ baseURL }) => {
           Créer une playlist
         </label>
       </div>
-      
+
+      <div className="user-playlist-search">
+        <input
+          className="user-playlist-search-input"
+          type="text"
+          placeholder="Filtrer - Rechercher une playlist"
+          onChange={(event) => {
+            setFilter(event.target.value);
+          }}
+        />
+      </div>
       
       <ul className="user-playlist-cards">
 
-      {userPlaylists &&
+      { userPlaylists &&
         userPlaylists.map(playlist => {
+            
+          const name = playlist.name.toLowerCase();
+          const search = filter.toLowerCase();
+
           const blackStars= [];
           const whiteStars= [];
           for(let i=0; i<playlist.rating; i++){
@@ -119,57 +134,61 @@ const UserPlaylists = ({ baseURL }) => {
           for(let j=0; j<5-playlist.rating; j++){
             whiteStars.push('+1')
           }
-          return (
-            <li className="user-playlist-card" key={playlist.id}>
-              <a id={playlist.id} onClick={() => {
-                setPlaylistLink(playlist.id);
-                setShowDetails(true);
-              }}>
-                { playlist.image ? (
-                  <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
-                  ) : (
-                  <img className="user-playlist-card-logo" src={imgDefault} alt="user-playlist placeholder" />
-                  )
-                }
-                <h2 className="user-playlist-card-title">{playlist.name}</h2>
-                <div>
-                  { blackStars &&
-                    blackStars.map(e=>{
-                      return(
-                        <em>&#9733;</em>
-                      )
-                    })
+
+          if( name.includes(search) ) {
+            return (
+              <li className="user-playlist-card" key={playlist.id}>
+                <a id={playlist.id} onClick={() => {
+                  setPlaylistLink(playlist.id);
+                  setShowDetails(true);
+                }}>
+                  { playlist.image ? (
+                    <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
+                    ) : (
+                    <img className="user-playlist-card-logo" src={imgDefault} alt="user-playlist placeholder" />
+                    )
                   }
-                  { whiteStars &&
-                    whiteStars.map(e=>{
-                      return(
-                        <em>&#9734;</em>
-                      )
-                    })
-                  }
-                </div>
-              </a>
-              
-              <div className="user-playlist-options">
-                <input className="user-playlist-options-edit" type="image" src={edit} onClick={() => {
-                  history.push({
-                    pathname: '/update',
-                    state: { playlist }
-                  })
-                }}/>
+                  <h2 className="user-playlist-card-title">{playlist.name}</h2>
+                  <div>
+                    { blackStars &&
+                      blackStars.map(e=>{
+                        return(
+                          <em>&#9733;</em>
+                        )
+                      })
+                    }
+                    { whiteStars &&
+                      whiteStars.map(e=>{
+                        return(
+                          <em>&#9734;</em>
+                        )
+                      })
+                    }
+                  </div>
+                </a>
                 
-                <input
-                  className="user-playlist-options-delete"
-                  type="image"
-                  src={del}
-                  onClick={() => {
-                    deletePlaylist(playlist.id, playlist.user_id);
-                    }}
-                />
-              </div>
-            </li>
-          )
+                <div className="user-playlist-options">
+                  <input className="user-playlist-options-edit" type="image" src={edit} onClick={() => {
+                    history.push({
+                      pathname: '/update',
+                      state: { playlist }
+                    })
+                  }}/>
+                  
+                  <input
+                    className="user-playlist-options-delete"
+                    type="image"
+                    src={del}
+                    onClick={() => {
+                      deletePlaylist(playlist.id, playlist.user_id);
+                      }}
+                  />
+                </div>
+              </li>
+            )
+          }
         })}
+          
       </ul>
 
       {showDetails &&

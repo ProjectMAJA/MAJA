@@ -63,7 +63,7 @@
   }
 }
 
-@media (max-width: 1700px) {
+@media screen and (max-width: 1700px) {
   .admin-container {
     padding: 1em;
     margin: 0.5em;
@@ -94,7 +94,7 @@
   }
 }
 
-@media (max-width: 850px) {
+@media screen and (max-width: 850px) {
   .admin {
     margin-left: 0;
     margin-bottom: 6em;
@@ -133,7 +133,7 @@
   }
 }
 
-@media (max-width: 500px) {
+@media screen and (max-width: 500px) {
   .admin {
 
     &-container {

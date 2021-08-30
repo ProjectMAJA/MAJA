@@ -23,6 +23,21 @@
     }
   }
 
+  &-search {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+
+    &-input {
+      font-size: 1.2em;
+      padding: 0.5em;
+      width: 15em;
+      background-color: vars.$mainColor;
+      border: none;
+      color: white;
+    }
+  }
+
   &-container {
     margin-left: 15em;
     width: 80%;
