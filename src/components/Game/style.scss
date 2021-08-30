@@ -90,7 +90,7 @@ iframe {
   }
 
   &-input {
-    height: 10vh;
+    height: 8vh;
     font-size: 2em;
     padding: 1.5em;
     text-align: center;
@@ -169,12 +169,13 @@ iframe {
     align-items: center;
     justify-content: center;
     border: 5px solid vars.$mainColor;
-    border-radius: 5px;
+    border-radius: 10px;
     z-index: 1;
 
     &-img {
       height: 5em;
       margin-right: 1em;
+      border-radius: 5px;
     }
 
     &-content {
@@ -493,5 +494,23 @@ hr {
     &-not_found {
       font-size: 0.8em;
     }
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .game {
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  .game {
+    font-size: 0.6em;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .game {
+    font-size: 0.4em;
   }
 }

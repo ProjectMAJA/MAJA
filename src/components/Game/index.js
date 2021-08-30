@@ -105,7 +105,7 @@ const Game = ({ baseURL }) => {
     setProposal(value);
   };
 
-  const firstAttempts = [];
+  let firstAttempts = [];
 
   const handleSubmit = () => {
 
@@ -245,6 +245,8 @@ const Game = ({ baseURL }) => {
   // Launch the game
   const playGame = () => {
 
+    DZ.player.setVolume(musicVolume);
+
     // Hide button & show input & score
     setShowBefore(false);
     setShowInput(true);
@@ -305,6 +307,7 @@ const Game = ({ baseURL }) => {
         setShowBothFound(false);
         setShowWaitMessage(false);
         setShowInput(false);
+        firstAttempts = [];
 
         // The game is over
         endGame();
@@ -338,6 +341,7 @@ const Game = ({ baseURL }) => {
         setShowTryAgain(false);
         setShowBothFound(false);
         setShowFeatFound(false);
+        firstAttempts = [];
 
         // Little timer between every track
         setTimeout(() => {
