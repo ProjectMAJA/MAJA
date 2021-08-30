@@ -26,11 +26,11 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
   return (
     <section className="menu">
 
-      <NavLink exact to="/" activeClassName="navActive">
-        <img src={logo} alt="Logo" className="menu-logo" />
-      </NavLink>
-
       <nav className="menu-buttons">
+
+        <NavLink exact to="/" activeClassName="navActive" className="menu-logo">
+          <img src={logo} alt="Logo du site" className="menu-logo-img"/>
+        </NavLink>
 
         <div className="menu-buttons-item">
           <img src={search} alt="Rechercher" className="menu-buttons-logo nav-closed"/>

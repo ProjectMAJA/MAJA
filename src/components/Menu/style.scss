@@ -24,7 +24,8 @@
     }
   
     .menu-buttons-item {
-      padding-right: 2vw;
+      justify-content: start;
+      padding-left: 2vw;
   
       &:hover {
         transform: translateX(5px);
@@ -42,24 +43,30 @@
   }
   
   &-logo {
-    width: 40%;
-    margin-top: 5vw;
-    margin-left: 30%;
-  
-      &:hover {
-        transform: translateY(-5px);
-        transition: .3s;
-      }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+    margin-bottom: 20vh;
+
+    &-img {
+      width: 40%;
+    
+        &:hover {
+          transform: translateY(-5px);
+          transition: .3s;
+        }
+    }
   }
 
   &-buttons {
-    margin-top: 20vh;
     display: flex;
     flex-direction: column;
 
     &-item {
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     &-logo {
@@ -106,22 +113,20 @@
   
         &:hover {
           transform: translateX(0);
-          transform: translateY(-5px);
-          transition: .3s;
         }
       }
     }
 
     &-logo {
-      margin: auto;
-      height: 4vh;
-      min-height: 30px;
-      width: auto;
-      margin-left: 5vw;
+      margin: 0;
 
-      &:hover {
-        transform: translateY(-5px);
-        transition: .3s;
+      &-img {
+        width: 30px;
+        height: 150px;
+  
+        &:hover {
+          transform: translateY(0);
+        }
       }
     }
     
@@ -133,7 +138,7 @@
       justify-content: space-evenly;
 
       &-logo {
-        height: 2.5vh;
+        height: 20px;
         min-height: 20px;
         width: auto;
       }
