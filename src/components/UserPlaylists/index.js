@@ -15,22 +15,27 @@ import PlaylistInfo from '../PlaylistInfo';
 
 const UserPlaylists = ({ baseURL }) => {
 
- let history = useHistory();
+  let history = useHistory();
 
- // Init axios requests
- const api = axios.create({
-   baseURL: baseURL
- });
+  // Init axios requests
+  const api = axios.create({
+    baseURL: baseURL
+  });
 
- const [userPlaylists, setUserPlaylists] = useState([]);
- const [showDetails, setShowDetails] = useState(false);
- const [playlistLink, setPlaylistLink] = useState('');
+  const [userPlaylists, setUserPlaylists] = useState([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [playlistLink, setPlaylistLink] = useState('');
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
 
-    if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
+    const wasPlaying = localStorage.getItem('playlist_id');
+
+    if (wasPlaying) {
+      window.location.reload();
+      localStorage.removeItem('playlist_id');
     };
+
 
     document.title = "MAJA - Mes playlist";
 
@@ -41,14 +46,17 @@ const UserPlaylists = ({ baseURL }) => {
         authorization: token
       }
     })
-    .then((res) => {
-      setUserPlaylists(res.data)
-    })
+      .then((res) => {
+        setUserPlaylists(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
   }, []);
 
   const deletePlaylist = async (playlistID, userID) => {
     const token = localStorage.getItem('token');
-
+ 
     await api.delete(`/playlist`,
       {
       headers: {
@@ -61,38 +69,63 @@ const UserPlaylists = ({ baseURL }) => {
     })
       .then((res) => {
         console.log(res.data);
+        api.get('/user/playlists', {
+          headers: {
+            Authorization: token
+          }
+        })
+          .then((res) => {
+            setUserPlaylists(res.data);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          })
       })
       .catch((err) => {
         console.log(err.response);
-      });
+      })
   };
 
   return(
     <div className="user-playlist-container">
 
-    <div className="user-playlist-add">
-      <input 
-        className="user-playlist-add-logo"
-        name="create"
-        id="create"
-        type="image"
-        src={plus}
-        onClick={() => {
-          history.push({
-            pathname: '/create'
-          })
-        }}
-      />
-      <label className="user-playlist-add-label" htmlFor="create">
-        Créer une playlist
-      </label>
-    </div>
-    
-    
-    <ul>
+      <div className="user-playlist-add">
+        <input 
+          className="user-playlist-add-logo"
+          name="create"
+          id="create"
+          type="image"
+          src={plus}
+          onClick={() => {
+            history.push({
+              pathname: '/create'
+            })
+          }}
+        />
+        <label className="user-playlist-add-label" htmlFor="create">
+          Créer une playlist
+        </label>
+      </div>
 
-      {userPlaylists &&
+      <div className="user-playlist-search">
+        <input
+          className="user-playlist-search-input"
+          type="text"
+          placeholder="Filtrer - Rechercher une playlist"
+          onChange={(event) => {
+            setFilter(event.target.value);
+          }}
+        />
+      </div>
+      
+      <ul className="user-playlist-cards">
+
+      { userPlaylists &&
         userPlaylists.map(playlist => {
+            
+          const name = playlist.name.toLowerCase();
+          const search = filter.toLowerCase();
+
           const blackStars= [];
           const whiteStars= [];
           for(let i=0; i<playlist.rating; i++){
@@ -101,59 +134,61 @@ const UserPlaylists = ({ baseURL }) => {
           for(let j=0; j<5-playlist.rating; j++){
             whiteStars.push('+1')
           }
-          return (
-            <li className="user-playlist-card" key={playlist.id}>
-              <a id={playlist.id} onClick={() => {
-                setPlaylistLink(playlist.id);
-                setShowDetails(true);
-              }}>
+
+          if( name.includes(search) ) {
+            return (
+              <li className="user-playlist-card" key={playlist.id}>
+                <a id={playlist.id} onClick={() => {
+                  setPlaylistLink(playlist.id);
+                  setShowDetails(true);
+                }}>
                   { playlist.image ? (
                     <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
-                  ) : (
+                    ) : (
                     <img className="user-playlist-card-logo" src={imgDefault} alt="user-playlist placeholder" />
-                  )
+                    )
                   }
-                  <h2>{playlist.name}</h2>
+                  <h2 className="user-playlist-card-title">{playlist.name}</h2>
                   <div>
-                          {blackStars &&
-                            blackStars.map(e=>{
-                              return(
-                                <em>&#9733;</em>
-                              )
-                            })
-                          }
-                          {whiteStars &&
-                            whiteStars.map(e=>{
-                              return(
-                                <em>&#9734;</em>
-                              )
-                            })
-                          }
+                    { blackStars &&
+                      blackStars.map(e=>{
+                        return(
+                          <em>&#9733;</em>
+                        )
+                      })
+                    }
+                    { whiteStars &&
+                      whiteStars.map(e=>{
+                        return(
+                          <em>&#9734;</em>
+                        )
+                      })
+                    }
                   </div>
-              </a>
-              
-              <div className="user-playlist-options">
-                <input className="user-playlist-options-edit" type="image" src={edit} onClick={() => {
-                  history.push({
-                    pathname: '/update',
-                    state: { playlist }
-                  })
-                }}/>
+                </a>
                 
-                <input
-                  className="user-playlist-options-delete"
-                  type="image"
-                  src={del}
-                  onClick={() => {
-                    deletePlaylist(playlist.id, playlist.user_id);
-                    }}
-                />
-              </div>
-              
-              
-            </li>
-          )
+                <div className="user-playlist-options">
+                  <input className="user-playlist-options-edit" type="image" src={edit} onClick={() => {
+                    history.push({
+                      pathname: '/update',
+                      state: { playlist }
+                    })
+                  }}/>
+                  
+                  <input
+                    className="user-playlist-options-delete"
+                    type="image"
+                    src={del}
+                    onClick={() => {
+                      deletePlaylist(playlist.id, playlist.user_id);
+                      }}
+                  />
+                </div>
+              </li>
+            )
+          }
         })}
+          
       </ul>
 
       {showDetails &&

@@ -8,7 +8,6 @@ import Profil from "src/components/Profil";
 import Game from "src/components/Game";
 import Team from 'src/components/Team';
 import Error from 'src/components/Error';
-import Footer from 'src/components/Footer';
 import PlaylistUpdate from 'src/components/PlaylistUpdate';
 import PlaylistCreate from 'src/components/PlaylistCreate';
 import Admin from 'src/components/Admin';
@@ -101,7 +100,6 @@ const App = () => {
         
       </Switch>
 
-      {/* <Footer /> */}
     </div>
   ) 
 };

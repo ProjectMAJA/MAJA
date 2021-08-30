@@ -9,13 +9,14 @@ import del from '../../../public/img/icons/delete.svg';
 
 const Item = ({ track, key, deleteTrack }) => {
 
+  const altImg = "Image de l'album de " + track.artist
+
   return (
     <div key={key} className="item-result">
-      <img className="item-result-img" src={track.cover} alt="" />
-      <div className="item-result-right">
+      <img className="item-result-img" src={track.cover} alt={altImg} />
         <div className="item-result-track">
-          <h3>{track.artist}</h3>
-          <h3>{track.title}</h3>
+          <p className="item-result-track-artist">{track.artist}</p>
+          <p className="item-result-track-title">{track.title}</p>
         </div>
         <input
           type="image"
@@ -25,7 +26,6 @@ const Item = ({ track, key, deleteTrack }) => {
             deleteTrack(track.id);
           }}
         />
-      </div>
     </div>
   );
 }

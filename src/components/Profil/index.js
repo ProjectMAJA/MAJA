@@ -1,5 +1,6 @@
 // Import de la lib React
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 // Imports NPM
 import PropTypes from 'prop-types';
@@ -34,8 +35,11 @@ const Profil = ({ baseURL }) => {
 
   useEffect(() => {
 
-    if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
+    const wasPlaying = localStorage.getItem('playlist_id');
+
+    if (wasPlaying) {
+      window.location.reload();
+      localStorage.removeItem('playlist_id');
     };
 
     document.title = "MAJA - Mon profil";
@@ -101,7 +105,6 @@ const Profil = ({ baseURL }) => {
             setShowErrorMail(true);
           }
         });
-
     }
   };
 
@@ -127,20 +130,20 @@ const Profil = ({ baseURL }) => {
   return (
       <div className="profil">
         <div className="profil-header">
-          <div className="profil-header-left">
             <img 
-              src={ avatar!=null ? avatar : imgDefault}
+              src={ avatar!=null ? avatar : imgDefault }
               className="profil-header-avatar"
             />
+              <h2 className="profil-header-pseudo">{pseudo}</h2>
           </div>
-            <div className="profil-header-right">
-              <h2>{pseudo}</h2>
-          </div>
-        </div>
 
         <div className="profil-info">
           <h3 className="profil-info-title">Modifier mes informations</h3>
           <hr />
+            <p className="profil-info-item">Pseudo</p>
+            { showErrorPseudo &&
+              <p className="error">Ce pseudo est déjà pris</p>
+            }
             <input
               className="profil-info-form-input"
               type="text"
@@ -149,6 +152,10 @@ const Profil = ({ baseURL }) => {
                 setPseudo(event.target.value);
               }}
             />
+            <p className="profil-info-item">Adresse mail</p>
+            { showErrorMail &&
+              <p className="error">Cette adresse email est déjà utilisée sur notre site</p>
+            }
             <input
               className="profil-info-form-input"
               type="text"
@@ -157,6 +164,7 @@ const Profil = ({ baseURL }) => {
                 setImage(event.target.value);
               }}
             />
+            <p className="profil-info-item">URL de votre avatar</p>
             <input
               className="profil-info-form-input"
               type="text"
@@ -165,6 +173,10 @@ const Profil = ({ baseURL }) => {
                 setAvatar(event.target.value);
               }}
             />
+            <p className="profil-info-item">Mot de passe</p>
+            { showErrorPassword &&
+              <p className="error">Les deux mots de passe ne correspondent pas</p>
+            }
             <input
               className="profil-info-form-input"
               type={showPassword ? "text" : "password"}
@@ -184,7 +196,6 @@ const Profil = ({ baseURL }) => {
               }}
             />
 
-
                 <label className="profil-info-form-check">
                   <input
                     type="checkbox"
@@ -195,16 +206,6 @@ const Profil = ({ baseURL }) => {
                   Voir le mot de passe
                 </label>
 
-
-            { showErrorPassword &&
-              <p className="error">Les deux mots de passe ne correspondent pas</p>
-            }
-            { showErrorMail &&
-              <p className="error">Cette adresse email est déjà utilisée sur notre site</p>
-            }
-            { showErrorPseudo &&
-              <p className="error">Ce pseudo est déjà pris</p>
-            }
             <input
               className="profil-info-form-button"
               type="button"
@@ -217,14 +218,14 @@ const Profil = ({ baseURL }) => {
 
         <div className="profil-info-delete">
 
-          <a 
-            href='/'
+          <NavLink 
+            exact to='/'
             className="profil-info-delete-button"
             onClick={() => {
               deleteAccount();
             }}>
               Supprimer mon compte
-          </a>
+          </NavLink>
           
         </div>
 

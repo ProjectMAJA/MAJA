@@ -14,11 +14,13 @@ iframe {
   text-align: center;
 
   &-before {
-    width: 40vw;
+    margin: 2em;
+    margin-left: 10em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 15vh;
 
     &-button {
       font-size: 2em;
@@ -32,11 +34,16 @@ iframe {
       border-right: 1em solid vars.$buttonColor;
       border-radius: 25px;
       cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
     }
     
     &-rules {
       background-color: vars.$menuColor;
-      margin-top: 20vh;
+      margin-top: 10vh;
       border-radius: 10px;
       padding: 2em;
 
@@ -49,30 +56,41 @@ iframe {
         font-size: 1.5em;
         margin-top: 1em;
         font-weight: bold;
+
+        &-rule {
+          margin-bottom: 0.5em;
+        }
       }
     }
 
     &-warning {
-      margin-top: 10vh;
+      margin-top: 30px;
       width: 80%;
     }
   }
 
   &-countdown {
-    font-size: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     font-weight: 900;
-    margin-top: 20vh;
-    padding-top: 0.38em;
-    width: 2em;
-    height: 2em;
+    margin-top: 25vh;
     border-radius: 50%;
-    transition-property: border-radius;
-    transition-duration: 10s;
-    border: 30px solid red;
+    width: 20em;
+    height: 20em;
+    padding: 3em;
+    border: 20px solid vars.$buttonColor;
+    background-color: vars.$buttonColor;
+
+    &-content {
+      font-size: 10em;
+    }
   }
 
   &-input {
-    height: 10vh;
+    height: 8vh;
     font-size: 2em;
     padding: 1.5em;
     text-align: center;
@@ -84,16 +102,22 @@ iframe {
   }
 
   &-timer {
-    font-size: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     font-weight: 900;
-    margin-top: 20vh;
-    padding-top: 0.38em;
-    width: 2em;
-    height: 2em;
+    margin-top: 25vh;
     border-radius: 50%;
-    transition-property: border-radius;
-    transition-duration: 10s;
-    border: 30px solid vars.$buttonColor;
+    width: 20em;
+    height: 20em;
+    padding: 3em;
+    border: 20px solid vars.$buttonColor;
+
+    &-content {
+      font-size: 10em;
+    }
   }
 
   &-previous {
@@ -109,6 +133,7 @@ iframe {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
     border-bottom-left-radius: 5px;
 
     &-song {
@@ -134,22 +159,23 @@ iframe {
   }
 
   &-answer {
-    padding: 1em;
+    padding: 2em;
     color: vars.$menuColor;
-    margin-top: 20vh;
-    width: 30vw;
-    height: 8em;
+    margin-top: 30vh;
     font-size: 2em;
     font-weight: bold;
     background-color: vars.$buttonColor;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border: 5px solid vars.$mainColor;
+    border-radius: 10px;
+    z-index: 1;
 
     &-img {
       height: 5em;
       margin-right: 1em;
+      border-radius: 5px;
     }
 
     &-content {
@@ -179,27 +205,41 @@ iframe {
   }
 
   &-result {
-    margin-top: 20vh;
-    padding: 5em;
-    font-size: 2em;
-    font-weight: bold;
-    background-color: vars.$buttonColor;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    border-radius: 100%;
+    margin-top: 25vh;
 
-    &-score {
-      margin: 2em;
+    &-text {
+      padding: 2em;
+      font-size: 2em;
+      font-weight: bold;
+      background-color: vars.$buttonColor;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      border-radius: 25px;
+      margin-bottom: 20vh;
+
+      &-score {
+        margin-top: 0.5em;
+      }
     }
 
-    &-redirect {
-      font-size: 0.6em;
-      padding: 1em;
-      margin-top: 10vh;
+    &-button {
+      font-size: 2em;
       font-weight: bold;
-      text-decoration: underline;
+      padding: 0.5em;
+      color: vars.$secondaryColor;
+      background-color: vars.$buttonColor;
+      border-top: 0.3em solid vars.$buttonColor;
+      border-bottom: 0.3em solid vars.$buttonColor;
+      border-left: 1em solid vars.$buttonColor;
+      border-right: 1em solid vars.$buttonColor;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
     }
   }
 
@@ -220,17 +260,24 @@ iframe {
       font-size: 1.5em;
       border: none;
       width: 1.3em;
+      border-radius: 50%;
+      transition: .2s;
+
+      &:hover {
+        transform: translateY(-2px);
+      } 
     }
   }
   
   &-rating {
     position: fixed;
     top: 0%;
-    left: 20em;
+    left: 10em;
     background-color: vars.$buttonColor;
     padding: 1em;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    transition: 1s;
 
     &-stars {
       margin-top: 0.5em;
@@ -249,36 +296,16 @@ iframe {
     }
   }
 
-  &-title_found {
+  &-found {
     padding: 0.8em;
     font-size: 1.5em;
     border-radius: 25px;
     position: fixed;
     bottom: 20%;
-    left: 20%;
     background-color: green;
   }
 
-  &-artist_found {
-    padding: 0.8em;
-    font-size: 1.5em;
-    border-radius: 25px;
-    position: fixed;
-    bottom: 20%;
-    right: 20%;
-    background-color: green;
-  }
-
-  &-try_again {
-    padding: 0.8em;
-    font-size: 1.5em;
-    border-radius: 25px;
-    position: fixed;
-    bottom: 20%;
-    background-color: red;
-  }
-
-  &-wait_message {
+  &-not_found {
     padding: 0.8em;
     font-size: 1.5em;
     border-radius: 25px;
@@ -291,4 +318,199 @@ iframe {
 hr {
   width: 50%;
   color: white;
+}
+
+@media screen and (max-width: 1200px) {
+  .game {
+    &-answer {
+      font-size: 1.5em;
+    }
+    
+    &-input {
+      font-size: 1.5em;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .game {
+    
+    &-before {
+      margin-left: 0;
+      margin: 2em;
+      margin-bottom: 15vh;
+
+      &-rules {
+        &-title {
+          font-size: 1.5em;
+        }
+
+        &-description {
+          font-size: 1.1em;
+        }
+      }
+
+      &-warning {
+        font-size: 0.8em;
+      }
+
+      &-button {
+        font-size: 1.5em;
+      }
+    }
+    
+    &-input {
+      right: 5%;
+      bottom: 10%;
+      width: 90%;
+      height: 5em;
+      font-size: 1em;
+    }
+
+    &-score {
+      top: 0;
+      left: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 5px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      font-size: 2em;
+    }
+
+    &-answer {
+      font-size: 1em;
+    }
+
+    &-previous {
+      font-size: 0.6em;
+    }
+
+    &-rating {
+      display: none;
+    }
+
+    &-volume {
+      display: none;
+    }
+
+    &-found {
+      bottom: 22%;
+    }
+    
+    &-not_found {
+      bottom: 22%;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .game {
+
+    &-before {
+      margin: 1em;
+      margin-bottom: 15vh;
+
+      &-rules {
+        &-title {
+          font-size: 1em;
+        }
+
+        &-description {
+          font-size: 1.1em;
+        }
+      }
+
+      &-warning {
+        font-size: 0.6em;
+      }
+
+      &-button {
+        font-size: 1em;
+      }
+    }
+
+    &-result {
+      &-text {
+        font-size: 1.2em;
+      }
+
+      &-button {
+        font-size: 1.2em;
+      }
+    }
+
+    &-found {
+      font-size: 1.2em;
+    }
+    
+    &-not_found {
+      font-size: 1.2em;
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .game {
+    &-timer {
+      width: 15em;
+      height: 15em;
+      border: 15px solid vars.$buttonColor;
+
+      &-content {
+        font-size: 7.5em;
+      }
+    }
+
+    &-input {
+      font-size: 0.75em;
+    }
+
+    &-answer {
+      flex-direction: column;
+      font-size: 0.8em;
+
+      &-content {
+        margin: 1em;
+
+        &-track {
+          font-size: 1.2em;
+        }
+      }
+    }
+
+    &-previous {
+      display: none;
+    }
+
+    &-score {
+      width: 100%;
+      border-bottom-left-radius: 5px;
+    }
+
+    &-found {
+      font-size: 0.8em;
+    }
+    
+    &-not_found {
+      font-size: 0.8em;
+    }
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .game {
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  .game {
+    font-size: 0.6em;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .game {
+    font-size: 0.4em;
+  }
 }

@@ -3,19 +3,19 @@
 .admin {
   display: flex;
   justify-content: space-evenly;
-  padding: 1em;
-  padding-right: 10%;
-  padding-left: 5%;
+  overflow: hidden;
+  margin-left: 200px;
 
   &-container {
     background-color: vars.$menuColor;
-    height: 98vh;
+    height: 96vh;
     width: 45%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1em;
-    overflow: auto;
+    padding: 2em;
+    margin: 1.5em;
+    overflow-x: hidden;
 
     &-input {
       margin: 1em;
@@ -29,24 +29,26 @@
       width: 95%;
       background-color: vars.$mainColor;
       display: flex;
+      border-radius: 2px;
 
       &-img {
-        margin: 1em;
-        width: 5em;
-        border-radius: 2px;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 2%;
       }
 
       &-content {
-        padding: 0.5em;
-        width: 70%;
+        padding: 1em;
+        width: 60%;
         
         &-title {
-          margin-top: 0.5em;
           font-size: 1.5em;
+          font-weight: bold;
+          height: 2.5em;
         }
 
         &-description {
-          margin-top: 0.5em;
           font-style: italic;
         }
       }
@@ -54,8 +56,108 @@
       &-button {
         height: 4vh;
         width: 2vw;
-        font-size: 1.5em;
         margin: auto;
+        margin-right: 2em;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1700px) {
+  .admin-container {
+    padding: 1em;
+    margin: 0.5em;
+    width: 49%;
+
+    &-input {
+      width: 60%;
+    }
+
+    &-section {
+
+      &-img {
+        width: 100px;
+        height: 100px;
+      }
+
+      &-content {
+
+        &-title {
+          font-size: 0.8em;
+        }
+
+        &-description {
+          font-size: 0.5em;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .admin {
+    margin-left: 0;
+    margin-bottom: 6em;
+
+    &-container {
+      margin: 0.5em;
+      width: 49%;
+      padding: 0.1em;
+
+      &-input {
+        width: 80%;
+      }
+
+      &-section {
+        margin: 0.5em 0em 0em 0em;
+        width: 100%;
+
+        &-img {
+          width: 80px;
+          height: 80px;
+        }
+
+        &-content {
+          padding: 0.5em;
+
+          &-title {
+            font-size: 0.5em;
+          }
+
+          &-description {
+            font-size: 0.3em;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .admin {
+
+    &-container {
+
+      &-input {
+        width: 95%;
+        padding: 0.2em;
+        font-size: 0.5em;
+      }
+
+      &-title {
+        font-size: 1em;
+      }
+
+      &-section {
+
+        &-img {
+          width: 40px;
+          height: 40px;
+        }
+
+        &-content {
+          padding: 0.1em;
+        }
       }
     }
   }

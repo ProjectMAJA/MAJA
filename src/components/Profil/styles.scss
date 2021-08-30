@@ -1,7 +1,7 @@
 @use 'src/styles/vars';
 
 .profil {
-  margin-left: 20em;
+  margin-left: 15em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,27 +11,9 @@
 
   &-header {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     margin-top: 2em;
-
-    &-left {
-      display: flex;
-      width: 250px;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-
-      h2 {
-        font-family: 'HK Grotesk SemiBold', sans-serif;
-        font-size: 2em;
-        font-weight: bold;
-      }
-    }
 
     &-avatar {
       width: 150px;
@@ -39,18 +21,27 @@
       object-fit: cover;
       border-radius: 50%;
     }
+    
+    &-pseudo {
+      font-size: 2em;
+      margin-top: 1em;
+    }
   }
 
   &-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2em;
+    margin-top: 1em;
 
     &-title {
       font-size: 1.5em;
       font-weight: bold;
       margin: 1em;
+    }
+
+    &-item {
+      margin-top: 1em;
     }
     
     &-form {
@@ -77,7 +68,7 @@
       }
 
       &-button {
-        font-size: 1em;
+        font-size: 1.2em;
         margin-top: 2em;
         padding: 0.5em;
         color: vars.$secondaryColor;
@@ -88,11 +79,21 @@
         border-right: 1em solid vars.$buttonColor;
         border-radius: 25px;
         cursor: pointer;
+        transition: .3s;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
       }
     }
 
     &-delete {
-      margin-top: 5em;
+      margin: 5em;
+      transition: .3s;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
       
       &-button {
         font-size: 1em;
@@ -106,7 +107,6 @@
         border-right: 1em solid vars.$buttonColor;
         border-radius: 25px;
         cursor: pointer;
-
       }
     }
   }
@@ -119,4 +119,16 @@
   margin: 0.5em;
 }
 
+@media screen and (max-width: 850px) {
+  .profil {
+    margin-left: 0;
+    width: 100%;
+    margin-bottom: 5vh;
+  }
+}
 
+@media screen and (max-width: 400px) {
+  .profil {
+    font-size: 0.7em;
+  }
+}

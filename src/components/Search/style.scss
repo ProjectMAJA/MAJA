@@ -2,7 +2,7 @@
 
 .search {
   padding: 2em;
-  margin-left: 20em;
+  margin-left: 15em;
   height: 100%;
 
   &-header {
@@ -45,4 +45,8 @@
   }
 }
 
-
+@media screen and (max-width: 850px) {
+  .search {
+    margin-left: 0;
+  }
+}

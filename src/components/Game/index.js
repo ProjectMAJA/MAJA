@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -25,8 +26,11 @@ const Game = ({ baseURL }) => {
   const [showTitleFound, setShowTitleFound] = useState(false);
   const [showTryAgain, setShowTryAgain] = useState(false);
   const [showWaitMessage, setShowWaitMessage] = useState(false);
+  const [showBothFound, setShowBothFound] = useState(false);
+  const [showFeatFound, setShowFeatFound] = useState(false);
 
-  // DOM values
+  // Values states
+  const [firstTry, setFirstTry] = useState([]);
   const [proposal, setProposal] = useState('');
   const [score, setScore] = useState(0);
   const [previousTrack, setPreviousTrack] = useState('');
@@ -50,12 +54,20 @@ const Game = ({ baseURL }) => {
     baseURL: baseURL
   });
 
+  const interval = useRef();
+  const countInterval = useRef();
+  const timerInterval = useRef();
+  const ratingSection = useRef();
+
   // Init Deezer's SDK
   useEffect ( () => {
-
     if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
+      DZ.player.pause();
     };
+
+    const intervalId = interval.current;
+    const countdownInterval = countInterval.current;
+    const timerSong = timerInterval.current;
 
     document.title = "MAJA - Blind test";
 
@@ -78,15 +90,29 @@ const Game = ({ baseURL }) => {
       .catch((err) => {
         console.log(err.response);
       });
+
+      return () => {
+        DZ.player.playTracks([]);
+        window.clearInterval();
+        DZ.player.pause();
+        clearInterval(intervalId);
+        clearInterval(countdownInterval);
+        clearInterval(timerSong);
+      }
   }, []);
 
   const handleChange = (value) => {
     setProposal(value);
   };
 
+  let firstAttempts = [];
+
   const handleSubmit = () => {
 
-    // Reset 'try again' message
+    // Hide other messages
+    setShowArtistFound(false);
+    setShowTitleFound(false);
+    setShowFeatFound(false);
     setShowTryAgain(false);
 
     // Check if SDK is playing
@@ -97,28 +123,29 @@ const Game = ({ baseURL }) => {
       setShowWaitMessage(true);
       return;
     } else {
+
+      // We save it on an array
+      firstAttempts.push(proposal);
+
+      // And we use this array for check user's answer. It will join the previous and next tries of the user.
+      const userTry = firstAttempts.join('').toLowerCase();
+
       // Get the current track actually playing in Deezer's SDK
       const currentTrack = DZ.player.getCurrentTrack();
 
       // Get all informations we need in lower case
-      const userProposal = proposal.toLowerCase();
+      const userProposal = userTry.toLowerCase();
       const title = currentTrack.title.toLowerCase();
       const artist = currentTrack.artist.name.toLowerCase();
 
       checkAnswer(userProposal, title, artist);
-
-      if(title.includes('jean-jacques goldman') && userProposal.includes('jjg')) {
-        scoring+=3;
-        setScore(scoring);
-      };
-
-      if(artist.includes('jean-jacques goldman') && userProposal.includes('jjg')) {
-        scoring+=3;
-        setScore(scoring);
-      };
     };
 
-    function checkAnswer(answer, title, artist){
+    function checkAnswer(answer, title, artist) {
+      title = title.replace("-", " ");
+      artist = artist.replace("-", " ");
+      answer = answer.replace("-", " ");
+
       title = title.replace(/[^a-zA-Z +\d]/g, "");
       artist = artist.replace(/[^a-zA-Z +\d]/g, "");
       answer = answer.replace(/[^a-zA-Z +\d]/g, "");
@@ -145,8 +172,9 @@ const Game = ({ baseURL }) => {
           setArtistFound(true);
 
           // Show congrats
-          setShowTitleFound(true);
-          setShowArtistFound(true);
+          setShowArtistFound(false);
+          setShowTitleFound(false);
+          setShowBothFound(true);
           
         } else if (answer.includes(artist)) {
           if (!artistFound) {
@@ -157,6 +185,9 @@ const Game = ({ baseURL }) => {
             if (titleFound) {
               scoring+=3;
               setScore(scoring);
+              setShowArtistFound(false);
+              setShowTitleFound(false);
+              setShowBothFound(true);
             };
           };
         } else if (answer.includes(title)) {
@@ -168,11 +199,15 @@ const Game = ({ baseURL }) => {
             if (artistFound) {
               scoring+=3;
               setScore(scoring);
+              setShowArtistFound(false);
+              setShowTitleFound(false);
+              setShowBothFound(true);
             };
           };
-        } else if(feat && answer.includes(feat)){
+        } else if (feat && answer.includes(feat)){
           scoring+=1;
           setScore(scoring);
+          setShowFeatFound(true);
         } else {
           setShowTryAgain(true);
         }
@@ -180,7 +215,7 @@ const Game = ({ baseURL }) => {
     }
 
     function ftCheck(e){
-      if(e.includes('feat')){
+      if (e.includes('feat')){
         const index = e.indexOf(' feat ');
         feat = e.slice(index+6);
         e=e.slice(0,index);
@@ -201,13 +236,16 @@ const Game = ({ baseURL }) => {
       }
 
       return e
-    }
+    };
+
     // Reset input
     setProposal('');
   };
 
   // Launch the game
   const playGame = () => {
+
+    DZ.player.setVolume(musicVolume);
 
     // Hide button & show input & score
     setShowBefore(false);
@@ -237,6 +275,8 @@ const Game = ({ baseURL }) => {
       }
     }, 1000);
 
+    countInterval.current = countId;
+
     let tracksLeft = tracks;
     // Go to the next track after timer
     const nextTrack = setInterval(() => {
@@ -251,18 +291,27 @@ const Game = ({ baseURL }) => {
         setPreviousArtist(currentTrack.artist.name);
         setPreviousTrack(currentTrack.title);
 
-        axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${currentTrack.id}`)
-          .then((res) => {
-            setPreviousImg(res.data.artist.picture_medium);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+        DZ.api('/track/' + currentTrack.id, (res) => {
+          setPreviousImg(res.artist.picture_medium);
+        });
+
+        // We hide the timer, show what the good answer was
+        setShowTimer(false);
+        setShowAnswer(true);
+
+        // Hide messages and input
+        setShowArtistFound(false);
+        setShowTitleFound(false);
+        setShowTryAgain(false);
+        setShowFeatFound(false);
+        setShowBothFound(false);
+        setShowWaitMessage(false);
+        setShowInput(false);
+        firstAttempts = [];
 
         // The game is over
         endGame();
-        DZ.player.setVolume(0);
-        clearTimeout(nextTrack);
+        clearInterval(nextTrack);
       } else {
         // Get the current track
         const currentTrack = DZ.player.getCurrentTrack();
@@ -274,13 +323,9 @@ const Game = ({ baseURL }) => {
         setPreviousArtist(currentTrack.artist.name);
         setPreviousTrack(currentTrack.title);
 
-        axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${currentTrack.id}`)
-          .then((res) => {
-            setPreviousImg(res.data.artist.picture_medium);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        DZ.api('/track/' + currentTrack.id, (res) => {
+          setPreviousImg(res.artist.picture_medium);
+        });
 
         // We hide the timer, show what the good answer was
         setShowTimer(false);
@@ -294,6 +339,9 @@ const Game = ({ baseURL }) => {
         setShowArtistFound(false);
         setShowTitleFound(false);
         setShowTryAgain(false);
+        setShowBothFound(false);
+        setShowFeatFound(false);
+        firstAttempts = [];
 
         // Little timer between every track
         setTimeout(() => {
@@ -307,6 +355,7 @@ const Game = ({ baseURL }) => {
             setShowPrevious(true);
           }
         }, cooldown*1000);
+        interval.current = nextTrack;
       }
       return true;
     }, timer*1000 + cooldown*1000);
@@ -315,9 +364,6 @@ const Game = ({ baseURL }) => {
   const launchTimer = () => {
     // Show timer
     setShowTimer(true);
-
-    // Set volume
-    DZ.player.setVolume(musicVolume);
     
     let timeLeft = timer;
     let timerId = setInterval(() => {
@@ -325,7 +371,7 @@ const Game = ({ baseURL }) => {
         setShowTimer(false);
         setTimer(timer);
         // Set volume
-        DZ.player.setVolume(0);
+        DZ.player.pause();
         // Reset the timer state
         clearTimeout(timerId);
       } else {
@@ -333,9 +379,13 @@ const Game = ({ baseURL }) => {
         setTimer(timeLeft);
       }
     }, 1000);
+    timerInterval.current = timerId;
   };
   
   const endGame = () => {
+
+    const token = localStorage.getItem('token');
+    const playlistID = localStorage.getItem('playlist_id');
 
     setTimeout(() => {
 
@@ -359,17 +409,18 @@ const Game = ({ baseURL }) => {
       };
 
       // Show the score & the redirect button
-      setShowArtistFound(false);
-      setShowTitleFound(false);
-      setShowTryAgain(false);
-      setShowWaitMessage(false);
-      setShowInput(false);
       setShowVolume(false);
+      setShowAnswer(false);
+      setShowScore(false);
+      setShowPrevious(false);
       setShowEndgame(true);
     }, cooldown*1000);
   };
 
   const giveRate = (rate) => {
+
+    const playlistID = localStorage.getItem('playlist_id');
+    const token = localStorage.getItem('token');
 
     // Send rating to back
     api.post('/playlist/rating', {
@@ -388,7 +439,7 @@ const Game = ({ baseURL }) => {
       });
 
     // Hide rating section
-    setShowRating(false);
+    ratingSection.current.style.transform = "translateY(-10em)";
   };
 
   return (
@@ -430,24 +481,30 @@ const Game = ({ baseURL }) => {
       }
       {showEndgame &&
         <section className="game-result">
-          <span className="game-result-end"> Fin de la partie </span>
-          <span className="game-result-score">Votre score est de {score} !</span>
-          <hr />
-          <a 
-            href="/"
-            className="game-result-redirect"
+          <div className="game-result-text">
+            <span className="game-result-text-title"> Fin de la partie </span>
+            <hr />
+            <span className="game-result-text-score">Votre score est de {score} !</span>
+          </div>
+          <NavLink
+            exact to="/"
+            className="game-result-button"
             onClick={() => {
               localStorage.removeItem('playlist_id');
             }}>
               Revenir à l'accueil
-            </a>
+          </NavLink>
         </section>
       }
       {showCountdown &&
-        <div className="game-countdown">{countdown}</div>
+        <div className="game-countdown">
+          <div className="game-countdown-content">{countdown}</div>
+        </div>
       }
       {showTimer &&
-        <div className="game-timer">{timer}</div>
+        <div className="game-timer">
+          <div className="game-timer-content">{timer}</div>
+        </div>
       }
       {showBefore &&
         <section className="game-before">
@@ -455,16 +512,16 @@ const Game = ({ baseURL }) => {
             <h1 className="game-before-rules-title">Règles du jeu</h1>
             <hr />
             <ul className="game-before-rules-description">
-              <li> Trouvez l'artiste et le titre de la chanson que vous entendez </li>
-              <li> Vous avez {timer} secondes pour écrire votre proposition dans le champ en bas de l'écran </li>
-              <li> Vous gagnez 2 points si vous trouvez l'artiste ou le titre </li>
-              <li> Vous gagnez 3 points supplémentaires si vous trouvez les deux </li>
-              <li> Certaines musiques cachent 1 point bonus si elles ont un featuring : à vous d'y être attentif</li>
+              <li className="game-before-rules-description-rule"> Trouvez l'artiste et le titre de la chanson que vous entendez </li>
+              <li className="game-before-rules-description-rule"> Vous avez {timer} secondes pour écrire votre proposition dans le champ en bas de l'écran </li>
+              <li className="game-before-rules-description-rule"> Vous gagnez 2 points si vous trouvez l'artiste ou le titre </li>
+              <li className="game-before-rules-description-rule"> Vous gagnez 3 points supplémentaires si vous trouvez les deux </li>
+              <li className="game-before-rules-description-rule"> Certaines musiques cachent 1 point bonus si elles ont un featuring : à vous d'y être attentif</li>
             </ul>
           </div>
 
           <div className="game-before-warning">
-            <p>Attention ! Certains navigateurs n'autorisent pas automatiquement la lecture de son. Si vous n'avez pas de son alors que le chrono est lancé, allez dans les paramètres de votre navigateur pour l'autoriser sur notre site et rafraïchissez la page.</p>
+            <p>Attention ! Certains navigateurs n'autorisent pas automatiquement la lecture de son. Si vous n'avez pas de son alors que le chrono est lancé, allez dans les paramètres de votre navigateur pour l'autoriser sur notre site et rafraïchissez la page. Et les navigateurs sur smartphone ne sont pas compatibles avec le lecteur, vous ne pourrez jouer que sur un ordinateur.</p>
           </div>
 
           <input
@@ -529,9 +586,9 @@ const Game = ({ baseURL }) => {
       }
 
       {showRating &&
-        <section className="game-rating">
+        <section className="game-rating" ref={ratingSection}>
 
-          <div className="game-rating-title"> Notez cette playlist </div>
+          <p className="game-rating-title"> Notez cette playlist </p>
 
           <div className="game-rating-stars">
 
@@ -576,25 +633,37 @@ const Game = ({ baseURL }) => {
       }
 
       {showTitleFound &&
-        <section className="game-title_found">
+        <section className="game-found">
           <p> Bravo ! C'est bien cette chanson ! </p>
         </section>
       }
 
       {showArtistFound &&
-        <section className="game-artist_found">
-          <p> Bravo ! C'est bien ça ! </p>
+        <section className="game-found">
+          <p> Bien joué ! C'est bien ça ! </p>
+        </section>
+      }
+
+      {showFeatFound &&
+        <section className="game-found">
+          <p> Yeah ! Tu as trouvé un feat, 1 point bonus ! </p>
+        </section>
+      }
+
+      {showBothFound &&
+        <section className="game-found">
+          <p> Bravo ! Tu as trouvé le titre et l'artiste ! </p>
         </section>
       }
 
       {showTryAgain &&
-        <section className="game-try_again">
+        <section className="game-not_found">
           <p> Non ! Essaie encore. </p>
         </section>
       }
 
       {showWaitMessage &&
-        <section className="game-wait_message">
+        <section className="game-not_found">
           <p> Attendez le prochain morceau </p>
         </section>
       }

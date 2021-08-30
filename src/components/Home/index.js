@@ -9,9 +9,6 @@ import axios from 'axios';
 
 // Imports locaux
 import './styles.scss';
-import imgDefault from '../../../public/img/playlist/playlist-placeholder.png'
-import playlist from '../../../public/img/playlist/playlist-placeholder.png';
-import rating from '../../../public/img/playlist/rating.png';
 
 const Home = ({ baseURL, setLogged }) => {
 
@@ -19,10 +16,10 @@ const Home = ({ baseURL, setLogged }) => {
     const [showDetails, setShowDetails] = useState(false);
     const [playlistLink, setPlaylistLink] = useState('');
   
-    const [best, setBest] = useState(null);
-    const [moment, setMoment] = useState(null);
-    const [random, setRandom] = useState(null);
-    const [base, setBase] = useState(null);
+    const [best, setBest] = useState(false);
+    const [moment, setMoment] = useState(false);
+    const [random, setRandom] = useState(false);
+    const [base, setBase] = useState(false);
 
     const [userPlaylists, setUserPlaylists] = useState(false);
     const [userPlayed, setUserPlayed] = useState(false);
@@ -34,8 +31,11 @@ const Home = ({ baseURL, setLogged }) => {
 
     useEffect(async () => {
 
-      if (DZ.player.isPlaying()) {
-        DZ.player.setMute(true);
+      const wasPlaying = localStorage.getItem('playlist_id');
+
+      if (wasPlaying) {
+        window.location.reload();
+        localStorage.removeItem('playlist_id');
       };
   
       document.title = "MAJA";
@@ -49,7 +49,11 @@ const Home = ({ baseURL, setLogged }) => {
       // GET playlists most played from all time
       await api.get('/playlists/bests/0')
       .then((res) => {
-        setBest(res.data);
+        if(res.data === []){
+          setBest(false);
+        }else{
+          setBest(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +62,11 @@ const Home = ({ baseURL, setLogged }) => {
       // GET playlists most played this week
       await api.get('/playlists/bests/7')
       .then((res) => {
-        setMoment(res.data);
+        if(res.data === []){
+          setMoment(false);
+        }else{
+          setMoment(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +75,11 @@ const Home = ({ baseURL, setLogged }) => {
       // GET 10 random playlists
       await api.get('/playlists/random/10')
       .then((res) => {
-        setRandom(res.data);
+        if(res.data === []){
+          setRandom(false);
+        }else{
+          setRandom(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -76,7 +88,11 @@ const Home = ({ baseURL, setLogged }) => {
       // Playlists admin
       await api.get('/admin/playlists')
       .then((res) => {
-        setBase(res.data);
+        if(res.data === []){
+          setBase(false);
+        }else{
+          setBase(res.data);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -135,38 +151,43 @@ const Home = ({ baseURL, setLogged }) => {
         })
       }
 
-    }, []);
+  }, []);
 
-    return (
-      <div className="home-playlist-container">
-        <Playlist
-          title='Les intemporelles'
-          playlists={best}
-          setPlaylistLink={setPlaylistLink}
-          setShowDetails={setShowDetails}
-        />
+  return (
+      <div className="home-playlist-container" >
 
-        <Playlist
-          title='Playlists du moment'
-          playlists={moment}
-          setPlaylistLink={setPlaylistLink}
-          setShowDetails={setShowDetails}
-        />
-
-        <Playlist
-          title='Les classiques'
-          playlists={base}
-          setPlaylistLink={setPlaylistLink}
-          setShowDetails={setShowDetails}
-        />
-
-        <Playlist
-          title='Aléatoire'
-          playlists={random}
-          setPlaylistLink={setPlaylistLink}
-          setShowDetails={setShowDetails}
-        />
-
+        {best &&
+          <Playlist
+            title='Les intemporelles'
+            playlists={best}
+            setPlaylistLink={setPlaylistLink}
+            setShowDetails={setShowDetails}
+          />
+        }
+        {moment &&
+          <Playlist
+            title='Playlists du moment'
+            playlists={moment}
+            setPlaylistLink={setPlaylistLink}
+            setShowDetails={setShowDetails}
+          />
+        }
+        {base &&
+          <Playlist
+            title='Les classiques'
+            playlists={base}
+            setPlaylistLink={setPlaylistLink}
+            setShowDetails={setShowDetails}
+          />
+        }
+        {random &&
+          <Playlist
+            title='Aléatoire'
+            playlists={random}
+            setPlaylistLink={setPlaylistLink}
+            setShowDetails={setShowDetails}
+          />
+        }
         {userPlayed &&
           <Playlist
             title='Récemment jouées'

@@ -1,69 +1,121 @@
 @use 'src/styles/vars';
 
-body {
-  color: vars.$secondaryColor;
-}
-h1 {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 2em;
-}
-h2 {
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 1.1em;
-  margin: 0.5em 0;
-}
-a {
-  cursor: pointer;
-}
 .home-playlist {
+
   &-container {
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
   }
+
   &-row {
     margin: 3em 0 3em 20em;
-    display:flex;
-    flex-direction: column;
-  }
-  &-cards {
-    // scroll horizontal des cards
     display: flex;
-    // scroll horizontal du container
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    flex: 0 0 auto;
-    // cacher la scrollbar
-    &::-webkit-scrollbar {
-      display: none;
+    flex-direction: column;
+    width: 100000000%;
+
+    &-title {
+      font-size: 2em;
     }
   }
+
+  &-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 0 0 auto;
+    transition: .5s;
+    width: 100%;
+
+    &-blur {
+      position: absolute;
+      right: 0vw;
+      width: 150px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, rgba(vars.$mainColor, 0) 0%, rgba(rgba(vars.$mainColor, 0), 1) 100%, rgba(rgba(vars.$mainColor, 0), 1) 100%);
+      z-index: 3;
+
+      &-arrow {
+        height: 50px;
+        background: rgba(vars.$secondaryColor, 0.7);
+        border-radius: 50%;
+        padding: 1em;
+        transition: .3s;
+        z-index: 5;
+        cursor: pointer;
+        margin-left: 40px;
+    
+        &:hover {
+          transform: translateX(5px);
+        }
+      }
+    }
+
+    &-leftblur {
+      position: absolute;
+      left: 0;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(270deg, rgba(vars.$mainColor, 0) 0%, rgba(rgba(vars.$mainColor, 1), 100) 100%, rgba(rgba(vars.$mainColor, 0), 1) 100%);
+      z-index: 3;
+
+      &-arrow {
+        margin-left: 250px;
+        height: 50px;
+        background: rgba(vars.$secondaryColor, 0.9);
+        border-radius: 50%;
+        padding: 1em;
+        transition: .3s;
+        z-index: 5;
+        cursor: pointer;
+        transform: rotate(180deg);
+    
+        &:hover {
+          transform: translateX(-5px) rotate(180deg);
+        }
+      }
+    }
+  }
+
   &-card {
-    margin: 1em;
+    width: 150px;
+    margin: 20px;
     display: inline-block;
+
     &-logo {
       width: 150px;
       height: 150px;
       object-fit: cover;
       border-radius: 2%;
     }
+
     &-rating {
       width: 100px;
     }
   }
 }
-@media (max-width: 800px) {
+
+@media screen and (max-width: 850px) {
   .home-playlist {
+
     &-container {
       width: 100%;
       display: flex;
       flex-direction: column;
     }
+
     &-row {
       margin: 3em 0 3em 5em;
       display:flex;
       flex-direction: column;
     }
+
     &-cards {
       // scroll horizontal des cards
       display: flex;
@@ -71,50 +123,51 @@ a {
       flex-wrap: nowrap;
       overflow-x: auto;
       flex: 0 0 auto;
+
       // cacher la scrollbar
       &::-webkit-scrollbar {
         display: none;
       }
+
+      &-blur {
+        display: none;
+      }
+
+      &-leftblur {
+        display: none;
+      }
     }
+
     &-card {
       margin: 1em;
       display: inline-block;
+
       &-logo {
         width: 150px;
         border-radius: 2%;
       }
+
       &-rating {
         width: 100px;
       }
     }
   }
 }
-@media (max-width: 500px) {
-  h1 {
-    font-family: ‘Nunito Sans’, sans-serif;
-    font-size: 1.5em;
-  }
+
+@media screen and (max-width: 450px) {
   .home-playlist {
-    &-container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-    }
+
     &-row {
-      margin: 3em 0 3em 7em;
-      display:flex;
-      flex-direction: column;
+      margin: 1em 0 1em 2em;
     }
-    &-cards {
-      // scroll horizontal des cards
-      display: flex;
-      // scroll horizontal du container
-      flex-wrap: wrap;
-      overflow-x: auto;
-      flex: 0 0 auto;
-      // cacher la scrollbar
-      &::-webkit-scrollbar {
-        display: none;
+
+    &-card {
+      width: 100px;
+      margin: 0.5em;
+
+      &-logo {
+        width: 100px;
+        height: 100px;
       }
     }
   }

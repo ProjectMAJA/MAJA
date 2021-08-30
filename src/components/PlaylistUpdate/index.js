@@ -1,23 +1,17 @@
 // Import de la lib React
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
 
 // Imports NPM
 import axios from 'axios';
-import DeezerPublicApi from 'deezer-public-api';
 
 // Imports locaux
 import './styles.scss';
 import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
-import settings from '../../../public/img/profil/settings.svg';
-import edit from '../../../public/img/icons/edit.svg';
-import moins from '../../../public/img/icons/moins.svg';
-import plus from '../../../public/img/icons/plus.svg';
-
-let deezerApi = new DeezerPublicApi();
+import downArrow from '../../../public/img/icons/downArrow.png';
 
 const PlaylistUpdate = ({ baseURL }) => {
 
@@ -31,16 +25,15 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   {/* useState pour l'accordéon */}
   const [toggle, setToggle] = useState(false);
-  const [heightEl, setHeightEl] = useState();
-  {/* useState pour la barre de recherche */}
   
+  {/* useState pour la barre de recherche */}
   const [search, setSearch] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  {/* useState pour l'ajout de track dans la liste */}
-  const [dataArr, setDataArr] = useState([]);
+
   {/* useState pour sélectionner la musique */}
-  const [selectedTrack, setSelectedTrack] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
   {/* useState pour afficher les musiques d'une playlist */}
+  const [selectedTrack, setSelectedTrack] = useState([]);
 
   const [playlistID, setPlaylistID] = useState(null);
   const [userID, setUserID] = useState(null);
@@ -50,20 +43,22 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   const [showTooLongDesc, setShowTooLongDesc] = useState(false);
   const [showTooLongName, setShowTooLongName] = useState(false);
+  const [showTenSongMinMessage, setShowTenSongMinMessage] = useState(false);
 
   const [deezerIds, setDeezerIds] = useState([]);
 
   const toggleState = () => {
     setToggle(!toggle);
-  }
-
-  const refHeight = useRef();
+  };
 
   // useEffect that gets playlist info
   useEffect(() => {
 
-    if (DZ.player.isPlaying()) {
-      DZ.player.setMute(true);
+    const wasPlaying = localStorage.getItem('playlist_id');
+
+    if (wasPlaying) {
+      window.location.reload();
+      localStorage.removeItem('playlist_id');
     };
 
     document.title = "MAJA - Éditer une playlist";
@@ -75,62 +70,60 @@ const PlaylistUpdate = ({ baseURL }) => {
     setPlaylistImg(location.state.playlist.image);
     setDeezerIds(location.state.playlist.deezer_ids);
     displayTracks(location.state.playlist.deezer_ids);
-  }, [])
+  }, []);
 
   function displayTracks(tracksId) {
     const fetchedTracks = [];
 
     tracksId.map(trackId => {
-      axios.get(`https://api-maja.herokuapp.com:8080/https://api.deezer.com/track/${trackId}`)
-          .then((res) => {
-            fetchedTracks.push({
-              id: res.data.id,
-              artist: res.data.artist.name,
-              title : res.data.title,
-              track: res.data.link,
-              cover: res.data.album.cover_medium,
-              preview: res.data.preview,
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    })
 
+      DZ.api(`/track/${trackId}`, (res) => {
+
+        fetchedTracks.push({
+          id: res.id,
+          artist: res.artist.name,
+          title : res.title,
+          track: res.link,
+          cover: res.album.cover_medium,
+          preview: res.preview,
+        });
+      });
+    });
+      
     setSelectedTrack(fetchedTracks);
-  }
+  };
 
-  // useEffect that fetches data from Deezer API
   useEffect(() => {
-    if (!search) return setSearchResults([]);
 
-    {/* cela permet de faire la requête seulement quand on a fini d'écrire, au lieu d'en faire une à chaque lettre tapée */}
-    let cancel = false;
-    {/* cette méthode permet de fetch le titre d'une musique sur l'api de Deezer grâce au deezer-public-api */}
-    deezerApi.search.track(search).then(function(res) {
-      if (cancel) return;
+    DZ.api('/search?q=' + search, (res) => {
       
       setSearchResults(
         res.data.map(track => {
-          return {
-            id: track.id,
-            artist: track.artist.name,
-            title : track.title,
-            track: track.link,
-            cover: track.album.cover_medium,
-            preview: track.preview,
-          }
-        }))
-      ;})
+          if (track.readable) {
+            if ( deezerIds.includes(track.id) ) {
+              return;
+            } else {
 
-      return() => cancel = true
+              return {
+                id: track.id,
+                artist: track.artist.name,
+                title : track.title,
+                track: track.link,
+                cover: track.album.cover_medium,
+                preview: track.preview,
+              };
+            };
+          };
+        })
+      );
+    });
+
   }, [search]);
 
   function chooseTrack(track) {
+
     const tracks = [...selectedTrack, track];
-  
     setSelectedTrack(tracks);
-    setSearch('');
 
     const newIDs = [...deezerIds, track.id];
     setDeezerIds(newIDs);
@@ -142,30 +135,33 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   async function savePlaylist() {
 
-    const token = localStorage.getItem('token');
+    if (deezerIds.length >= 10) {
 
-    console.log("deezerIds dans  : ", deezerIds);
+      const token = localStorage.getItem('token');
 
-    await api.post('/playlist', {
-      id: playlistID,
-      name: playlistName,
-      description: playlistDesc,
-      image: playlistImg,
-      deezer_ids: deezerIds
-    },{
-      headers: {
-        Authorization: token
-      }
-    })
-      .then((res) => {
-        history.push({
-          pathname: '/user/playlists',
+      await api.post('/playlist', {
+        id: playlistID,
+        name: playlistName,
+        description: playlistDesc,
+        image: playlistImg,
+        deezer_ids: deezerIds
+      },{
+        headers: {
+          Authorization: token
+        }
+      })
+        .then((res) => {
+          history.push({
+            pathname: '/user/playlists',
+          })
+          console.log(res.data);
         })
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      })
+        .catch((err) => {
+          console.log(err.response);
+        })
+    } else {
+      setShowTenSongMinMessage(true);
+    };
   };
 
   const deleteTrack = (id) => {
@@ -175,7 +171,6 @@ const PlaylistUpdate = ({ baseURL }) => {
 
     const newIDs = deezerIds.filter(deezerId => deezerId != id);
     setDeezerIds(newIDs);
-
   };
 
   const deletePlaylist = async () => {
@@ -192,6 +187,9 @@ const PlaylistUpdate = ({ baseURL }) => {
       }
     })
       .then((res) => {
+        history.push({
+          pathname: '/user/playlists',
+        })
         console.log(res.data);
       })
       .catch((err) => {
@@ -218,128 +216,156 @@ const PlaylistUpdate = ({ baseURL }) => {
   return (
     <div className="playlist-update">
 
-      <div className="playlist-update">
+      <div className="playlist-update-header">
+        <h1 className="playlist-update-header-name">{playlistName}</h1>
+        <p className="playlist-update-header-desc">{playlistDesc}</p>
+      </div>
 
-        <div className="playlist-update-header">
-          <h1 className="playlist-update-header-name">{playlistName}</h1>
-          <p className="playlist-update-header-desc">{playlistDesc}</p>
-        </div>
+      <div className="playlist-update-container">
 
-        <div className="playlist-update-accord-container">
-          <div className="playlist-update-accord visible">
+        <section className="playlist-update-container-img">
+          {playlistImg ? (
+            <img className="playlist-update-container-img-content" src={playlistImg} alt="Image de votre playlist" />
+          ) : (
+            <img className="playlist-update-container-img-content" src={imgDefault} alt="Image par défaut d'une playlist" />
+          )}
+          <p>Changer l'image</p>
+          <input
+            className="playlist-update-container-img-link"
+            type="text"
+            placeholder="URL de l'image"
+            onChange={(event) => {
+              setPlaylistImg(event.target.value);
+            }}
+          />
+        </section>
 
-
-            <section className="playlist-update-img">
-              {playlistImg ? (
-                <img className="playlist-update-img-content" src={playlistImg} alt="playlist-placeholder" />
-              ) : (
-                <img className="playlist-update-img-content" src={imgDefault} alt="playlist-placeholder" />
-              )}
+        <section className="playlist-update-container-info">
+            <label className="playlist-update-container-info-name">
+              Changer le nom
               <input
-                className="playlist-update-img-link"
                 type="text"
-                placeholder="URL de l'image"
+                className="playlist-update-container-info-name-input"
+                placeholder={playlistName} 
                 onChange={(event) => {
-                  setPlaylistImg(event.target.value);
+                  changeName(event.target.value);
                 }}
               />
-            </section>
-
-            <section className="playlist-update-info">
-              <label className="playlist-update-name">
-                Changer le nom
-                <input
-                  type="text"
-                  className="playlist-update-name-input"
-                  placeholder={playlistName} 
-                  onChange={(event) => {
-                    changeName(event.target.value);
-                  }}
-                />
-              </label>
-              {showTooLongName &&
-                <p className="too_long">Le nom doit faire 30 caractères au maximum</p>
-              }
-            
-              <label className="playlist-update-desc">
-                Changer la description
-                <input
-                  type="textarea"
-                  className="playlist-update-desc-input"
-                  placeholder={playlistDesc}
-                  onChange={(event) => {
-                    changeDesc(event.target.value);
-                  }}
-                />
-              </label>
-              {showTooLongDesc &&
-                <p className="too_long">Votre description doit faire 100 caractères au maximum</p>
-              }
-
-            </section>
-            
-            <button
-            onClick={toggleState}
-             className="playlist-update-settings-button">
-              <img className="playlist-update-settings" src={settings} alt="" />
-            </button> 
-          </div>
-  
-          {/* accordéon qui se déplie */}
-          <div className="playlist-update-accord animated">
-            <div className="playlist-update-accord-header">
-                <input 
-                  className="playlist-update-accord-header-search" 
-                  type="search"
-                  onChange={e=>setSearch(e.target.value)} 
-                  value={search}
-                  placeholder="Rechercher sur Deezer"
-                />
-            </div>
-            <div className="playlist-update-accord-result">
-              {searchResults.map(track => (
-                <TrackSearchResult track={track} key={track.track} chooseTrack={chooseTrack} addNewTrack={addNewTrack} />
-              ))}
-            </div>
-            <div className="playlist-update-existing-tracks">
-              {}
-            </div>
-
-
-            { toggle &&
-            <div className="playlist-update-accord-body">          
-              {selectedTrack.map(song => (
-                  <Item track={song} key={song.track} deleteTrack={deleteTrack} />
-                ))}
-                
-            </div>
+            </label>
+            {showTooLongName &&
+              <p className="too_long">Le nom doit faire 30 caractères au maximum</p>
             }
-            <div>
-
-                <input
-                  className="playlist-update-delete"
-                  type="button"
-                  value="Supprimer cette playlist"
-                  onClick={() => {
-                    deletePlaylist();
-                    history.push({
-                      pathname: '/user/playlists'
-                    })
-                  }}
-                />
-                <button className="playlist-update-save" onClick={(event) => {
-                  event.preventDefault();
-                  savePlaylist();
-                }}>
-                  Sauvegarder
-                </button>
-
-
-            </div>
-          </div>
-        </div>
-
+          
+            <label className="playlist-update-container-info-desc">
+              Changer la description
+              <input
+                type="text"
+                className="playlist-update-container-info-desc-input"
+                placeholder={playlistDesc}
+                onChange={(event) => {
+                  changeDesc(event.target.value);
+                }}
+              />
+            </label>
+            {showTooLongDesc &&
+              <p className="too_long">Votre description doit faire 100 caractères au maximum</p>
+            }
+          </section>
+          
       </div>
+
+      {showTenSongMinMessage &&
+        <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
+      }
+
+      <section className="playlist-update-songs">
+
+        <button
+          onClick={toggleState}
+          className="playlist-update-songs-button">
+          <img 
+            className="playlist-update-songs-button-img"
+            src={downArrow} 
+            alt="Ajouter / Supprimer des musiques"
+          />
+          <p className="playlist-update-songs-button-label">Ajouter / Supprimer des musiques</p>
+        </button>
+          
+        { toggle &&
+
+          <div className="playlist-update-songs-list">
+
+            <section className="playlist-update-songs-list-tracks"> 
+
+              <p className="playlist-update-songs-list-tracks-title">Musiques de votre playlist</p>
+              <hr />
+              {selectedTrack.map(song => (
+                  <Item
+                    track={song}
+                    key={song.track}
+                    deleteTrack={deleteTrack}
+                  />
+                ))}
+            </section>
+
+            <section className="playlist-update-songs-list-search">
+
+              <p className="playlist-update-songs-list-search-title">Ajouter une musique</p>
+              <hr />
+              <input 
+                className="playlist-update-songs-list-search-input" 
+                type="search"
+                onChange={e=>setSearch(e.target.value)} 
+                value={search}
+                placeholder="Rechercher sur Deezer"
+              />
+              {searchResults.map(track => {
+                // If there is a track, we render it
+                if (track) {
+                  // If the track is already on the songs list of the playlist,
+                  if (deezerIds.includes(track.id)) {
+                    // We return and don't render it.
+                    return;
+                  } else {
+                    return (
+                      <TrackSearchResult
+                        track={track}
+                        chooseTrack={chooseTrack}
+                        addNewTrack={addNewTrack}
+                      />
+                    )
+                  }
+                }
+              })}
+            </section>
+
+          </div>     
+        }
+
+        {showTenSongMinMessage &&
+          <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
+        }
+      </section>
+
+      <section className="playlist-update-buttons">
+
+          <button className="playlist-update-buttons-save" onClick={(event) => {
+            event.preventDefault();
+            savePlaylist();
+          }}>
+            Sauvegarder
+          </button>
+
+          <input
+            className="playlist-update-buttons-delete"
+            type="button"
+            value="Supprimer cette playlist"
+            onClick={() => {
+              deletePlaylist();
+            }}
+          />
+
+      </section>
     </div>
   );
 };
@@ -349,5 +375,3 @@ PlaylistUpdate.propTypes = {
 };
 
 export default PlaylistUpdate;
-
-
