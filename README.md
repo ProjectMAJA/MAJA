@@ -21,7 +21,7 @@ Si vous avez trouvé __les deux__, vous marquez **1 point supplémentaire**, en 
 * React
 * Node
 * Sqitch
-* Postgres
+* PostgreSQL
 * AWS
 * API Deezer
 

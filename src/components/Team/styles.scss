@@ -54,6 +54,7 @@
 
           &-role {
             height: 2.5em;
+            margin: 1em;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -70,12 +71,9 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .team-container {
-    margin-top: 20em;
-    margin-bottom: 20em;
-  
-    &-list {
-      flex-direction: column;
-    }
+  .team-container-list-card {
+    width: 150px;
+    height: 300px;
+    font-size: 0.7em;
   }
 }

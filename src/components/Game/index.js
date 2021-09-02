@@ -30,7 +30,6 @@ const Game = ({ baseURL }) => {
   const [showFeatFound, setShowFeatFound] = useState(false);
 
   // Values states
-  const [firstTry, setFirstTry] = useState([]);
   const [proposal, setProposal] = useState('');
   const [score, setScore] = useState(0);
   const [previousTrack, setPreviousTrack] = useState('');
@@ -166,7 +165,7 @@ const Game = ({ baseURL }) => {
           if(feat && answer.includes(feat)){
             scoring+=1;
             setScore(scoring);
-          }
+          };
 
           setTitleFound(true);
           setArtistFound(true);
@@ -210,9 +209,9 @@ const Game = ({ baseURL }) => {
           setShowFeatFound(true);
         } else {
           setShowTryAgain(true);
-        }
-      }
-    }
+        };
+      };
+    };
 
     function ftCheck(e){
       if (e.includes('feat')){
