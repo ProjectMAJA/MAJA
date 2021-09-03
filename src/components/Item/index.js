@@ -28,7 +28,6 @@ const Item = ({ track, key, deleteTrack }) => {
         />
     </div>
   );
-}
-
+};
 
 export default Item;

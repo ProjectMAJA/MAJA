@@ -109,10 +109,15 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
 )}
       </nav>
 
-      <NavLink exact to="/" className="menu-deezer">
+      <a 
+        href="https://www.deezer.com/"
+        className="menu-deezer"
+        target="_blank"
+        rel="noreferrer"
+      >
 
         <img src={deezer} className="menu-deezer-logo" alt="Deezer" />
-      </NavLink>
+      </a>
 
 {showModal && (
       <Modal baseURL={baseURL} setShowModal={setShowModal} setLogged={setLogged} setIsAdmin={setIsAdmin} />
