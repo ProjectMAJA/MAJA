@@ -24,7 +24,9 @@ const PlaylistCreate = ({ baseURL }) => {
   {/* useState pour l'accordéon */}
   const [toggle, setToggle] = useState(false);
   {/* useState pour la barre de recherche */}
-    const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
+
   const [searchResults, setSearchResults] = useState([]);
   {/* useState pour sélectionner la musique */}
   const [selectedTrack, setSelectedTrack] = useState([]);
@@ -251,9 +253,32 @@ const PlaylistCreate = ({ baseURL }) => {
 
               <p className="playlist-update-songs-list-tracks-title">Musiques de votre playlist</p>
               <hr />
-              {selectedTrack.map(song => (
-                <Item track={song} key={song.track} deleteTrack={deleteTrack} />
-              ))}
+              <input 
+                className="playlist-update-songs-list-search-input" 
+                type="search"
+                onChange={(event) => {
+                  setFilter(event.target.value)
+                }}
+                value={filter}
+                placeholder="Rechercher une musique"
+              />
+              {selectedTrack.map(song => {
+                if (song) {
+                  const filt = filter.toLowerCase();
+                  const title = song.title.toLowerCase();
+                  const artist = song.artist.toLowerCase();
+
+                  if (title.includes(filt) || artist.includes(filt)) {
+                    return (
+                      <Item
+                        track={song}
+                        key={song.track}
+                        deleteTrack={deleteTrack}
+                      />
+                    )
+                  } 
+                }
+              })}
             </section>
 
             <section className="playlist-update-songs-list-search">

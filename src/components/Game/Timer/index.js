@@ -21,6 +21,10 @@ const Timer = ({ setShowTimer, timer, setTimer }) => {
         setTimer(timeLeft);
       };
     }, 1000);
+
+    return () => {
+      setTimer(timer);
+    };
   }, []);
 
   return (

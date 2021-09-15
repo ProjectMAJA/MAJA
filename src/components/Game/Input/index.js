@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
 import "./style.scss";
@@ -22,6 +22,10 @@ const Input = ({
 
   const [proposal, setProposal] = useState("");
 
+  useEffect(() => {
+    scoring = 0;
+  }, []);
+
   const handleChange = (value) => {
     setProposal(value);
   };
@@ -30,9 +34,13 @@ const Input = ({
   // let firstTry = [];
 
   function checkAnswer(answer, title, artist) {
-    title = title.replace("-", " ");
-    artist = artist.replace("-", " ");
-    answer = answer.replace("-", " ");
+    title = title.replace("-", "");
+    artist = artist.replace("-", "");
+    answer = answer.replace("-", "");
+
+    title = title.replace(" ", "");
+    artist = artist.replace(" ", "");
+    answer = answer.replace(" ", "");
 
     title = title.replace(/[^a-zA-Z +\d]/g, "");
     artist = artist.replace(/[^a-zA-Z +\d]/g, "");
@@ -125,6 +133,7 @@ const Input = ({
 
   const handleSubmit = () => {
     // Hide other messages
+    setShowWaitMessage(false);
     setShowArtistFound(false);
     setShowTitleFound(false);
     setShowFeatFound(false);

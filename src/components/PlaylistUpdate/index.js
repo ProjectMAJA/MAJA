@@ -120,7 +120,6 @@ const PlaylistUpdate = ({ baseURL }) => {
         })
       );
     });
-
   }, [search]);
 
   function chooseTrack(track) {
@@ -327,7 +326,6 @@ const PlaylistUpdate = ({ baseURL }) => {
                     )
                   } 
                 }
-
               })}
             </section>
 

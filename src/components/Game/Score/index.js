@@ -5,11 +5,10 @@ import './style.scss';
 
 const Score = ({ score }) => {
 
-
   useEffect(() => {
 
     localStorage.setItem('score', score);
-    
+
   }, [score]);
 
   return (

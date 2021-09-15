@@ -9,7 +9,7 @@ import del from '../../../public/img/icons/delete.svg';
 
 const Item = ({ track, key, deleteTrack }) => {
 
-  const altImg = "Image de l'album de " + track.artist
+  const altImg = "Image de l'album de " + track.artist;
 
   return (
     <div key={key} className="item-result">

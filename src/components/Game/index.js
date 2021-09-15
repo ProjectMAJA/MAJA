@@ -63,6 +63,8 @@ const Game = ({ baseURL, logged }) => {
       DZ.player.pause();
     };
 
+    setScore(0);
+
     document.title = "MAJA - Blind test";
 
     const playlistID = localStorage.getItem('playlist_id');
@@ -95,7 +97,6 @@ const Game = ({ baseURL, logged }) => {
 
   // Launch the game
   const playGame = () => {
-
     DZ.player.setVolume(musicVolume);
 
     // Hide button & show input & score
