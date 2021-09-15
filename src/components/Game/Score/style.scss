@@ -1,0 +1,33 @@
+@use 'src/styles/vars';
+
+.score {
+  position: fixed;
+  top: 40%;
+  right: 0%;
+  width: 4em;
+  padding: 1em;
+  font-size: 3em;
+  font-weight: bold;
+  background-color: vars.$buttonColor;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+@media screen and (max-width: 850px) {
+  .score {
+    top: 0;
+    left: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 5px;
+    font-size: 2em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .score {
+    width: 100%;
+    border-bottom-left-radius: 5px;
+  }
+}

@@ -23,21 +23,31 @@
       display: contents;
     }
   
-    .menu-buttons-item {
-      justify-content: start;
-      padding-left: 2vw;
-  
-      &:hover {
-        transform: translateX(5px);
-        transition: .3s;
+    .menu-buttons {
+      display: flex;
+      justify-content: space-evenly;
+      
+      &-item {
+        justify-content: start;
+        margin-left: 2.5em;
+    
+        &:hover {
+          transform: scale(1.1) translateX(10px);
+          transition: .3s;
+        }
       }
+    }
+
+    .menu-logo {
+      transform: scale(1.5);
+      margin-bottom: 18.5vh;
     }
   
     .menu-buttons-link {
       color: vars.$secondaryColor;
   
       &:hover {
-        color: rgb(173, 173, 173);
+        color: white;
       }
     }
   }
@@ -47,14 +57,14 @@
     justify-content: center;
     align-items: center;
     margin-top: 10vh;
-    margin-bottom: 20vh;
+    margin-bottom: 23vh;
 
     &-img {
       width: 40%;
+      transition: .3s;
     
         &:hover {
-          transform: translateY(-5px);
-          transition: .3s;
+          transform: scale(1.1);
         }
     }
   }
@@ -82,6 +92,11 @@
 
     &-logo {
       height: 2em;
+      transition: .3s;
+
+      &:hover {
+        transform: translateY(-3px);
+      }
     }
   }
 }
@@ -95,21 +110,29 @@
     position: fixed;
     bottom: 0;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
     height: 8vh;
     min-height: 60px;
 
     &:hover {
       width: 100%;
+
+      .menu-logo {
+        transform: scale(1);
+        margin-bottom: 0;
+      }
+
+      .menu-buttons {
+        justify-content: space-evenly;
+      }
       
       .menu-buttons-name {
         display: none;
       }
 
       .menu-buttons-item {
-        padding: 0;
+        margin: 0;
   
         &:hover {
           transform: translateX(0);

@@ -58,13 +58,27 @@
     justify-content: space-evenly;
 
     &-edit {
-      height: 20px;
-      margin: 0.5em;
+      height: 40px;
+      // background-color: dodgerblue;
+      padding: 0.7em;
+      border-radius: 5px;
+
+      &:hover {
+        transform: scale(1.2);
+        transition: .1s;
+      }
     }
 
     &-delete {
-      height: 20px;
-      margin: 0.5em;
+      height: 40px;
+      // background-color: rgb(255, 57, 43);
+      padding: 0.7em;
+      border-radius: 5px;
+
+      &:hover {
+        transform: scale(1.2);
+        transition: .1s;
+      }
     }
   }
 
@@ -76,13 +90,19 @@
 
   &-card {
     margin: 1em;
-    padding: 1em;
+    padding: 1.5em;
     display: inline-block;
     text-align: center;
     justify-content: center;
     width: 200px;
     height: 320px;
-    border: 1px solid darkgrey;
+    background-color: rgb(40, 40, 40);
+    border-radius: 10px;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: .3s;
+    }
 
     &-logo {
       width: 150px;

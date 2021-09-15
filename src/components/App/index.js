@@ -13,6 +13,7 @@ import PlaylistCreate from 'src/components/PlaylistCreate';
 import Admin from 'src/components/Admin';
 import UserPlaylists from 'src/components/UserPlaylists';
 import Search from 'src/components/Search';
+import Contact from 'src/components/Contact';
 
 import './style.scss';
 
@@ -69,11 +70,15 @@ const App = () => {
         </Route>
 
         <Route exact path="/game">
-          <Game baseURL={baseURL} />
+          <Game baseURL={baseURL} logged={logged} />
         </Route>
 
         <Route exact path="/team">
           <Team />
+        </Route>
+
+        <Route exact path="/contact">
+          <Contact />
         </Route>
 
         <Route exact path="/user">

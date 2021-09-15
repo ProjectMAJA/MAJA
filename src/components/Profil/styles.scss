@@ -1,13 +1,14 @@
 @use 'src/styles/vars';
 
 .profil {
-  margin-left: 15em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   background-color: vars.$mainColor;
-  width: 70%;
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &-header {
     display: flex;

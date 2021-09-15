@@ -1,0 +1,64 @@
+@use 'src/styles/vars';
+
+.answer {
+  padding: 2em;
+  color: vars.$menuColor;
+  margin-top: 30vh;
+  font-size: 2em;
+  font-weight: bold;
+  background-color: vars.$buttonColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid vars.$mainColor;
+  border-radius: 10px;
+  z-index: 1;
+
+  &-img {
+    height: 5em;
+    margin-right: 1em;
+    border-radius: 5px;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+
+    &-track {
+      font-style: italic;
+      font-size: 1.1em;
+      color: vars.$mainColor;
+      margin-top: 5vh;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+
+  .answer {
+    font-size: 1.5em;
+  }
+}
+
+@media screen and (max-width: 850px) {
+
+  .answer {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .answer {
+    flex-direction: column;
+    font-size: 0.8em;
+
+    &-content {
+      margin: 1em;
+
+      &-track {
+        font-size: 1.2em;
+      }
+    }
+  }
+}

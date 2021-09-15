@@ -1,0 +1,52 @@
+@use 'src/styles/vars';
+
+.end_game {
+  margin-top: 25vh;
+
+  &-text {
+    padding: 2em;
+    font-size: 2em;
+    font-weight: bold;
+    background-color: vars.$buttonColor;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 25px;
+    margin-bottom: 20vh;
+
+    &-score {
+      margin-top: 0.5em;
+    }
+  }
+
+  &-button {
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0.5em;
+    color: vars.$secondaryColor;
+    background-color: vars.$buttonColor;
+    border-top: 0.3em solid vars.$buttonColor;
+    border-bottom: 0.3em solid vars.$buttonColor;
+    border-left: 1em solid vars.$buttonColor;
+    border-right: 1em solid vars.$buttonColor;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .end_game {
+    &-text {
+      font-size: 1.2em;
+    }
+
+    &-button {
+      font-size: 1.2em;
+    }
+  }
+}

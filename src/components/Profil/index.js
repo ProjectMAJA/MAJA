@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
+import Loading from 'src/components/Loading';
+
 // Imports locaux
 import imgDefault from '../../../public/img/profil/default.png';
 import './styles.scss';
@@ -17,6 +19,7 @@ const Profil = ({ baseURL }) => {
   const [showErrorPassword, setShowErrorPassword] = useState(false);
   const [showErrorPseudo, setShowErrorPseudo] = useState(false);
   const [showErrorMail, setShowErrorMail] = useState(false);
+  const [showLoading, setShowLoading] = useState(true);
 
   // State values
   const [userID, setUserID] = useState();
@@ -57,6 +60,7 @@ const Profil = ({ baseURL }) => {
         setMail(res.data.email);
         setAvatar(res.data.avatar);
         setPassword(res.data.password);
+        setShowLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -129,105 +133,113 @@ const Profil = ({ baseURL }) => {
 
   return (
       <div className="profil">
-        <div className="profil-header">
-            <img 
-              src={ avatar!=null ? avatar : imgDefault }
-              className="profil-header-avatar"
-            />
-              <h2 className="profil-header-pseudo">{pseudo}</h2>
+
+        { showLoading &&
+          <Loading />
+        }
+
+        <section className="profil-container"> 
+          <div className="profil-header">
+              <img 
+                src={ avatar!=null ? avatar : imgDefault }
+                className="profil-header-avatar"
+              />
+                <h2 className="profil-header-pseudo">{pseudo}</h2>
+            </div>
+
+          <div className="profil-info">
+            <h3 className="profil-info-title">Modifier mes informations</h3>
+            <hr />
+              <p className="profil-info-item">Pseudo</p>
+              { showErrorPseudo &&
+                <p className="error">Ce pseudo est déjà pris</p>
+              }
+              <input
+                className="profil-info-form-input"
+                type="text"
+                placeholder={pseudo}
+                onChange={(event) => {
+                  setPseudo(event.target.value);
+                }}
+              />
+              <p className="profil-info-item">Adresse mail</p>
+              { showErrorMail &&
+                <p className="error">Cette adresse email est déjà utilisée sur notre site</p>
+              }
+              <input
+                className="profil-info-form-input"
+                type="text"
+                placeholder={mail}
+                onChange={(event) => {
+                  setImage(event.target.value);
+                }}
+              />
+              <p className="profil-info-item">URL de votre avatar</p>
+              <input
+                className="profil-info-form-input"
+                type="text"
+                placeholder={avatar ? avatar : 'URL de votre image'}
+                onChange={(event) => {
+                  setAvatar(event.target.value);
+                }}
+              />
+              <p className="profil-info-item">Mot de passe</p>
+              { showErrorPassword &&
+                <p className="error">Les deux mots de passe ne correspondent pas</p>
+              }
+              <input
+                className="profil-info-form-input"
+                type={showPassword ? "text" : "password"}
+                placeholder="Nouveau mot de passe"
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                  setPasswordChange(true);
+                }}
+              />
+              <input
+                className="profil-info-form-input"
+                type={showPassword ? "text" : "password"}
+                placeholder="Confirmer le nouveau mot de passe"
+                onChange={(event) => {
+                  setConfirmPassword(event.target.value);
+                  setPasswordChange(true);
+                }}
+              />
+
+                  <label className="profil-info-form-check">
+                    <input
+                      type="checkbox"
+                      onClick={() => {
+                        setShowPassword(!showPassword);
+                      }}
+                    />
+                    Voir le mot de passe
+                  </label>
+
+              <input
+                className="profil-info-form-button"
+                type="button"
+                value="Enregistrer les modifications"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              />
           </div>
 
-        <div className="profil-info">
-          <h3 className="profil-info-title">Modifier mes informations</h3>
-          <hr />
-            <p className="profil-info-item">Pseudo</p>
-            { showErrorPseudo &&
-              <p className="error">Ce pseudo est déjà pris</p>
-            }
-            <input
-              className="profil-info-form-input"
-              type="text"
-              placeholder={pseudo}
-              onChange={(event) => {
-                setPseudo(event.target.value);
-              }}
-            />
-            <p className="profil-info-item">Adresse mail</p>
-            { showErrorMail &&
-              <p className="error">Cette adresse email est déjà utilisée sur notre site</p>
-            }
-            <input
-              className="profil-info-form-input"
-              type="text"
-              placeholder={mail}
-              onChange={(event) => {
-                setImage(event.target.value);
-              }}
-            />
-            <p className="profil-info-item">URL de votre avatar</p>
-            <input
-              className="profil-info-form-input"
-              type="text"
-              placeholder={avatar ? avatar : 'URL de votre image'}
-              onChange={(event) => {
-                setAvatar(event.target.value);
-              }}
-            />
-            <p className="profil-info-item">Mot de passe</p>
-            { showErrorPassword &&
-              <p className="error">Les deux mots de passe ne correspondent pas</p>
-            }
-            <input
-              className="profil-info-form-input"
-              type={showPassword ? "text" : "password"}
-              placeholder="Nouveau mot de passe"
-              onChange={(event) => {
-                setPassword(event.target.value);
-                setPasswordChange(true);
-              }}
-            />
-            <input
-              className="profil-info-form-input"
-              type={showPassword ? "text" : "password"}
-              placeholder="Confirmer le nouveau mot de passe"
-              onChange={(event) => {
-                setConfirmPassword(event.target.value);
-                setPasswordChange(true);
-              }}
-            />
+          <div className="profil-info-delete">
 
-                <label className="profil-info-form-check">
-                  <input
-                    type="checkbox"
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                  Voir le mot de passe
-                </label>
-
-            <input
-              className="profil-info-form-button"
-              type="button"
-              value="Enregistrer les modifications"
+            <NavLink 
+              exact to='/'
+              className="profil-info-delete-button"
               onClick={() => {
-                handleSubmit();
-              }}
-            />
-        </div>
-
-        <div className="profil-info-delete">
-
-          <NavLink 
-            exact to='/'
-            className="profil-info-delete-button"
-            onClick={() => {
-              deleteAccount();
-            }}>
-              Supprimer mon compte
-          </NavLink>
-          
-        </div>
+                deleteAccount();
+              }}>
+                Supprimer mon compte
+            </NavLink>
+            
+          </div>
+        </section>
+        
 
       </div>
   )

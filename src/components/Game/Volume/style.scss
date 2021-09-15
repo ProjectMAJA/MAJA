@@ -1,0 +1,34 @@
+@use 'src/styles/vars';
+
+.volume {
+  position: fixed;
+  right: 0%;
+  bottom: 0%;
+  background-color: black;
+  padding: 1em;
+  border-top-left-radius: 10px;
+
+  &-value {
+    margin-bottom: 0.5em;
+  }
+
+  &-button {
+    margin: 0.2em;
+    font-size: 1.5em;
+    border: none;
+    width: 1.3em;
+    border-radius: 50%;
+    transition: .2s;
+
+    &:hover {
+      transform: translateY(-2px);
+    } 
+  }
+}
+
+
+@media screen and (max-width: 850px) {
+  .volume {
+    display: none;
+  }
+}

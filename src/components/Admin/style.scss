@@ -45,7 +45,7 @@
         &-title {
           font-size: 1.5em;
           font-weight: bold;
-          height: 2.5em;
+          height: 2em;
         }
 
         &-description {
@@ -54,10 +54,16 @@
       }
 
       &-button {
-        height: 4vh;
-        width: 2vw;
+        height: 4em;
         margin: auto;
-        margin-right: 2em;
+        margin-right: 4em;
+        border-radius: 5px;
+        padding: 1em;
+
+        &:hover {
+          transform: scale(1.1);
+          transition: .3s;
+        }
       }
     }
   }
@@ -90,7 +96,21 @@
           font-size: 0.5em;
         }
       }
+
+      &-button {
+        margin-right: 3em;
+        height: 3em;
+        padding: 0.8em;
+      }
     }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .admin-container-section-button {
+    margin-right: 2em;
+    height: 2.2em;
+    padding: 0.5em;
   }
 }
 
@@ -149,14 +169,23 @@
       }
 
       &-section {
+        flex-direction: column;
+        align-items: center;
 
         &-img {
           width: 40px;
           height: 40px;
+          margin-top: 1em;
         }
 
         &-content {
-          padding: 0.1em;
+          align-items: center;
+          text-align: center;
+        }
+        
+        &-button {
+          margin-right: 0;
+          margin: 1em;
         }
       }
     }

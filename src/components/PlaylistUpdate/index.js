@@ -12,6 +12,8 @@ import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import downArrow from '../../../public/img/icons/downArrow.png';
+import deleteImg from '../../../public/img/icons/delete.svg';
+import save from '../../../public/img/playlist/save.svg';
 
 const PlaylistUpdate = ({ baseURL }) => {
 
@@ -28,6 +30,7 @@ const PlaylistUpdate = ({ baseURL }) => {
   
   {/* useState pour la barre de recherche */}
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('');
 
   {/* useState pour sélectionner la musique */}
   const [searchResults, setSearchResults] = useState([]);
@@ -299,13 +302,33 @@ const PlaylistUpdate = ({ baseURL }) => {
 
               <p className="playlist-update-songs-list-tracks-title">Musiques de votre playlist</p>
               <hr />
-              {selectedTrack.map(song => (
-                  <Item
-                    track={song}
-                    key={song.track}
-                    deleteTrack={deleteTrack}
-                  />
-                ))}
+              <input 
+                className="playlist-update-songs-list-search-input" 
+                type="search"
+                onChange={(event) => {
+                  setFilter(event.target.value)
+                }}
+                value={filter}
+                placeholder="Rechercher une musique"
+              />
+              {selectedTrack.map(song => {
+                if (song) {
+                  const filt = filter.toLowerCase();
+                  const title = song.title.toLowerCase();
+                  const artist = song.artist.toLowerCase();
+
+                  if (title.includes(filt) || artist.includes(filt)) {
+                    return (
+                      <Item
+                        track={song}
+                        key={song.track}
+                        deleteTrack={deleteTrack}
+                      />
+                    )
+                  } 
+                }
+
+              })}
             </section>
 
             <section className="playlist-update-songs-list-search">
@@ -315,7 +338,9 @@ const PlaylistUpdate = ({ baseURL }) => {
               <input 
                 className="playlist-update-songs-list-search-input" 
                 type="search"
-                onChange={e=>setSearch(e.target.value)} 
+                onChange={(event) => {
+                  setSearch(event.target.value)
+                }}
                 value={search}
                 placeholder="Rechercher sur Deezer"
               />
@@ -349,21 +374,34 @@ const PlaylistUpdate = ({ baseURL }) => {
 
       <section className="playlist-update-buttons">
 
-          <button className="playlist-update-buttons-save" onClick={(event) => {
-            event.preventDefault();
-            savePlaylist();
-          }}>
+          <button 
+            className="playlist-update-buttons-save" 
+            onClick={(event) => {
+              event.preventDefault();
+              savePlaylist();
+            }}
+          >
+            <img
+             className="playlist-update-buttons-img"
+             src={save}
+             alt="Bouton de sauvegarde"
+            />
             Sauvegarder
           </button>
 
-          <input
+          <button
             className="playlist-update-buttons-delete"
-            type="button"
-            value="Supprimer cette playlist"
             onClick={() => {
               deletePlaylist();
             }}
-          />
+          >
+            <img
+            className="playlist-update-buttons-img"
+            src={deleteImg}
+            alt="Bouton de suppression"
+            />
+            Supprimer cette playlist
+          </button>
 
       </section>
     </div>

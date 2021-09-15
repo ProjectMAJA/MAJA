@@ -1,8 +1,11 @@
 // Import de la lib React
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+
 import PlaylistInfo from 'src/components/PlaylistInfo';
 import Playlist from '../Playlist';
+import Loading from '../Loading';
 
 // Imports NPM
 import axios from 'axios';
@@ -12,8 +15,9 @@ import './styles.scss';
 
 const Home = ({ baseURL, setLogged }) => {
 
-
     const [showDetails, setShowDetails] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
+
     const [playlistLink, setPlaylistLink] = useState('');
   
     const [best, setBest] = useState(false);
@@ -29,7 +33,8 @@ const Home = ({ baseURL, setLogged }) => {
       baseURL: baseURL
     });
 
-    useEffect(async () => {
+    useEffect(() => {
+      setShowLoading(true);
 
       const wasPlaying = localStorage.getItem('playlist_id');
 
@@ -39,6 +44,9 @@ const Home = ({ baseURL, setLogged }) => {
       };
   
       document.title = "MAJA";
+    }, [])
+
+    useEffect(async () => {
 
       const token = localStorage.getItem('token');
       if (token) {
@@ -53,6 +61,7 @@ const Home = ({ baseURL, setLogged }) => {
           setBest(false);
         }else{
           setBest(res.data);
+          setShowLoading(false);
         }
       })
       .catch((err) => {
@@ -66,6 +75,7 @@ const Home = ({ baseURL, setLogged }) => {
           setMoment(false);
         }else{
           setMoment(res.data);
+          setShowLoading(false);
         }
       })
       .catch((err) => {
@@ -79,6 +89,7 @@ const Home = ({ baseURL, setLogged }) => {
           setRandom(false);
         }else{
           setRandom(res.data);
+          setShowLoading(false);
         }
       })
       .catch((err) => {
@@ -92,6 +103,7 @@ const Home = ({ baseURL, setLogged }) => {
           setBase(false);
         }else{
           setBase(res.data);
+          setShowLoading(false);
         }
       })
       .catch((err) => {
@@ -110,6 +122,7 @@ const Home = ({ baseURL, setLogged }) => {
             setUserPlaylists(false);
           }else{
             setUserPlaylists(res.data);
+            setShowLoading(false);
           }
         })
         .catch((err) => {
@@ -127,6 +140,7 @@ const Home = ({ baseURL, setLogged }) => {
             setUserPlayed(false);
           }else{
             setUserPlayed(res.data);
+            setShowLoading(false);
           }
         })
         .catch((err) => {
@@ -144,6 +158,7 @@ const Home = ({ baseURL, setLogged }) => {
             setUserLiked(false);
           }else{
             setUserLiked(res.data);
+            setShowLoading(false);
           }
         })
         .catch((err) => {
@@ -154,73 +169,77 @@ const Home = ({ baseURL, setLogged }) => {
   }, []);
 
   return (
-      <div className="home-playlist-container" >
+    <div className="home-playlist-container" >
 
-        {best &&
-          <Playlist
-            title='Les intemporelles'
-            playlists={best}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-        {moment &&
-          <Playlist
-            title='Playlists du moment'
-            playlists={moment}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-        {base &&
-          <Playlist
-            title='Les classiques'
-            playlists={base}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-        {random &&
-          <Playlist
-            title='Aléatoire'
-            playlists={random}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-        {userPlayed &&
-          <Playlist
-            title='Récemment jouées'
-            playlists={userPlayed}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-        {userPlaylists &&
-          <Playlist
-            title='Vos playlists'
-            playlists={userPlaylists}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-        {userLiked &&
-          <Playlist
-            title='Parce que vous les avez aimées'
-            playlists={userLiked}
-            setPlaylistLink={setPlaylistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
+      {showLoading &&
+        <Loading />
+      }
+      
+      {best &&
+        <Playlist
+          title='Les intemporelles'
+          playlists={best}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+      {moment &&
+        <Playlist
+          title='Playlists du moment'
+          playlists={moment}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+      {base &&
+        <Playlist
+          title='Les classiques'
+          playlists={base}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+      {random &&
+        <Playlist
+          title='Aléatoire'
+          playlists={random}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+      {userPlayed &&
+        <Playlist
+          title='Récemment jouées'
+          playlists={userPlayed}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+      {userPlaylists &&
+        <Playlist
+          title='Vos playlists'
+          playlists={userPlaylists}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+      {userLiked &&
+        <Playlist
+          title='Parce que vous les avez aimées'
+          playlists={userLiked}
+          setPlaylistLink={setPlaylistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
 
-        {showDetails && 
-          <PlaylistInfo
-            baseURL={baseURL}
-            playlistLink={playlistLink}
-            setShowDetails={setShowDetails}
-          />
-        }
-     </div>
+      {showDetails && 
+        <PlaylistInfo
+          baseURL={baseURL}
+          playlistLink={playlistLink}
+          setShowDetails={setShowDetails}
+        />
+      }
+    </div>
   )
 };
 

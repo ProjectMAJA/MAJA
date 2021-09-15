@@ -1,0 +1,101 @@
+@use 'src/styles/vars';
+
+.contact {
+  width: 100%;
+  height: 100%;
+
+  &-container {
+    margin-left: 15em;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: vars.$thirdColor;
+      padding: 3em;
+      padding-right: 5em;
+      padding-left: 5em; 
+      border-radius: 5px;
+
+      &-input {
+        margin-bottom: 1em;
+        padding: 1em;
+        border: none;
+        width: 30em;
+        background-color: vars.$secondaryColor;
+      } 
+
+      &-area {
+        margin-bottom: 1em;
+        padding: 1em;
+        border: none;
+        width: 30em;
+        background-color: vars.$secondaryColor;
+        height: 10em;
+      }
+
+      &-submit {
+        border: none;
+        margin-top: 2em;
+        padding: 0.5em;
+        color: vars.$secondaryColor;
+        background-color: vars.$buttonColor;
+        border-top: 0.3em solid vars.$buttonColor;
+        border-bottom: 0.3em solid vars.$buttonColor;
+        border-left: 1em solid vars.$buttonColor;
+        border-right: 1em solid vars.$buttonColor;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: .3s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    &-success {
+      margin-top: 2em;
+      padding: 0.5em;
+      color: vars.$secondaryColor;
+      background-color: vars.$buttonColor;
+      border-top: 0.3em solid vars.$buttonColor;
+      border-bottom: 0.3em solid vars.$buttonColor;
+      border-left: 1em solid vars.$buttonColor;
+      border-right: 1em solid vars.$buttonColor;
+      border-radius: 25px;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .contact-container {
+    margin-left: 0;
+    margin-bottom: 10vh;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .contact-container-form {
+    padding: 1em;
+
+    &-input {
+      padding: 0.5em;
+      font-size: 0.5em;
+      height: 3em;
+    }
+
+    &-area {
+      padding: 0.5em;
+      font-size: 0.5em;
+      height: 20em;
+      width: 100%;
+    }
+  }
+}

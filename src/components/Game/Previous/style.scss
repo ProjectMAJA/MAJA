@@ -1,0 +1,51 @@
+@use 'src/styles/vars';
+
+.previous {
+  position: fixed;
+  top: 0%;
+  right: 0%;
+  width: 25em;
+  height: 10em;
+  padding: 1em;
+  background-color: vars.$buttonColor;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border-bottom-left-radius: 5px;
+
+  &-song {
+    margin-bottom: 1em;
+  }
+
+  &-content {
+    display: flex;
+
+    &-img {
+      height: 4em;
+      margin: 1em;
+    }
+
+    &-description {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 1em;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .previous {
+    font-size: 0.6em;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .previous {
+    display: none;
+  }
+}

@@ -17,6 +17,7 @@ import logout from '../../../public/img/nav/logout.svg';
 import search from '../../../public/img/nav/search.svg';
 import musicalnote from '../../../public/img/nav/musical-note.svg';
 import admin from '../../../public/img/nav/admin.svg';
+import contact from '../../../public/img/nav/contact.svg';
 import deezer from '../../../public/img/footer/deezer.jpg';
 
 const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
@@ -81,15 +82,22 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
             <p className="menu-buttons-name">Administration</p>
           </NavLink>
         </div>
-)} 
+)}
         <div className="menu-buttons-item team">
           <img src={glasses} alt="L'équipe" className="menu-buttons-logo nav-closed"/>
           <NavLink exact to="/team" activeClassName="navActive" className="menu-buttons-link nav-open">
-          <img src={glasses} alt="L'équipe" className="menu-buttons-logo"/>
+          <img src={glasses} alt="L'équipe" className="menu-buttons-logo" />
             <p className="menu-buttons-name">L'équipe</p>
           </NavLink>
         </div>
 
+        <div className="menu-buttons-item">
+          <img src={contact} alt="Contact" className="menu-buttons-logo nav-closed"/>
+          <NavLink exact to="/contact" activeClassName="navActive" className="menu-buttons-link nav-open">
+          <img src={contact} alt="Contact" className="menu-buttons-logo"/>
+            <p className="menu-buttons-name">Contact</p>
+          </NavLink>
+        </div>
 {logged && (
         <div className="menu-buttons-item">
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo nav-closed"/>

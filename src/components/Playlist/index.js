@@ -11,7 +11,6 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
 
   const [rightArrow, setRightArrow] = useState(false);
   const [leftArrow, setLeftArrow] = useState(false);
-  const [userWidth, setUserWidth] = useState(null);
   const [positionScroll, setPositionScroll] = useState(0);
 
   const rowCards = useRef(0);
@@ -20,8 +19,7 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
   useEffect(() => {
 
     // Get the client witdh
-    const width = document.body.clientWidth;
-    setUserWidth(width);
+    const userWidth = document.body.clientWidth;
 
     // Get the number of playlists for every row;
     const length = playlists.length;
@@ -30,46 +28,76 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
     const rowWidth = (length * 190) + 320;
 
     // If a playlist row is larger than the client's navigator, 
-    if ( rowWidth > width) {
+    if ( rowWidth > userWidth) {
       // We show the arrow for the horizontal scroll
       setRightArrow(true);
     };
   }, []);
 
   useEffect(() => {
+    // If user came back to original playlist on the scroll,
     if (positionScroll === 0) {
+      // We hide the left arrow & show right arrow
       setLeftArrow(false);
-    }
+    };
+
+    const userWidth = document.body.clientWidth;
+
+    // The margin left is 320 pixels
+    // And a card playlist width is 190 pixels
+    const userWidthCapacity = Math.floor((userWidth - 320) / 190);
+
+    // If the position goes too far, we hide the right arrow
+    if (positionScroll >= playlists.length - userWidthCapacity) {
+      setRightArrow(false);
+    };
+    // We check it every time user change de position with the arrows
   }, [positionScroll]);
   
   const scrollToRight = () => {
+    const userWidth = document.body.clientWidth;
+    const userWidthCapacity = Math.floor((userWidth - 320) / 190);
     
-    const newScroll = positionScroll + userWidth / 2;
+    let newScroll = 0;
 
+    const playlistsLeft = playlists.length - (userWidthCapacity + positionScroll);
+    
+    if (playlistsLeft <= userWidthCapacity) {
+      newScroll = positionScroll + playlistsLeft;
+    } else {
+      newScroll = positionScroll + ((Math.ceil((userWidth - 320) / 190)) -2);
+    };
+    
+    // Save the new position of the scrolling row
     setPositionScroll(newScroll);
 
-    rowCards.current.style.transform = `translateX(-${newScroll}px)`;
+    // We set the scroll CSS with the width of a playlist card
+    rowCards.current.style.transform = `translateX(-${newScroll * 190}px)`;
 
-    setLeftArrow(true);
-
-    // We want to know the width for this row
-    const rowWidth = (playlists.length * 190);
-    
-    // If the position goes too far, we hide the right arrow
-    if ( positionScroll > rowWidth / 2 ) {
-      setRightArrow(false);
+    // We show the left arrow
+    if (leftArrow === false) {
+      setLeftArrow(true);
     };
   };
 
   const scrollToLeft = () => {
-    
-    const newScroll = positionScroll - userWidth / 2;
+    const userWidth = document.body.clientWidth;
+    const userWidthCapacity = Math.floor((userWidth - 320) / 190);
+
+    let newScroll = 0;
+
+    if (positionScroll <= userWidthCapacity) {
+      newScroll = 0;
+    } else {
+      newScroll = positionScroll - ((Math.ceil((userWidth - 320) / 190)) -2);
+    };
 
     setPositionScroll(newScroll);
+    rowCards.current.style.transform = `translateX(-${newScroll * 190}px)`;
 
-    rowCards.current.style.transform = `translateX(-${newScroll}px)`;
-
-    setRightArrow(true);
+    if(rightArrow === false) {
+      setRightArrow(true);
+    };
   };
 
   return(
@@ -108,10 +136,10 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
 
             for(let i=0; i<playlist.rating; i++){
               blackStars.push('+1');
-            }
+            };
             for(let j=0; j<5-playlist.rating; j++){
-              whiteStars.push('+1')
-            }
+              whiteStars.push('+1');
+            };
 
             return (
               <li className="home-playlist-card" key={Math.random()}>
@@ -132,14 +160,14 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
                       blackStars.map(e=>{
                         return(
                           <em>&#9733;</em>
-                        )
+                        );
                       })
                     }
                     { whiteStars && 
                       whiteStars.map(e=>{
                         return(
                           <em>&#9734;</em>
-                        )
+                        );
                       })
                     }          
                   </div>
@@ -150,9 +178,7 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
         }
       </ul>
     </div>
-  )
-
-
+  );
 };
 
 Playlist.propTypes = {

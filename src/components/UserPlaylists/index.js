@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-// Imports NPM
+import Loading from 'src/components/Loading';
 
 // Imports locaux
 import './styles.scss';
@@ -26,6 +26,7 @@ const UserPlaylists = ({ baseURL }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [playlistLink, setPlaylistLink] = useState('');
   const [filter, setFilter] = useState('');
+  const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
 
@@ -35,7 +36,6 @@ const UserPlaylists = ({ baseURL }) => {
       window.location.reload();
       localStorage.removeItem('playlist_id');
     };
-
 
     document.title = "MAJA - Mes playlist";
 
@@ -48,6 +48,7 @@ const UserPlaylists = ({ baseURL }) => {
     })
       .then((res) => {
         setUserPlaylists(res.data);
+        setShowLoading(false);
       })
       .catch((err) => {
         console.log(err.response);
@@ -83,11 +84,15 @@ const UserPlaylists = ({ baseURL }) => {
       })
       .catch((err) => {
         console.log(err.response);
-      })
+      });
   };
 
   return(
     <div className="user-playlist-container">
+
+      { showLoading &&
+        <Loading />
+      }
 
       <div className="user-playlist-add">
         <input 

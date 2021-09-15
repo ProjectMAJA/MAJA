@@ -30,11 +30,10 @@
     &-blur {
       position: absolute;
       right: 0vw;
-      width: 150px;
+      width: 70px;
       height: 300px;
       display: flex;
       align-items: center;
-      justify-content: center;
       background: linear-gradient(90deg, rgba(vars.$mainColor, 0) 0%, rgba(rgba(vars.$mainColor, 0), 1) 100%, rgba(rgba(vars.$mainColor, 0), 1) 100%);
       z-index: 3;
 
@@ -46,7 +45,6 @@
         transition: .3s;
         z-index: 5;
         cursor: pointer;
-        margin-left: 40px;
     
         &:hover {
           transform: translateX(5px);
@@ -57,7 +55,7 @@
     &-leftblur {
       position: absolute;
       left: 0;
-      width: 300px;
+      width: 320px;
       height: 300px;
       display: flex;
       align-items: center;
@@ -87,6 +85,11 @@
     width: 150px;
     margin: 20px;
     display: inline-block;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: .3s;
+    }
 
     &-logo {
       width: 150px;

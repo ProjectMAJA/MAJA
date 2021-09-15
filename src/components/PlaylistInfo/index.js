@@ -47,7 +47,7 @@ const PlaylistInfo = ({ baseURL, playlistLink, setShowDetails }) => {
 
           <img 
             src={playlistImg}
-            className="info-bloc-playlist-img"
+            className="home-playlist-card-logo"
             alt="Image de la playlist"
           />
 

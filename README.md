@@ -8,12 +8,13 @@
 ## Principe du jeu
 
 Vous pouvez choisir une playlist sur la page d'accueil parmi plusieurs thèmes.
-Une fois la partie lancée, vous devez écrire le **titre** de la chanson et l'**artiste** qui l'interprète dans le champs en bas de l'écran.
-Attention, vous n'avez que **30 secondes** par chanson pour trouver, un minuteur de 30 secondes apparaît à l'écran.
+Une fois la partie lancée, vous devez écrire le **titre** de la musique et l'**artiste** qui l'interprète dans le champs en bas de l'écran.
+Attention, vous n'avez que **30 secondes** par musique pour trouver, un minuteur apparaît à l'écran.
 
-Si vous trouvez l'artiste, vous marquez **1 point**.
-Si vous trouvez le titre, vous marquez également **1 point**.
-Si vous avez trouvé __les deux__, vous marquez **1 point supplémentaire**, en bonus !
+Si vous trouvez l'artiste, vous gagnez **2 points**.
+Si vous trouvez le titre, vous gagnez également **2 points**.
+Si vous avez trouvé __les deux__, vous gagnez **3 points supplémentaires** !
+Attention ! Certaines musiques peuvent cacher **1 point bonus** supplémentaire si elles contiennent un "featuring", à vous d'être attentif !
 
 ## Technologies utilisées
 
