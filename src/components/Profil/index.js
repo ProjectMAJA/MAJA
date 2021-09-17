@@ -37,7 +37,6 @@ const Profil = ({ baseURL }) => {
   });
 
   useEffect(() => {
-
     const wasPlaying = localStorage.getItem('playlist_id');
 
     if (wasPlaying) {
@@ -64,7 +63,7 @@ const Profil = ({ baseURL }) => {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   }, []);
 
   const handleSubmit = () => {
@@ -104,12 +103,12 @@ const Profil = ({ baseURL }) => {
           console.log(err);
           if (err.response.data === `duplicate key value violates unique constraint \"user_pseudo_key\"`) {
             setShowErrorPseudo(true);
-          }
+          };
           if (err.response.data === `duplicate key value violates unique constraint "user_email_key"`) {
             setShowErrorMail(true);
-          }
+          };
         });
-    }
+    };
   };
 
   const deleteAccount = () => {
@@ -128,7 +127,7 @@ const Profil = ({ baseURL }) => {
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   };
 
   return (

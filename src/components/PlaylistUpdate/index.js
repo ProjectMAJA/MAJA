@@ -56,7 +56,6 @@ const PlaylistUpdate = ({ baseURL }) => {
 
   // useEffect that gets playlist info
   useEffect(() => {
-
     const wasPlaying = localStorage.getItem('playlist_id');
 
     if (wasPlaying) {
@@ -323,9 +322,9 @@ const PlaylistUpdate = ({ baseURL }) => {
                         key={song.track}
                         deleteTrack={deleteTrack}
                       />
-                    )
-                  } 
-                }
+                    );
+                  };
+                };
               })}
             </section>
 
@@ -356,17 +355,17 @@ const PlaylistUpdate = ({ baseURL }) => {
                         chooseTrack={chooseTrack}
                         addNewTrack={addNewTrack}
                       />
-                    )
-                  }
-                }
+                    );
+                  };
+                };
               })}
             </section>
-
           </div>     
         }
-
         {showTenSongMinMessage &&
-          <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
+          <p className="playlist-update-error">
+            Votre playlist doit contenir au minimum 10 musiques pour être enregistrée.
+          </p>
         }
       </section>
 

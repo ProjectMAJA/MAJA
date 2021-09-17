@@ -1,6 +1,7 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from "react-router-dom";
+import axios from 'axios';
 
 import Home from "src/components/Home";
 import Menu from "src/components/Menu";
@@ -23,10 +24,41 @@ const App = () => {
   const [logged, setLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const baseURL = "https://api-maja.herokuapp.com/v1";
+  // const baseURL = "https://api-maja.herokuapp.com/v1";
+  const baseURL = "http://localhost:3333/v1";
+  let token = localStorage.getItem('token');
+  let refreshToken = localStorage.getItem('refresh_token');
+
+  const api = axios.create({
+    baseURL: baseURL
+  });
+  
+  // Set AJAX requests
+  api.interceptors.response.use((response) => {
+    return response;
+  }, async (error) => {
+    const originalRequest = error.config;
+    if(error.config.url != '/refreshToken' && error.response.status === 401 && originalRequest._retry !== true) {
+      originalRequest._retry = true;
+      if(refreshToken && refreshToken != '') {
+        api.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
+        await api.post('/refreshToken')
+          .then((res) => {
+            console.log('res in api instance, in res of post refreshToken: ' + res) // Undefined ?? Wtf
+            api.defaults.headers.common['Authorization'] = `Bearer ${res.data.access_token}`;
+            originalRequest.headers['Authorization'] = `Bearer ${res.data.access_token}`;
+          })
+          .catch((err) => {
+            console.log('error in api instance, in catch of post refreshToken : ' + err);
+            refreshToken = null;
+          });
+          return api(originalRequest);
+      };
+    };
+  });
 
   useEffect(() => {
-
+    // Init the Deezer's player
     DZ.init({
       appId: '492382',
       channelUrl: `client/public/channel.html`,
@@ -37,15 +69,24 @@ const App = () => {
       }
     });
 
-    const token = localStorage.getItem('token');
-    const admin = localStorage.getItem('admin');
+    if (token) {
+      api.get('/user', {
+        headers: {
+          Authorization: token
+        }
+      })
+        .then((res) => {
+          setLogged(true);
 
-    token ? setLogged(true) : setLogged(false);
-
-    if ( admin === 'true' ) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
+          if (res.data.isadmin === true) {
+            setIsAdmin(true);
+          };
+        })
+        .catch((err) => {
+          setLogged(false);
+          setIsAdmin(false);
+          console.log('error in App : ' +err);
+        });
     };
   }, []);
 
@@ -86,7 +127,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/user/playlists">
-        { logged ? <UserPlaylists baseURL={baseURL} /> : <Error /> }
+          { logged ? <UserPlaylists baseURL={baseURL} /> : <Error /> }
         </Route>
 
         <Route exact path="/update">
@@ -104,9 +145,8 @@ const App = () => {
         <Route path="/" component={Error} />
         
       </Switch>
-
     </div>
-  ) 
+  );
 };
 
 export default App;

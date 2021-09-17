@@ -143,7 +143,7 @@ const UserPlaylists = ({ baseURL }) => {
           if( name.includes(search) ) {
             return (
               <li className="user-playlist-card" key={playlist.id}>
-                <a id={playlist.id} onClick={() => {
+                <a onClick={() => {
                   setPlaylistLink(playlist.id);
                   setShowDetails(true);
                 }}>

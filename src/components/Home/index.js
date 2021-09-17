@@ -44,72 +44,68 @@ const Home = ({ baseURL, setLogged }) => {
       };
   
       document.title = "MAJA";
-    }, [])
+    }, []);
 
     useEffect(async () => {
 
-      const token = localStorage.getItem('token');
-      if (token) {
-        setLogged(true);
-      } else {
-        setLogged(false);
-      };
+      let token = localStorage.getItem('token');
+      
       // GET playlists most played from all time
       await api.get('/playlists/bests/0')
       .then((res) => {
         if(res.data === []){
           setBest(false);
-        }else{
+        } else {
           setBest(res.data);
           setShowLoading(false);
-        }
+        };
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
 
       // GET playlists most played this week
       await api.get('/playlists/bests/7')
       .then((res) => {
         if(res.data === []){
           setMoment(false);
-        }else{
+        } else {
           setMoment(res.data);
           setShowLoading(false);
-        }
+        };
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
 
       // GET 10 random playlists
-      await api.get('/playlists/random/10')
+      await api.get('/playlists/random/10') 
       .then((res) => {
         if(res.data === []){
           setRandom(false);
-        }else{
+        } else {
           setRandom(res.data);
           setShowLoading(false);
-        }
+        };
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
 
       // Playlists admin
       await api.get('/admin/playlists')
       .then((res) => {
         if(res.data === []){
           setBase(false);
-        }else{
+        } else {
           setBase(res.data);
           setShowLoading(false);
-        }
+        };
       })
       .catch((err) => {
         console.log(err);
-      })
-
+      });
+      
       if(token){
         // GET user playlists
         await api.get('/user/playlists',{
@@ -120,14 +116,14 @@ const Home = ({ baseURL, setLogged }) => {
         .then((res) => {
           if(res.data === []){
             setUserPlaylists(false);
-          }else{
+          } else {
             setUserPlaylists(res.data);
             setShowLoading(false);
-          }
+          };
         })
         .catch((err) => {
           console.log(err.message);
-        })
+        });
 
         // GET user playlists recently played
         await api.get('/user/played',{
@@ -138,14 +134,14 @@ const Home = ({ baseURL, setLogged }) => {
         .then((res) => {
           if(res.data === []){
             setUserPlayed(false);
-          }else{
+          } else {
             setUserPlayed(res.data);
             setShowLoading(false);
-          }
+          };
         })
         .catch((err) => {
           console.log('erreur :', err);
-        })
+        });
 
         // GET user playlists most liked
         await api.get('/user/liked',{
@@ -156,16 +152,15 @@ const Home = ({ baseURL, setLogged }) => {
         .then((res) => {
           if(res.data === []){
             setUserLiked(false);
-          }else{
+          } else {
             setUserLiked(res.data);
             setShowLoading(false);
-          }
+          };
         })
         .catch((err) => {
           console.log(err);
-        })
-      }
-
+        });
+      };
   }, []);
 
   return (

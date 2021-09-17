@@ -12,6 +12,8 @@ import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import downArrow from '../../../public/img/icons/downArrow.png';
+import deleteImg from '../../../public/img/icons/delete.svg';
+import save from '../../../public/img/playlist/save.svg';
 
 const PlaylistCreate = ({ baseURL }) => {
 
@@ -46,7 +48,7 @@ const PlaylistCreate = ({ baseURL }) => {
 
   const toggleState = () => {
     setToggle(!toggle);
-  }
+  };
 
   useEffect(() => {
     document.title = "MAJA - Créer une playlist";
@@ -54,30 +56,28 @@ const PlaylistCreate = ({ baseURL }) => {
 
   // useEffect that fetches data from Deezer API
   useEffect(() => {
-
-    DZ.api('/search?q=' + search, (res) => {
-      
-      setSearchResults(
-        res.data.map(track => {
-          if (track.readable) {
-            if ( deezerIds.includes(track.id) ) {
-              return;
-            } else {
-
-              return {
-                id: track.id,
-                artist: track.artist.name,
-                title : track.title,
-                track: track.link,
-                cover: track.album.cover_medium,
-                preview: track.preview,
+    if (search != '') {
+      DZ.api('/search?q=' + search, (res) => {
+        setSearchResults(
+          res.data.map(track => {
+            if (track.readable) {
+              if ( deezerIds.includes(track.id) ) {
+                return;
+              } else {
+                return {
+                  id: track.id,
+                  artist: track.artist.name,
+                  title : track.title,
+                  track: track.link,
+                  cover: track.album.cover_medium,
+                  preview: track.preview
+                };
               };
             };
-          };
-        })
-      );
-    });
-
+          })
+        );
+      });
+    }
   }, [search]);
 
   function chooseTrack(track) {
@@ -87,6 +87,7 @@ const PlaylistCreate = ({ baseURL }) => {
     const newIDs = [...deezerIds, track.id];
     setDeezerIds(newIDs);
   };
+  
   function addNewTrack() {
     chooseTrack(track);
   };
@@ -109,13 +110,13 @@ const PlaylistCreate = ({ baseURL }) => {
       })
         .then((res) => {
           history.push({
-            pathname: '/user/playlists',
-          })
+            pathname: '/user/playlists'
+          });
           console.log(res.data);
         })
         .catch((err) => {
           console.log(err.response);
-        })
+        });
     } else {
       setShowTenSongMinMessage(true);
     };
@@ -275,9 +276,9 @@ const PlaylistCreate = ({ baseURL }) => {
                         key={song.track}
                         deleteTrack={deleteTrack}
                       />
-                    )
-                  } 
-                }
+                    );
+                  };
+                };
               })}
             </section>
 
@@ -306,9 +307,9 @@ const PlaylistCreate = ({ baseURL }) => {
                         chooseTrack={chooseTrack}
                         addNewTrack={addNewTrack}
                       />
-                    )
-                  }
-                }
+                    );
+                  };
+                };
               })}
             </section>
 
@@ -322,24 +323,34 @@ const PlaylistCreate = ({ baseURL }) => {
 
       <section className="playlist-update-buttons">
 
-          <button className="playlist-update-buttons-save" onClick={(event) => {
+        <button 
+          className="playlist-update-buttons-save" 
+          onClick={(event) => {
             event.preventDefault();
             savePlaylist();
-          }}>
-            Sauvegarder
-          </button>
-
-          <input
-            className="playlist-update-buttons-delete"
-            type="button"
-            value="Supprimer cette playlist"
-            onClick={() => {
-              deletePlaylist();
-              history.push({
-                pathname: '/user/playlists'
-              })
-            }}
+          }}
+        >
+          <img
+          className="playlist-update-buttons-img"
+          src={save}
+          alt="Bouton de sauvegarde"
           />
+          Sauvegarder
+        </button>
+
+        <button
+          className="playlist-update-buttons-delete"
+          onClick={() => {
+            deletePlaylist();
+          }}
+        >
+          <img
+          className="playlist-update-buttons-img"
+          src={deleteImg}
+          alt="Bouton de suppression"
+          />
+          Supprimer cette playlist
+        </button>
 
       </section>
     

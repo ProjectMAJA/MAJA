@@ -108,6 +108,7 @@ const Menu = ({ baseURL, logged, isAdmin, setLogged, setIsAdmin }) => {
             onClick={() => {
               localStorage.clear();
               setLogged(false);
+              setIsAdmin(false);
             }}
           >
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo"/>
