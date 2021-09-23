@@ -24,10 +24,8 @@ api.interceptors.response.use((res) => {
           api.defaults.headers.common['Authorization'] = `Bearer ${res.data.access_token}`;
           originalRequest.headers['Authorization'] = `Bearer ${res.data.access_token}`;
           localStorage.setItem('token', res.data.access_token);
-          console.log("token has been refreshed")
         })
         .catch((err) => {
-          console.log('error in api instance, in catch of post refreshToken : ' + err);
           refreshToken = null;
         });
       return api(originalRequest);

@@ -108,7 +108,7 @@ const Home = ({ api }) => {
           };
         })
         .catch((err) => {
-          console.log(err.message);
+          console.log(err);
         });
 
         // GET user playlists recently played
