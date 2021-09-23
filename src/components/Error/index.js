@@ -7,9 +7,7 @@ import cassette from '../../../public/img/icons/cassette-tape.svg';
 const Error = () => {
 
   useEffect(() => {
-
     document.title = "MAJA - Error";
-    
   }, []);
 
   return (
@@ -24,9 +22,7 @@ const Error = () => {
           Retour à l'accueil
         </a>
     </div>
-  )
+  );
 };
 
 export default Error;
-
-

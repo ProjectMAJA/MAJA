@@ -2,8 +2,6 @@
 @use 'src/styles/vars';
 
 .team {
-  height: 100%;
-  width: 100%;
 
   &-container {
     margin-left: 15em;
@@ -67,5 +65,47 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .team-container {
+    &-title {
+      font-size: 0.6em;
+    }
+  
+    &-list-card {
+      margin: 1em;
+      height: 235px;
+      width: 125px;
+
+      &-id {
+        &-name {
+          font-size: 0.8em;
+        }
+
+        &-role {
+          font-size: 0.6em;
+        }
+      }
+      
+      &-link {
+        margin-top: 0.5em;
+        height: 1em;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .team-container {
+    margin-left: 0;
+    margin-top: 50vh;
+    margin-bottom: 70vh;
+
+    &-list {
+      flex-direction: column;
+    }
+
   }
 }

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import './style.scss';
 
@@ -10,7 +8,7 @@ import Loading from 'src/components/Loading';
 import searchImg from '../../../public/img/nav/search.svg';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 
-const Search = ({ baseURL }) => {
+const Search = ({ api }) => {
 
   const [showDetails, setShowDetails] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
@@ -19,12 +17,7 @@ const Search = ({ baseURL }) => {
   const [playlists, setPlaylists] = useState(null);
   const [playlistLink, setPlaylistLink] = useState('');
 
-  const api = axios.create({
-    baseURL: baseURL 
-  });
-
   useEffect(async() => {
-
     setShowLoading(true);
 
     const wasPlaying = localStorage.getItem('playlist_id');
@@ -60,7 +53,7 @@ const Search = ({ baseURL }) => {
         <input
           className="search-header-input"
           type="text"
-          placeholder="Filtrer - Rechercher une playlist"
+          placeholder="Rechercher une playlist"
           onChange={(event) => {
             setSearchInput(event.target.value);
           }}
@@ -129,7 +122,7 @@ const Search = ({ baseURL }) => {
 
         {showDetails &&
           <PlaylistInfo
-            baseURL={baseURL}
+            api={api}
             playlistLink={playlistLink}
             setShowDetails={setShowDetails}
           />
@@ -138,10 +131,6 @@ const Search = ({ baseURL }) => {
       </div>
     </section>
   );
-};
-
-Search.propTypes = {
-  baseURL: PropTypes.string.isRequired
 };
 
 export default Search;

@@ -17,7 +17,6 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
   const rowContainer = useRef(0);
 
   useEffect(() => {
-
     // Get the client witdh
     const userWidth = document.body.clientWidth;
 

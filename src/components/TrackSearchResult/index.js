@@ -8,7 +8,7 @@ const TrackSearchResult = ({ track, chooseTrack, addNewTrack }) => {
 
   function addNewTrack() {
     chooseTrack(track);
-  }
+  };
 
   return (
     <div className="search-result" onClick={addNewTrack}>
@@ -18,7 +18,7 @@ const TrackSearchResult = ({ track, chooseTrack, addNewTrack }) => {
         <div className="search-result-info-title">{track.title}</div>
       </div>
     </div>
-  )
+  );
 };
 
 export default TrackSearchResult;

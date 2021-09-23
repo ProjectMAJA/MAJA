@@ -1,30 +1,18 @@
 import React, { useRef } from "react";
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import "./style.scss";
 
-const Rating = ({ baseURL, setShowRating }) => {
+const Rating = ({ api, setShowRating }) => {
 
   const ratingSection = useRef(null);
 
-  const api = axios.create({
-    baseURL: baseURL
-  });
-
   const giveRate = (rate) => {
-
     const playlistID = localStorage.getItem('playlist_id');
-    const token = localStorage.getItem('token');
-
     // Send rating to back
     api.post('/playlist/rating', {
       playlist_id: playlistID,
       rating: rate,
-    }, {
-      headers: {
-        Authorization: token
-      }
     })
       .then((res) => {
         console.log(res.data);
@@ -99,7 +87,6 @@ const Rating = ({ baseURL, setShowRating }) => {
 };
 
 Rating.propTypes = {
-  baseURL: PropTypes.string.isRequired,
   setShowRating: PropTypes.func.isRequired
 };
 

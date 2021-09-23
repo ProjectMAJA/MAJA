@@ -1,19 +1,14 @@
 // Import de la lib React
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-
 
 import PlaylistInfo from 'src/components/PlaylistInfo';
 import Playlist from '../Playlist';
 import Loading from '../Loading';
 
-// Imports NPM
-import axios from 'axios';
-
 // Imports locaux
 import './styles.scss';
 
-const Home = ({ baseURL, setLogged }) => {
+const Home = ({ api }) => {
 
     const [showDetails, setShowDetails] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
@@ -29,10 +24,6 @@ const Home = ({ baseURL, setLogged }) => {
     const [userPlayed, setUserPlayed] = useState(false);
     const [userLiked, setUserLiked] = useState(false);
 
-    const api = axios.create({
-      baseURL: baseURL
-    });
-
     useEffect(() => {
       setShowLoading(true);
 
@@ -45,11 +36,10 @@ const Home = ({ baseURL, setLogged }) => {
   
       document.title = "MAJA";
     }, []);
+    
+    let token = localStorage.getItem('token');
 
     useEffect(async () => {
-
-      let token = localStorage.getItem('token');
-      
       // GET playlists most played from all time
       await api.get('/playlists/bests/0')
       .then((res) => {
@@ -108,11 +98,7 @@ const Home = ({ baseURL, setLogged }) => {
       
       if(token){
         // GET user playlists
-        await api.get('/user/playlists',{
-          headers: {
-            authorization: token
-          }
-        })
+        await api.get('/user/playlists')
         .then((res) => {
           if(res.data === []){
             setUserPlaylists(false);
@@ -126,11 +112,7 @@ const Home = ({ baseURL, setLogged }) => {
         });
 
         // GET user playlists recently played
-        await api.get('/user/played',{
-          headers: {
-            authorization: token
-          }
-        })
+        await api.get('/user/played')
         .then((res) => {
           if(res.data === []){
             setUserPlayed(false);
@@ -144,11 +126,7 @@ const Home = ({ baseURL, setLogged }) => {
         });
 
         // GET user playlists most liked
-        await api.get('/user/liked',{
-          headers: {
-            authorization: token
-          }
-        })
+        await api.get('/user/liked')
         .then((res) => {
           if(res.data === []){
             setUserLiked(false);
@@ -229,18 +207,13 @@ const Home = ({ baseURL, setLogged }) => {
 
       {showDetails && 
         <PlaylistInfo
-          baseURL={baseURL}
+          api={api}
           playlistLink={playlistLink}
           setShowDetails={setShowDetails}
         />
       }
     </div>
-  )
-};
-
-Home.propTypes = {
-  baseURL: PropTypes.string.isRequired,
-  setLogged: PropTypes.func.isRequired
+  );
 };
 
 export default Home;

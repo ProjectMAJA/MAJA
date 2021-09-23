@@ -1,10 +1,6 @@
 // Import de la lib React
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-
-// Imports NPM
-import axios from 'axios';
 
 // Imports locaux
 import './styles.scss';
@@ -15,13 +11,9 @@ import downArrow from '../../../public/img/icons/downArrow.png';
 import deleteImg from '../../../public/img/icons/delete.svg';
 import save from '../../../public/img/playlist/save.svg';
 
-const PlaylistCreate = ({ baseURL }) => {
+const PlaylistCreate = ({ api }) => {
 
   let history = useHistory();
-
-  const api = axios.create({
-    baseURL: baseURL
-  });
 
   {/* useState pour l'accordéon */}
   const [toggle, setToggle] = useState(false);
@@ -96,17 +88,11 @@ const PlaylistCreate = ({ baseURL }) => {
 
     if (deezerIds.length >= 10) {
 
-      const token = localStorage.getItem('token');
-
       await api.post('/playlist', {
         name: playlistName,
         description: playlistDesc,
         image: playlistImg,
         deezer_ids: deezerIds
-      },{
-        headers: {
-          Authorization: token
-        }
       })
         .then((res) => {
           history.push({
@@ -132,13 +118,9 @@ const PlaylistCreate = ({ baseURL }) => {
   };
 
   const deletePlaylist = async () => {
-    const token = localStorage.getItem('token');
 
     await api.delete(`/playlist`,
       {
-      headers: {
-        Authorization: token
-      },
       data: {
         id: playlistID,
         user_id: userID
@@ -356,10 +338,6 @@ const PlaylistCreate = ({ baseURL }) => {
     
     </div>
   );
-};
-
-PlaylistCreate.propTypes = {
-  baseURL: PropTypes.string.isRequired
 };
 
 export default PlaylistCreate;

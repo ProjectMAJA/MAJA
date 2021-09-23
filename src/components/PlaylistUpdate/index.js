@@ -1,10 +1,6 @@
 // Import de la lib React
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
-
-// Imports NPM
-import axios from 'axios';
 
 // Imports locaux
 import './styles.scss';
@@ -15,15 +11,10 @@ import downArrow from '../../../public/img/icons/downArrow.png';
 import deleteImg from '../../../public/img/icons/delete.svg';
 import save from '../../../public/img/playlist/save.svg';
 
-const PlaylistUpdate = ({ baseURL }) => {
+const PlaylistUpdate = ({ api }) => {
 
   let history = useHistory();
-
   const location = useLocation();
-
-  const api = axios.create({
-    baseURL: baseURL
-  });
 
   {/* useState pour l'accordéon */}
   const [toggle, setToggle] = useState(false);
@@ -122,7 +113,6 @@ const PlaylistUpdate = ({ baseURL }) => {
   }, [search]);
 
   function chooseTrack(track) {
-
     const tracks = [...selectedTrack, track];
     setSelectedTrack(tracks);
 
@@ -135,21 +125,13 @@ const PlaylistUpdate = ({ baseURL }) => {
   };
 
   async function savePlaylist() {
-
     if (deezerIds.length >= 10) {
-
-      const token = localStorage.getItem('token');
-
       await api.post('/playlist', {
         id: playlistID,
         name: playlistName,
         description: playlistDesc,
         image: playlistImg,
         deezer_ids: deezerIds
-      },{
-        headers: {
-          Authorization: token
-        }
       })
         .then((res) => {
           history.push({
@@ -166,7 +148,6 @@ const PlaylistUpdate = ({ baseURL }) => {
   };
 
   const deleteTrack = (id) => {
-
     const newTracks = selectedTrack.filter(track => track.id != id);
     setSelectedTrack(newTracks);
 
@@ -175,13 +156,8 @@ const PlaylistUpdate = ({ baseURL }) => {
   };
 
   const deletePlaylist = async () => {
-    const token = localStorage.getItem('token');
-
     await api.delete(`/playlist`,
       {
-      headers: {
-        Authorization: token
-      }, 
       data: {
         id: playlistID,
         user_id: userID
@@ -403,10 +379,6 @@ const PlaylistUpdate = ({ baseURL }) => {
       </section>
     </div>
   );
-};
-
-PlaylistUpdate.propTypes = {
-  baseURL: PropTypes.string.isRequired
 };
 
 export default PlaylistUpdate;

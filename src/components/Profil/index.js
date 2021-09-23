@@ -2,17 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-// Imports NPM
-import PropTypes from 'prop-types';
-import axios from 'axios';
-
 import Loading from 'src/components/Loading';
 
 // Imports locaux
 import imgDefault from '../../../public/img/profil/default.png';
 import './styles.scss';
 
-const Profil = ({ baseURL }) => {
+const Profil = ({ api }) => {
 
   // DOM state
   const [showPassword, setShowPassword] = useState(false);
@@ -30,12 +26,6 @@ const Profil = ({ baseURL }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordChange, setPasswordChange] = useState(false);
 
-  const token = localStorage.getItem('token');
-
-  const api = axios.create({
-    baseURL: baseURL
-  });
-
   useEffect(() => {
     const wasPlaying = localStorage.getItem('playlist_id');
 
@@ -47,11 +37,7 @@ const Profil = ({ baseURL }) => {
     document.title = "MAJA - Mon profil";
 
     // Get user informations with his token
-    api.get('/user', {
-      headers: {
-        Authorization: token
-      }
-    })
+    api.get('/user')
       .then((res) => {
         // And set them in state
         setUserID(res.data.id);
@@ -84,16 +70,12 @@ const Profil = ({ baseURL }) => {
       };
     };
 
-    if ( canBeSend ) {
+    if (canBeSend) {
       api.post(`/user`, {
         pseudo: pseudo,
         email: mail,
         password: password,
         avatar: avatar,
-      }, {
-        headers: {
-          Authorization: token
-        }
       })
         .then((res) => {
           console.log(res.data);
@@ -112,16 +94,11 @@ const Profil = ({ baseURL }) => {
   };
 
   const deleteAccount = () => {
-
     // Clear the local storage
     localStorage.clear();
 
     // Delete user from database
-    api.delete(`/user/${userID}`, {
-      headers: {
-        Authorization: token
-      }
-    })
+    api.delete(`/user/${userID}`)
       .then((res) => {
         console.log(res.data);
       })
@@ -131,125 +108,115 @@ const Profil = ({ baseURL }) => {
   };
 
   return (
-      <div className="profil">
+    <div className="profil">
 
-        { showLoading &&
-          <Loading />
-        }
+      { showLoading &&
+        <Loading />
+      }
 
-        <section className="profil-container"> 
-          <div className="profil-header">
-              <img 
-                src={ avatar!=null ? avatar : imgDefault }
-                className="profil-header-avatar"
-              />
-                <h2 className="profil-header-pseudo">{pseudo}</h2>
-            </div>
-
-          <div className="profil-info">
-            <h3 className="profil-info-title">Modifier mes informations</h3>
-            <hr />
-              <p className="profil-info-item">Pseudo</p>
-              { showErrorPseudo &&
-                <p className="error">Ce pseudo est déjà pris</p>
-              }
-              <input
-                className="profil-info-form-input"
-                type="text"
-                placeholder={pseudo}
-                onChange={(event) => {
-                  setPseudo(event.target.value);
-                }}
-              />
-              <p className="profil-info-item">Adresse mail</p>
-              { showErrorMail &&
-                <p className="error">Cette adresse email est déjà utilisée sur notre site</p>
-              }
-              <input
-                className="profil-info-form-input"
-                type="text"
-                placeholder={mail}
-                onChange={(event) => {
-                  setImage(event.target.value);
-                }}
-              />
-              <p className="profil-info-item">URL de votre avatar</p>
-              <input
-                className="profil-info-form-input"
-                type="text"
-                placeholder={avatar ? avatar : 'URL de votre image'}
-                onChange={(event) => {
-                  setAvatar(event.target.value);
-                }}
-              />
-              <p className="profil-info-item">Mot de passe</p>
-              { showErrorPassword &&
-                <p className="error">Les deux mots de passe ne correspondent pas</p>
-              }
-              <input
-                className="profil-info-form-input"
-                type={showPassword ? "text" : "password"}
-                placeholder="Nouveau mot de passe"
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                  setPasswordChange(true);
-                }}
-              />
-              <input
-                className="profil-info-form-input"
-                type={showPassword ? "text" : "password"}
-                placeholder="Confirmer le nouveau mot de passe"
-                onChange={(event) => {
-                  setConfirmPassword(event.target.value);
-                  setPasswordChange(true);
-                }}
-              />
-
-                  <label className="profil-info-form-check">
-                    <input
-                      type="checkbox"
-                      onClick={() => {
-                        setShowPassword(!showPassword);
-                      }}
-                    />
-                    Voir le mot de passe
-                  </label>
-
-              <input
-                className="profil-info-form-button"
-                type="button"
-                value="Enregistrer les modifications"
-                onClick={() => {
-                  handleSubmit();
-                }}
-              />
+      <section className="profil-container"> 
+        <div className="profil-header">
+            <img 
+              src={ avatar!=null ? avatar : imgDefault }
+              className="profil-header-avatar"
+            />
+              <h2 className="profil-header-pseudo">{pseudo}</h2>
           </div>
 
-          <div className="profil-info-delete">
+        <div className="profil-info">
+          <h3 className="profil-info-title">Modifier mes informations</h3>
+          <hr />
+            <p className="profil-info-item">Pseudo</p>
+            { showErrorPseudo &&
+              <p className="error">Ce pseudo est déjà pris</p>
+            }
+            <input
+              className="profil-info-form-input"
+              type="text"
+              placeholder={pseudo}
+              onChange={(event) => {
+                setPseudo(event.target.value);
+              }}
+            />
+            <p className="profil-info-item">Adresse mail</p>
+            { showErrorMail &&
+              <p className="error">Cette adresse email est déjà utilisée sur notre site</p>
+            }
+            <input
+              className="profil-info-form-input"
+              type="text"
+              placeholder={mail}
+              onChange={(event) => {
+                setImage(event.target.value);
+              }}
+            />
+            <p className="profil-info-item">URL de votre avatar</p>
+            <input
+              className="profil-info-form-input"
+              type="text"
+              placeholder={avatar ? avatar : 'URL de votre image'}
+              onChange={(event) => {
+                setAvatar(event.target.value);
+              }}
+            />
+            <p className="profil-info-item">Mot de passe</p>
+            { showErrorPassword &&
+              <p className="error">Les deux mots de passe ne correspondent pas</p>
+            }
+            <input
+              className="profil-info-form-input"
+              type={showPassword ? "text" : "password"}
+              placeholder="Nouveau mot de passe"
+              onChange={(event) => {
+                setPassword(event.target.value);
+                setPasswordChange(true);
+              }}
+            />
+            <input
+              className="profil-info-form-input"
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirmer le nouveau mot de passe"
+              onChange={(event) => {
+                setConfirmPassword(event.target.value);
+                setPasswordChange(true);
+              }}
+            />
 
-            <NavLink 
-              exact to='/'
-              className="profil-info-delete-button"
+                <label className="profil-info-form-check">
+                  <input
+                    type="checkbox"
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                  />
+                  Voir le mot de passe
+                </label>
+
+            <input
+              className="profil-info-form-button"
+              type="button"
+              value="Enregistrer les modifications"
               onClick={() => {
-                deleteAccount();
-              }}>
-                Supprimer mon compte
-            </NavLink>
-            
-          </div>
-        </section>
-        
+                handleSubmit();
+              }}
+            />
+        </div>
 
-      </div>
-  )
-};
+        <div className="profil-info-delete">
 
-Profil.propTypes = {
-  baseURL: PropTypes.string.isRequired
+          <NavLink 
+            exact to='/'
+            className="profil-info-delete-button"
+            onClick={() => {
+              deleteAccount();
+            }}>
+              Supprimer mon compte
+          </NavLink>
+          
+        </div>
+      </section>
+    </div>
+  );
 };
 
 export default Profil;
-
-
-
-

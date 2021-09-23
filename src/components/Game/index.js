@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import './style.scss';
 
@@ -15,7 +14,7 @@ import Volume from './Volume';
 import Rating from './Rating';
 import EndGame from './EndGame';
 
-const Game = ({ baseURL, logged }) => {
+const Game = ({ api, logged }) => {
 
   // DOM elements
   const [showBefore, setShowBefore] = useState(true);
@@ -50,11 +49,6 @@ const Game = ({ baseURL, logged }) => {
   // Init cooldown beetwen every song played (in s) & number of tracks for a game
   const cooldown = 5;
   const nbOfTracks = 10;
-
-  // Init axios requests
-  const api = axios.create({
-    baseURL: baseURL
-  });
 
   let nextTrack = useRef(null);
 
@@ -197,25 +191,10 @@ const Game = ({ baseURL, logged }) => {
 
     <div className="game">
 
-      {showScore &&
-        <Score 
-          score={score}
-        />
-      }
-
-      {showAnswer &&
-        <Answer
-          previousImg={previousImg}
-          previousArtist={previousArtist}
-          previousTrack={previousTrack}
-        />
-      }
-
-      {showPrevious &&
-        <Previous
-          previousImg={previousImg}
-          previousTrack={previousTrack}
-          previousArtist={previousArtist}
+      {showBefore &&
+        <Before 
+          playGame={playGame}
+          timer={timer}
         />
       }
 
@@ -232,13 +211,6 @@ const Game = ({ baseURL, logged }) => {
           setShowTimer={setShowTimer}
           timer={timer}
           setTimer={setTimer}
-        />
-      }
-
-      {showBefore &&
-        <Before 
-          playGame={playGame}
-          timer={timer}
         />
       }
 
@@ -261,6 +233,12 @@ const Game = ({ baseURL, logged }) => {
         />
       }
 
+      {showScore &&
+        <Score 
+          score={score}
+        />
+      }
+
       {showVolume &&
         <Volume 
           musicVolume={musicVolume}
@@ -270,21 +248,35 @@ const Game = ({ baseURL, logged }) => {
 
       {logged && showRating &&
         <Rating 
-          baseURL={baseURL}
+          api={api}
           setShowRating={setShowRating}
+        />
+      }
+
+      {showAnswer &&
+        <Answer
+          previousImg={previousImg}
+          previousArtist={previousArtist}
+          previousTrack={previousTrack}
+        />
+      }
+
+      {showPrevious &&
+        <Previous
+          previousImg={previousImg}
+          previousTrack={previousTrack}
+          previousArtist={previousArtist}
         />
       }
 
       {showEndgame &&
         <EndGame
-          baseURL={baseURL}
+          api={api}
           score={score}
-          cooldown={cooldown}
           setShowVolume={setShowVolume}
           setShowAnswer={setShowAnswer}
           setShowPrevious={setShowPrevious}
           setShowScore={setShowScore}
-          setShowEndgame={setShowEndgame}
         />
       }
 
@@ -325,11 +317,10 @@ const Game = ({ baseURL, logged }) => {
       )}
 
     </div>
-  )
+  );
 };
 
 Game.propTypes = {
-  baseURL: PropTypes.string.isRequired,
   logged: PropTypes.bool.isRequired
 };
 

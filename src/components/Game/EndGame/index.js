@@ -1,49 +1,36 @@
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import './style.scss';
 
 const EndGame = ({
-  baseURL,
+  api,
   score,
-  cooldown,
   setShowVolume,
   setShowAnswer,
   setShowPrevious,
-  setShowScore,
-  setShowEndgame
+  setShowScore
 }) => {
   
   useEffect(() => {
-
-    // Init axios requests
-    const api = axios.create({
-      baseURL: baseURL
-    });
-
     const token = localStorage.getItem('token');
-    const playlistID = localStorage.getItem('playlist_id');
     const newScore = localStorage.getItem('score');
+    const playlistID = localStorage.getItem('playlist_id');
 
     // Send score to back
     if (token) {
       api.post('/playlist/game', {
         score: newScore,
         playlist_id: playlistID
-      },
-      {
-        headers: {
-          Authorization: token
-        }
       })
         .then((res) => {
           console.log(res.data);
+          localStorage.removeItem('playlist_id');
         })
         .catch((err) => {
           console.log(err.response);
-        })
+        });
     };
 
     // Show the result & the redirect button
@@ -73,14 +60,11 @@ const EndGame = ({
 };
 
 EndGame.propTypes = {
-  baseURL: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  cooldown: PropTypes.number.isRequired,
   setShowVolume: PropTypes.func.isRequired,
   setShowAnswer: PropTypes.func.isRequired,
   setShowPrevious: PropTypes.func.isRequired,
-  setShowScore: PropTypes.func.isRequired,
-  setShowEndgame: PropTypes.func.isRequired
+  setShowScore: PropTypes.func.isRequired
 };
 
 export default EndGame;

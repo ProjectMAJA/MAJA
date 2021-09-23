@@ -1,7 +1,5 @@
 // Import packages
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
 
 import Loading from "../Loading";
 
@@ -12,18 +10,13 @@ import del from "../../../public/img/icons/delete.svg";
 import imgDefaultPlaylist from "../../../public/img/playlist/playlist-placeholder.png";
 import imgDefaultUser from "../../../public/img/profil/default.png";
 
-const Admin = ({ baseURL }) => {
+const Admin = ({ api }) => {
 
   const [playlists, setPlaylists] = useState(null);
   const [playlistInput, setPlaylistInput] = useState("");
   const [users, setUsers] = useState(null);
   const [userInput, setUserInput] = useState("");
   const [showLoading, setShowLoading] = useState(false);
-
-  // Init axios with our URL
-  const api = axios.create({
-    baseURL: baseURL
-  });
 
   useEffect(() => {
     setShowLoading(true);
@@ -47,14 +40,8 @@ const Admin = ({ baseURL }) => {
         console.log(err);
       });
 
-    const token = localStorage.getItem("token");
-
     // Get users from database
-    api.get("/users", {
-        headers: {
-          Authorization: token
-        }
-      })
+    api.get("/users")
       .then((res) => {
         setUsers(res.data);
         setShowLoading(false);
@@ -70,9 +57,6 @@ const Admin = ({ baseURL }) => {
     setShowLoading(true);
 
     await api.delete(`/playlist`, {
-        headers: {
-          Authorization: token
-        },
         data: {
           id: playlistID,
           user_id: userID,
@@ -80,11 +64,7 @@ const Admin = ({ baseURL }) => {
       })
       .then((res) => {
         console.log(res.data);
-        api.get("/playlists", {
-            headers: {
-              Authorization: token
-            }
-          })
+        api.get("/playlists")
           .then((res) => {
             setPlaylists(res.data);
             setShowLoading(false);
@@ -99,22 +79,12 @@ const Admin = ({ baseURL }) => {
   };
 
   const deleteUser = (id) => {
-    const token = localStorage.getItem("token");
-
     setShowLoading(true);
 
-    api.delete(`/user/${id}`, {
-        headers: {
-          Authorization: token
-        }
-      })
+    api.delete(`/user/${id}`)
       .then((res) => {
         console.log(res.data);
-        api.get("/users", {
-            headers: {
-              Authorization: token
-            }
-          })
+        api.get("/users")
           .then((res) => {
             setUsers(res.data);
             setShowLoading(false);
@@ -250,10 +220,6 @@ const Admin = ({ baseURL }) => {
       </section>
     </div>
   );
-};
-
-Admin.propTypes = {
-  baseURL: PropTypes.string.isRequired,
 };
 
 export default Admin;

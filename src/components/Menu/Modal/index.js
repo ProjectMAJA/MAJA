@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import './style.scss';
 import cancel from '../../../../public/img/icons/cancel.svg';
 
-const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
+const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
 
   const [showSignInForm, setShowSignInForm] = useState(true);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
@@ -16,10 +15,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
   const [showErrorMailTaken, setShowErrorMailTaken] = useState(false);
   const [showErrorWrongId, setShowErrorWrongId] = useState(false);
 
-  const api = axios.create({ 
-    baseURL: baseURL
-  });
-
   const signInSubmit = (obj) => {
     api.post('/login', {
       pseudo: obj.pseudo.value,
@@ -28,12 +23,11 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
       .then((res) => {
         setLogged(true);
         setShowModal(false);
-        localStorage.setItem('token', `bearer ${res.data.access_token}`);
-        localStorage.setItem('refresh_token', `bearer ${res.data.refresh_token}`);
+        localStorage.setItem('token', `Bearer ${res.data.access_token}`);
+        localStorage.setItem('refresh_token', `Bearer ${res.data.refresh_token}`);
         if (res.data.isadmin === true) {
           setIsAdmin(true);
         };
-        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -103,6 +97,9 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
   return (
       // If it's true, render the modal
       <section className="modal">
+        <div className="behind" onClick={() => {
+          setShowModal(false);
+        }}></div>
         <div className="modal-display">
  
           <section className="modal-display-buttons">
@@ -173,7 +170,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
                 Cet identifiant ou ce mot de passe ne correspondent pas
               </span>
 }
-
               <button
                 className="modal-display-form-button"
                 type="submit"
@@ -183,7 +179,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
 
             </form>
 }
-            
 { showSignUpForm &&
             <form
               className="modal-display-form"
@@ -261,7 +256,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
 };
 
 Modal.propTypes = {
-  baseURL: PropTypes.string.isRequired,
   setShowModal: PropTypes.func.isRequired,
   setLogged: PropTypes.func.isRequired,
   setIsAdmin: PropTypes.func.isRequired
