@@ -78,7 +78,7 @@ const PlaylistUpdate = ({ api }) => {
           title : res.title,
           track: res.link,
           cover: res.album.cover_medium,
-          preview: res.preview,
+          preview: res.preview
         });
       });
     });
@@ -93,10 +93,9 @@ const PlaylistUpdate = ({ api }) => {
       setSearchResults(
         res.data.map(track => {
           if (track.readable) {
-            if ( deezerIds.includes(track.id) ) {
+            if (deezerIds.includes(track.id)) {
               return;
             } else {
-
               return {
                 id: track.id,
                 artist: track.artist.name,

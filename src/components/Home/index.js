@@ -43,7 +43,7 @@ const Home = ({ api }) => {
       // GET playlists most played from all time
       await api.get('/playlists/bests/0')
       .then((res) => {
-        if(res.data === []){
+        if (res.data === []) {
           setBest(false);
         } else {
           setBest(res.data);
@@ -57,7 +57,7 @@ const Home = ({ api }) => {
       // GET playlists most played this week
       await api.get('/playlists/bests/7')
       .then((res) => {
-        if(res.data === []){
+        if (res.data === []) {
           setMoment(false);
         } else {
           setMoment(res.data);
@@ -71,7 +71,7 @@ const Home = ({ api }) => {
       // GET 10 random playlists
       await api.get('/playlists/random/10') 
       .then((res) => {
-        if(res.data === []){
+        if (res.data === []) {
           setRandom(false);
         } else {
           setRandom(res.data);
@@ -85,7 +85,7 @@ const Home = ({ api }) => {
       // Playlists admin
       await api.get('/admin/playlists')
       .then((res) => {
-        if(res.data === []){
+        if (res.data === []) {
           setBase(false);
         } else {
           setBase(res.data);
@@ -100,7 +100,7 @@ const Home = ({ api }) => {
         // GET user playlists
         await api.get('/user/playlists')
         .then((res) => {
-          if(res.data === []){
+          if (res.data === []) {
             setUserPlaylists(false);
           } else {
             setUserPlaylists(res.data);
@@ -114,7 +114,7 @@ const Home = ({ api }) => {
         // GET user playlists recently played
         await api.get('/user/played')
         .then((res) => {
-          if(res.data === []){
+          if (res.data === []) {
             setUserPlayed(false);
           } else {
             setUserPlayed(res.data);
@@ -128,7 +128,7 @@ const Home = ({ api }) => {
         // GET user playlists most liked
         await api.get('/user/liked')
         .then((res) => {
-          if(res.data === []){
+          if (res.data === []) {
             setUserLiked(false);
           } else {
             setUserLiked(res.data);
