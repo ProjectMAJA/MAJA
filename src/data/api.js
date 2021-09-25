@@ -4,7 +4,7 @@ let token = localStorage.getItem('token');
 let refreshToken = localStorage.getItem('refresh_token');
 
 const api = axios.create({
-  baseURL: "http://localhost:3333/v1"
+  baseURL: "https://api-maja.herokuapp.com/v1/"
 });
 
 if (token) {
