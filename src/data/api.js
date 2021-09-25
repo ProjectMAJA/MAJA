@@ -29,10 +29,10 @@ api.interceptors.response.use((res) => {
           refreshToken = null;
         });
       return api(originalRequest);
-    }else{
+    } else {
       throw err;
     };
-  }else{
+  } else {
     throw err;
   };
 });

@@ -1,5 +1,5 @@
 // Import de la lib React
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Imports locaux
@@ -38,8 +38,15 @@ const PlaylistCreate = ({ api }) => {
 
   const [deezerIds, setDeezerIds] = useState([]);
 
+  const songArrow = useRef(null);
+
   const toggleState = () => {
     setToggle(!toggle);
+    if(toggle) {
+      songArrow.current.style.transform = "rotate(0deg)";
+    } else {
+      songArrow.current.style.transform = "rotate(180deg)";
+    };
   };
 
   useEffect(() => {
@@ -224,6 +231,7 @@ const PlaylistCreate = ({ api }) => {
             className="playlist-update-songs-button-img"
             src={downArrow} 
             alt="Ajouter / Supprimer des musiques"
+            ref={songArrow}
           />
           <p className="playlist-update-songs-button-label">Ajouter / Supprimer des musiques</p>
         </button>

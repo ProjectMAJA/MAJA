@@ -120,12 +120,6 @@
       align-items: center;
       margin: 1em;
 
-      &:hover {
-        .playlist-update-songs-button-img {
-          transform: translateY(2px);
-        }
-      }
-
       &-img {
         height: 2em;
         background-color: white;
