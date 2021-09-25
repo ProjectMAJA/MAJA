@@ -1,7 +1,6 @@
 // Import de la lib React
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 
 import Loading from 'src/components/Loading';
 
@@ -13,14 +12,9 @@ import del from '../../../public/img/icons/delete.svg';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import PlaylistInfo from '../PlaylistInfo';
 
-const UserPlaylists = ({ baseURL }) => {
+const UserPlaylists = ({ api }) => {
 
   let history = useHistory();
-
-  // Init axios requests
-  const api = axios.create({
-    baseURL: baseURL
-  });
 
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
@@ -29,7 +23,6 @@ const UserPlaylists = ({ baseURL }) => {
   const [showLoading, setShowLoading] = useState(true);
 
   useEffect(() => {
-
     const wasPlaying = localStorage.getItem('playlist_id');
 
     if (wasPlaying) {
@@ -39,13 +32,7 @@ const UserPlaylists = ({ baseURL }) => {
 
     document.title = "MAJA - Mes playlist";
 
-    const token = localStorage.getItem('token');
-
-    api.get(`/user/playlists`, {
-      headers: {
-        authorization: token
-      }
-    })
+    api.get(`/user/playlists`)
       .then((res) => {
         setUserPlaylists(res.data);
         setShowLoading(false);
@@ -56,13 +43,7 @@ const UserPlaylists = ({ baseURL }) => {
   }, []);
 
   const deletePlaylist = async (playlistID, userID) => {
-    const token = localStorage.getItem('token');
- 
-    await api.delete(`/playlist`,
-      {
-      headers: {
-        Authorization: token
-      },
+    await api.delete(`/playlist`, {
       data: {
         id: playlistID,
         user_id: userID
@@ -70,11 +51,7 @@ const UserPlaylists = ({ baseURL }) => {
     })
       .then((res) => {
         console.log(res.data);
-        api.get('/user/playlists', {
-          headers: {
-            Authorization: token
-          }
-        })
+        api.get('/user/playlists')
           .then((res) => {
             setUserPlaylists(res.data);
           })
@@ -104,7 +81,7 @@ const UserPlaylists = ({ baseURL }) => {
           onClick={() => {
             history.push({
               pathname: '/create'
-            })
+            });
           }}
         />
         <label className="user-playlist-add-label" htmlFor="create">
@@ -135,15 +112,15 @@ const UserPlaylists = ({ baseURL }) => {
           const whiteStars= [];
           for(let i=0; i<playlist.rating; i++){
             blackStars.push('+1');
-          }
+          };
           for(let j=0; j<5-playlist.rating; j++){
             whiteStars.push('+1')
-          }
+          };
 
           if( name.includes(search) ) {
             return (
               <li className="user-playlist-card" key={playlist.id}>
-                <a id={playlist.id} onClick={() => {
+                <a onClick={() => {
                   setPlaylistLink(playlist.id);
                   setShowDetails(true);
                 }}>
@@ -198,7 +175,7 @@ const UserPlaylists = ({ baseURL }) => {
 
       {showDetails &&
         <PlaylistInfo
-          baseURL={baseURL}
+          api={api}
           playlistLink={playlistLink}
           setShowDetails={setShowDetails}
         />

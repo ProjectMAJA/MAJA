@@ -17,7 +17,6 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
   const rowContainer = useRef(0);
 
   useEffect(() => {
-
     // Get the client witdh
     const userWidth = document.body.clientWidth;
 
@@ -143,7 +142,7 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
 
             return (
               <li className="home-playlist-card" key={Math.random()}>
-                <a id={playlist.id} onClick={() => {
+                <a onClick={() => {
                   setPlaylistLink(playlist.id);
                   setShowDetails(true);
                 }}>

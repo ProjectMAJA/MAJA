@@ -1,8 +1,6 @@
 // Import de la lib React
 import React from 'react';
 
-// Imports NPM
-
 // Imports locaux
 import './styles.scss';
 import del from '../../../public/img/icons/delete.svg';

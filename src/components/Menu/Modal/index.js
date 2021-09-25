@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 
 import './style.scss';
 import cancel from '../../../../public/img/icons/cancel.svg';
 
-const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
+const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
 
   const [showSignInForm, setShowSignInForm] = useState(true);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
@@ -16,38 +15,36 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
   const [showErrorMailTaken, setShowErrorMailTaken] = useState(false);
   const [showErrorWrongId, setShowErrorWrongId] = useState(false);
 
-  const api = axios.create({ 
-    baseURL: baseURL 
-  });
-
-  const signInSubmit = (obj) => {
-    api.post('/login', {
+  const signInSubmit = async (obj) => {
+    await api.post('/login', {
       pseudo: obj.pseudo.value,
       password: obj.password.value
     })
       .then((res) => {
         setLogged(true);
         setShowModal(false);
-        localStorage.setItem('admin', res.data.isadmin);
-        localStorage.setItem('token', `bearer ${res.data.access_token}`);
-        setIsAdmin(res.data.isadmin);
+        localStorage.setItem('token', `Bearer ${res.data.access_token}`);
+        localStorage.setItem('refresh_token', `Bearer ${res.data.refresh_token}`);
+        if (res.data.isadmin === true) {
+          setIsAdmin(true);
+        };
+        window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        localStorage.clear();
         setShowErrorWrongId(true);
-      })
+      });
   };
 
   const signUpSubmit = (obj) => {
-
+    // Reset error messages
     setShowErrorSamePass(false);
     setShowErrorPseudoTaken(false);
     setShowErrorMailTaken(false);
     setShowErrorIncomplete(false);
 
-    // Check if password & password's confirmation are the same
-
     if (obj.pseudo.value && obj.email.value && obj.password.value) {
+      // Check if password & password's confirmation are the same
       if (obj.password.value === obj.confirmpassword.value) {
 
         // If true, send to back
@@ -59,8 +56,9 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
           .then((res) => {
             setLogged(true);
             setShowModal(false);
-            // Set the token in the localStorage
+            // Set the tokens in the localStorage
             localStorage.setItem('token', `bearer ${res.data.access_token}`);
+            localStorage.setItem('refresh_token', `bearer ${res.data.refresh_token}`);
             window.location.reload();
           })
           .catch((err) => {
@@ -68,43 +66,41 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
               setShowErrorPseudoTaken(true);
             } else if (err.response.data === `duplicate key value violates unique constraint "user_email_key"`) {
               setShowErrorMailTaken(true);
-            }
-          })
+            };
+          });
       } else {
         // If false, show error message
         setShowErrorSamePass(true);
-      }
+      };
     } else {
       setShowErrorIncomplete(true);
-    }
-    
+    };
   };
   
   const selectSignInForm = () => {
     if (showSignUpForm) {
       setShowSignUpForm(false);
       setShowSignInForm(true);
-    }
+    };
   };
 
   const selectSignUpForm = () => {
     if (showSignInForm) {
       setShowSignInForm(false);
       setShowSignUpForm(true);
-    }
+    };
   };
 
   const showPass = () => {
-    if (!showPassword) {
-      setShowPassword(true);
-    } else {
-      setShowPassword(false);
-    }
+    setShowPassword(!showPassword);
   };
 
   return (
       // If it's true, render the modal
       <section className="modal">
+        <div className="behind" onClick={() => {
+          setShowModal(false);
+        }}></div>
         <div className="modal-display">
  
           <section className="modal-display-buttons">
@@ -137,11 +133,9 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
                 className="modal-display-buttons-close-button"
               />
             </div>
-            
           </section>
 
           <section>
-
 { showSignInForm &&
             <form
               className="modal-display-form"
@@ -177,7 +171,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
                 Cet identifiant ou ce mot de passe ne correspondent pas
               </span>
 }
-
               <button
                 className="modal-display-form-button"
                 type="submit"
@@ -187,7 +180,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
 
             </form>
 }
-            
 { showSignUpForm &&
             <form
               className="modal-display-form"
@@ -265,7 +257,6 @@ const Modal = ({ baseURL, setShowModal, setLogged, setIsAdmin }) => {
 };
 
 Modal.propTypes = {
-  baseURL: PropTypes.string.isRequired,
   setShowModal: PropTypes.func.isRequired,
   setLogged: PropTypes.func.isRequired,
   setIsAdmin: PropTypes.func.isRequired

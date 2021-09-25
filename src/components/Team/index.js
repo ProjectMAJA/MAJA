@@ -1,5 +1,5 @@
 // Import de la lib React
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 // Imports locaux
 import './styles.scss';
@@ -10,7 +10,6 @@ import team from '../../../data/team.json';
 const Team = () => {
 
   useEffect(() => {
-
     const wasPlaying = localStorage.getItem('playlist_id');
 
     if (wasPlaying) {
@@ -19,7 +18,6 @@ const Team = () => {
     };
 
     document.title = "MAJA - L'équipe";
-
   }, []);
 
   return (
@@ -68,10 +66,7 @@ const Team = () => {
         </ul>
       </div>
     </section>
-  )
+  );
 };
 
 export default Team;
-
-
-

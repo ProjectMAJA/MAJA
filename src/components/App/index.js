@@ -15,6 +15,8 @@ import UserPlaylists from 'src/components/UserPlaylists';
 import Search from 'src/components/Search';
 import Contact from 'src/components/Contact';
 
+import api from '../../data/api';
+
 import './style.scss';
 
 // == Composant
@@ -23,10 +25,8 @@ const App = () => {
   const [logged, setLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const baseURL = "https://api-maja.herokuapp.com/v1";
-
   useEffect(() => {
-
+    // Init the Deezer's player
     DZ.init({
       appId: '492382',
       channelUrl: `client/public/channel.html`,
@@ -37,22 +37,28 @@ const App = () => {
       }
     });
 
-    const token = localStorage.getItem('token');
-    const admin = localStorage.getItem('admin');
+    let token = localStorage.getItem('token');
 
-    token ? setLogged(true) : setLogged(false);
+    if (token) {
+      api.get('/user')
+        .then((res) => {
+          setLogged(true);
 
-    if ( admin === 'true' ) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
+          if (res.data.isadmin === true) {
+            setIsAdmin(true);
+          };
+        })
+        .catch((err) => {
+          setLogged(false);
+          setIsAdmin(false);
+          console.log(err.response);
+        });
     };
   }, []);
-
   return (
     <div className="app">
       <Menu 
-        baseURL={baseURL}
+        api={api}
         logged={logged}
         isAdmin={isAdmin}
         setLogged={setLogged}
@@ -62,15 +68,15 @@ const App = () => {
       <Switch>
 
         <Route exact path="/">
-          <Home baseURL={baseURL} setLogged={setLogged} />
+          <Home api={api} setLogged={setLogged} />
         </Route>
 
         <Route exact path="/search">
-          <Search baseURL={baseURL} />
+          <Search api={api} />
         </Route>
 
         <Route exact path="/game">
-          <Game baseURL={baseURL} logged={logged} />
+          <Game api={api} logged={logged} />
         </Route>
 
         <Route exact path="/team">
@@ -82,31 +88,30 @@ const App = () => {
         </Route>
 
         <Route exact path="/user">
-          { logged ? <Profil baseURL={baseURL} /> : <Error /> }
+          { logged ? <Profil api={api} /> : <Error /> }
         </Route>
 
         <Route exact path="/user/playlists">
-        { logged ? <UserPlaylists baseURL={baseURL} /> : <Error /> }
+          { logged ? <UserPlaylists api={api} /> : <Error /> }
         </Route>
 
         <Route exact path="/update">
-          { logged ? <PlaylistUpdate baseURL={baseURL}/> : <Error /> }
+          { logged ? <PlaylistUpdate api={api}/> : <Error /> }
         </Route>
 
         <Route exact path="/create">
-          { logged ? <PlaylistCreate baseURL={baseURL}/> : <Error /> }
+          { logged ? <PlaylistCreate api={api}/> : <Error /> }
         </Route>
 
         <Route exact path="/admin">
-          { isAdmin ? <Admin baseURL={baseURL} /> : <Error /> }
+          { isAdmin ? <Admin api={api} /> : <Error /> }
         </Route>
 
         <Route path="/" component={Error} />
         
       </Switch>
-
     </div>
-  ) 
+  );
 };
 
 export default App;
