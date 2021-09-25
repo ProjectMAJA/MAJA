@@ -84,6 +84,7 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
             localStorage.clear();
             setLogged(false);
             setIsAdmin(false);
+            window.location.reload();
           }}
         >
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo"/>

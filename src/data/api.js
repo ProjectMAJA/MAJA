@@ -4,7 +4,7 @@ let token = localStorage.getItem('token');
 let refreshToken = localStorage.getItem('refresh_token');
 
 const api = axios.create({
-  baseURL: "https://api-maja.herokuapp.com/v1"
+  baseURL: "http://localhost:3333/v1"
 });
 
 if (token) {
@@ -29,7 +29,11 @@ api.interceptors.response.use((res) => {
           refreshToken = null;
         });
       return api(originalRequest);
+    }else{
+      throw err;
     };
+  }else{
+    throw err;
   };
 });
 

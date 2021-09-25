@@ -26,7 +26,7 @@ const Profil = ({ api }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordChange, setPasswordChange] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     const wasPlaying = localStorage.getItem('playlist_id');
 
     if (wasPlaying) {
@@ -37,7 +37,7 @@ const Profil = ({ api }) => {
     document.title = "MAJA - Mon profil";
 
     // Get user informations with his token
-    api.get('/user')
+    await api.get('/user')
       .then((res) => {
         // And set them in state
         setUserID(res.data.id);
@@ -78,7 +78,8 @@ const Profil = ({ api }) => {
         avatar: avatar,
       })
         .then((res) => {
-          console.log(res.data);
+          localStorage.setItem('token', `bearer ${res.data.access_token}`);
+          localStorage.setItem('refresh_token', `bearer ${res.data.refresh_token}`);
           window.location.reload();
         })
         .catch((err) => {
@@ -147,7 +148,7 @@ const Profil = ({ api }) => {
               type="text"
               placeholder={mail}
               onChange={(event) => {
-                setImage(event.target.value);
+                setMail(event.target.value);
               }}
             />
             <p className="profil-info-item">URL de votre avatar</p>

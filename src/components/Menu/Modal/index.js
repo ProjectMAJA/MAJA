@@ -15,8 +15,8 @@ const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
   const [showErrorMailTaken, setShowErrorMailTaken] = useState(false);
   const [showErrorWrongId, setShowErrorWrongId] = useState(false);
 
-  const signInSubmit = (obj) => {
-    api.post('/login', {
+  const signInSubmit = async (obj) => {
+    await api.post('/login', {
       pseudo: obj.pseudo.value,
       password: obj.password.value
     })
@@ -28,9 +28,10 @@ const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
         if (res.data.isadmin === true) {
           setIsAdmin(true);
         };
+        window.location.reload();
       })
       .catch((err) => {
-        console.log(err);
+        localStorage.clear();
         setShowErrorWrongId(true);
       });
   };
