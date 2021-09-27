@@ -15,7 +15,7 @@ import UserPlaylists from 'src/components/UserPlaylists';
 import Search from 'src/components/Search';
 import Contact from 'src/components/Contact';
 
-import api from '../../data/api';
+import api from '../../../data/api';
 
 import './style.scss';
 

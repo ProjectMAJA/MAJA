@@ -46,6 +46,7 @@ const Profil = ({ api }) => {
         setAvatar(res.data.avatar);
         setPassword(res.data.password);
         setShowLoading(false);
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +54,6 @@ const Profil = ({ api }) => {
   }, []);
 
   const handleSubmit = () => {
-
     setShowErrorMail(false);
     setShowErrorPassword(false);
     setShowErrorPseudo(false);

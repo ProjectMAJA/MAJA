@@ -30,7 +30,8 @@
     
           &:hover {
             color: white;
-            transform: scale(1.1) translateX(10px);
+            transform: translateX(0.5em);
+            font-weight: bold;
             transition: .3s;
           }
         }
@@ -54,7 +55,7 @@
       transition: .3s;
     
       &:hover {
-        transform: scale(1.1);
+        transform: scale(0.9);
       }
     }
   }
@@ -69,7 +70,8 @@
     }
 
     &-logo {
-      margin: 0.8vh;
+      margin: 0.4em;
+      margin-right: 0.6em;
       height: 1em;
     }
   }
