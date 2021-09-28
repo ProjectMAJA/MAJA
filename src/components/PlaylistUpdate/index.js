@@ -287,7 +287,7 @@ const PlaylistUpdate = ({ api }) => {
                 className="playlist-update-songs-list-search-input" 
                 type="search"
                 onChange={(event) => {
-                  setFilter(event.target.value)
+                  setFilter(event.target.value);
                 }}
                 value={filter}
                 placeholder="Rechercher une musique"

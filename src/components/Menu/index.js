@@ -24,6 +24,13 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const disconnect = () => {
+    localStorage.clear();
+    setLogged(false);
+    setIsAdmin(false);
+    window.location.reload();
+  };
+
   return (
     <section className="menu">
       <nav className="menu-buttons">
@@ -36,10 +43,9 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
           <img src={search} alt="Rechercher" className="menu-buttons-logo"/>
           <p className="menu-buttons-name">Rechercher</p>
         </NavLink>
-{!logged && (         
+{!logged && (
         <NavLink
           exact to="#"
-          activeClassName="navActive"
           className="menu-buttons-link"
           onClick={() => {
             setShowModal(true);
@@ -81,10 +87,7 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
           exact to="/"
           className="menu-buttons-link"
           onClick={() => {
-            localStorage.clear();
-            setLogged(false);
-            setIsAdmin(false);
-            window.location.reload();
+            disconnect();
           }}
         >
           <img src={logout} alt="Déconnexion" className="menu-buttons-logo"/>
