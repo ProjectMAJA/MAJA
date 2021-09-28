@@ -101,27 +101,6 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
 
   return(
     <div className="home-playlist-row" ref={rowContainer}>
-        
-      { rightArrow &&
-        <div className="home-playlist-cards-blur">
-          <img
-            src={arrow}
-            alt="Flèche pour faire défiler les playlists"
-            className="home-playlist-cards-blur-arrow"
-            onClick={scrollToRight}
-          />
-        </div>
-      }
-      { leftArrow &&
-        <div className="home-playlist-cards-leftblur">
-          <img
-            src={arrow}
-            alt="Flèche pour faire défiler les playlists"
-            className="home-playlist-cards-leftblur-arrow"
-            onClick={scrollToLeft}
-          />
-        </div>
-      }
 
       <h1 className="home-playlist-row-title">{title}</h1>
 
@@ -149,7 +128,7 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
                         
                   { playlist.image ? (
                     <img className="home-playlist-card-logo" src={playlist.image} alt={altImg} />
-                      ) : (
+                    ) : (
                     <img className="home-playlist-card-logo" src={imgDefault} alt="Image par défaut d'une playlist" />
                     )
                   }
@@ -172,10 +151,31 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
                   </div>
                 </a>
               </li>
-            )
+            );
           })
         }
       </ul>
+        
+      { rightArrow &&
+        <div className="home-playlist-cards-blur">
+          <img
+            src={arrow}
+            alt="Flèche pour faire défiler les playlists"
+            className="home-playlist-cards-blur-arrow"
+            onClick={scrollToRight}
+          />
+        </div>
+      }
+      { leftArrow &&
+        <div className="home-playlist-cards-leftblur">
+          <img
+            src={arrow}
+            alt="Flèche pour faire défiler les playlists"
+            className="home-playlist-cards-leftblur-arrow"
+            onClick={scrollToLeft}
+          />
+        </div>
+      }
     </div>
   );
 };

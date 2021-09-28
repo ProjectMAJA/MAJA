@@ -15,6 +15,17 @@
       color: vars.$secondaryColor;
       font-weight: bold;
       margin-bottom: 1em;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      color: rgb(150, 150, 150);
+
+      &-img {
+        margin-left: 0.5em;
+        height: 2em;
+      }
     }
 
     &-list {
@@ -71,7 +82,7 @@
 @media screen and (max-width: 1500px) {
   .team-container {
     &-title {
-      font-size: 0.6em;
+      font-size: 1.5em;
     }
   
     &-list-card {
@@ -103,9 +114,12 @@
     margin-top: 50vh;
     margin-bottom: 70vh;
 
+    &-title {
+      margin-bottom: 5em;
+    }
+
     &-list {
       flex-direction: column;
     }
-
   }
 }

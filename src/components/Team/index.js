@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 // Imports locaux
 import './styles.scss';
 import linkedin from './images/linkedin.png';
+import logo from '../../../public/img/nav/logo.png';
 
 import team from '../../../data/team.json';
 
@@ -25,7 +26,12 @@ const Team = () => {
 
       <div className="team-container">
         <div className="team-container-title">
-          <h1>La team MAJA</h1>
+          <p>La team MAJA</p>
+          {/* <img
+            src={logo}
+            alt="Logo du site MAJA"
+            className="team-container-title-img"
+          /> */}
         </div>
 
         <ul className="team-container-list">
