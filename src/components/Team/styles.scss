@@ -73,6 +73,11 @@
         &-link {
           margin-top: 1em;
           height: 3em;
+          transition: .3s;
+
+          &:hover {
+            transform: scale(0.9);
+          }
         }
       }
     }

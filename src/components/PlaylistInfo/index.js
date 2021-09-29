@@ -28,6 +28,9 @@ const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
 
   return (
     <div className="info">
+      <div className="behind" onClick={() => {
+        setShowDetails(false);
+      }}></div>
       <div className="info-bloc">
         <section className="info-bloc-playlist">
 

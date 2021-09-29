@@ -67,7 +67,7 @@ const Team = () => {
                   <img src={linkedin} alt={altLink} className="team-container-list-card-link" />
                 </a>
               </li>
-            )
+            );
           })}
         </ul>
       </div>
