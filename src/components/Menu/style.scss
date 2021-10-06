@@ -77,17 +77,22 @@
   }
 
   &-deezer {
-    font-size: 1em;
     position: fixed;
     bottom: 1%;
+
+    &-text {
+      text-align: center;
+      font-size: 0.5em;
+      margin-bottom: 0.2em;
+    }
 
     &-logo {
       height: 2em;
       transition: .3s;
+    }
 
-      &:hover {
-        transform: translateY(-3px);
-      }
+    &:hover {
+      transform: translateY(-3px);
     }
   }
 }

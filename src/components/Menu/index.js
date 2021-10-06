@@ -95,15 +95,17 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
         </NavLink>
 )}
       </nav>
-
-      <a 
-        href="https://www.deezer.com/"
-        className="menu-deezer"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <img src={deezer} className="menu-deezer-logo" alt="Deezer" />
-      </a>
+      <section className="menu-deezer">
+        <a 
+          href="https://deezerbrand.com/"
+          className="menu-deezer-link"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <p className="menu-deezer-text"> Powered by </p>
+          <img src={deezer} className="menu-deezer-logo" alt="Deezer" />
+        </a>
+      </section>
 
 {showModal && (
       <Modal api={api} setShowModal={setShowModal} setLogged={setLogged} setIsAdmin={setIsAdmin} />
