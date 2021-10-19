@@ -102,8 +102,8 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
           target="_blank"
           rel="noreferrer"
         >
-          <p className="menu-deezer-text"> Powered by </p>
-          <img src={deezer} className="menu-deezer-logo" alt="Deezer" />
+          <p className="menu-deezer-text">Powered by</p>
+          <img src={deezer} className="menu-deezer-logo" alt="Logo de Deezer" />
         </a>
       </section>
 

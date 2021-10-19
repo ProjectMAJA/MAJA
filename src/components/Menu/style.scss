@@ -88,10 +88,10 @@
 
     &-logo {
       height: 2em;
-      transition: .3s;
     }
 
     &:hover {
+      transition: .3s;
       transform: translateY(-3px);
     }
   }

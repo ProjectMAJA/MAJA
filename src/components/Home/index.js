@@ -55,7 +55,7 @@ const Home = ({ api }) => {
       });
 
       // GET playlists most played this week
-      await api.get('/playlists/bests/7')
+      await api.get('/playlists/bests/15')
       .then((res) => {
         if (res.data === []) {
           setMoment(false);
@@ -69,7 +69,7 @@ const Home = ({ api }) => {
       });
 
       // GET 10 random playlists
-      await api.get('/playlists/random/10') 
+      await api.get('/playlists/random/50') 
       .then((res) => {
         if (res.data === []) {
           setRandom(false);

@@ -65,18 +65,19 @@
 
       &:hover {
         transform: scale(1.2);
+        background-color: rgb(35, 35, 218);
         transition: .1s;
       }
     }
 
     &-delete {
       height: 40px;
-      // background-color: rgb(255, 57, 43);
       padding: 0.7em;
       border-radius: 5px;
 
       &:hover {
         transform: scale(1.2);
+        background-color: rgb(223, 28, 28);
         transition: .1s;
       }
     }
