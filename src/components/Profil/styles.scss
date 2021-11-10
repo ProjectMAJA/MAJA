@@ -83,7 +83,7 @@
         transition: .3s;
 
         &:hover {
-          transform: translateY(-5px);
+          transform: scale(0.95);
         }
       }
     }
@@ -93,7 +93,7 @@
       transition: .3s;
 
       &:hover {
-        transform: translateY(-5px);
+        transform: scale(0.95);
       }
       
       &-button {

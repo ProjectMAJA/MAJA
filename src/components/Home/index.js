@@ -57,7 +57,7 @@ const Home = ({ api }) => {
       // GET playlists most played this week
       await api.get('/playlists/bests/15')
       .then((res) => {
-        if (res.data === []) {
+        if (res.data == '') {
           setMoment(false);
         } else {
           setMoment(res.data);

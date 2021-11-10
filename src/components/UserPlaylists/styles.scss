@@ -64,9 +64,9 @@
       border-radius: 5px;
 
       &:hover {
-        transform: scale(1.2);
+        transform: scale(0.8);
         background-color: rgb(35, 35, 218);
-        transition: .1s;
+        transition: .2s;
       }
     }
 
@@ -76,9 +76,9 @@
       border-radius: 5px;
 
       &:hover {
-        transform: scale(1.2);
+        transform: scale(0.8);
         background-color: rgb(223, 28, 28);
-        transition: .1s;
+        transition: .2s;
       }
     }
   }
