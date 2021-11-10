@@ -27,7 +27,7 @@ const Contact = () => {
             placeholder="Insérez votre adresse mail"
           />
           <ValidationError
-            prefix="Email" 
+            prefix="Email"
             field="email"
             errors={state.errors}
           />
@@ -38,18 +38,14 @@ const Contact = () => {
             placeholder="Une idée ? Une suggestion ? Vous avez trouvé un bug ? Un problème ? Envoyez nous un message"
           />
           <ValidationError
-            prefix="Message" 
+            prefix="Message"
             field="message"
             errors={state.errors}
           />
-          <button 
+          <button
             className="contact-container-form-submit"
             type="submit"
             disabled={state.submitting}
-            onClick={() => {
-              setShowMailSend(true);
-              setShowForm(false);
-            }}
           >
             Envoyer
           </button>

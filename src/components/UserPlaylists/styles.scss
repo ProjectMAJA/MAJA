@@ -20,6 +20,26 @@
       font-size: 2em;
       margin-left: 0.5em;
       margin-top: 0.2em;
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: -5px;
+        border: 2px solid transparent;
+      }
+    }
+
+    &:hover {
+      .user-playlist-add-label:after {
+        animation: hover .3s linear forwards;
+      }
+
+      .user-playlist-add-logo {
+        transition: .3s;
+        transform: scale(0.95);
+      }
     }
   }
 
@@ -59,7 +79,6 @@
 
     &-edit {
       height: 40px;
-      // background-color: dodgerblue;
       padding: 0.7em;
       border-radius: 5px;
 
@@ -125,6 +144,17 @@
     &-rating {
       width: 100px;
     }
+  }
+}
+
+@keyframes hover {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 105%;
+    border-bottom-color: vars.$secondaryColor;
   }
 }
 
