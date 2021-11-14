@@ -25,15 +25,15 @@
       &:after {
         content: '';
         position: absolute;
-        bottom: -3px;
-        left: -5px;
-        border: 2px solid transparent;
+        bottom: -2px;
+        left: -1px;
+        border: 1px solid transparent;
       }
     }
 
     &:hover {
       .user-playlist-add-label:after {
-        animation: hover .3s linear forwards;
+        animation: line .3s linear forwards;
       }
 
       .user-playlist-add-logo {
@@ -147,13 +147,13 @@
   }
 }
 
-@keyframes hover {
+@keyframes line {
   0% {
     width: 0;
   }
 
   100% {
-    width: 105%;
+    width: 103%;
     border-bottom-color: vars.$secondaryColor;
   }
 }

@@ -52,8 +52,6 @@ const Admin = ({ api }) => {
   }, []);
 
   const deletePlaylist = async (playlistID, userID) => {
-    const token = localStorage.getItem("token");
-
     setShowLoading(true);
 
     await api.delete(`/playlist`, {

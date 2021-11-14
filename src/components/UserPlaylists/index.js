@@ -11,6 +11,7 @@ import plus from '../../../public/img/icons/plus.svg';
 import del from '../../../public/img/icons/delete.svg';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import PlaylistInfo from '../PlaylistInfo';
+import DeleteModal from '../DeleteModal';
 
 const UserPlaylists = ({ api }) => {
 
@@ -21,6 +22,9 @@ const UserPlaylists = ({ api }) => {
   const [playlistLink, setPlaylistLink] = useState('');
   const [filter, setFilter] = useState('');
   const [showLoading, setShowLoading] = useState(true);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [playlistID, setPlaylistID] = useState(0);
+  const [userID, setUserID] = useState(0);
 
   useEffect(() => {
     const wasPlaying = localStorage.getItem('playlist_id');
@@ -41,28 +45,6 @@ const UserPlaylists = ({ api }) => {
         console.log(err.response);
       })
   }, []);
-
-  const deletePlaylist = async (playlistID, userID) => {
-    await api.delete(`/playlist`, {
-      data: {
-        id: playlistID,
-        user_id: userID
-      }
-    })
-      .then((res) => {
-        console.log(res.data);
-        api.get('/user/playlists')
-          .then((res) => {
-            setUserPlaylists(res.data);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          })
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
 
   return(
     <div className="user-playlist-container">
@@ -162,16 +144,27 @@ const UserPlaylists = ({ api }) => {
                     type="image"
                     src={del}
                     onClick={() => {
-                      deletePlaylist(playlist.id, playlist.user_id);
-                      }}
+                      setPlaylistID(playlist.id);
+                      setUserID(playlist.user_id);
+                      setShowDeleteConfirm(true);
+                    }}
                   />
                 </div>
               </li>
-            )
-          }
+            );
+          };
         })}
-          
       </ul>
+
+      {showDeleteConfirm &&
+        <DeleteModal
+          api={api}
+          setShowDeleteConfirm={setShowDeleteConfirm}
+          playlistID={playlistID}
+          userID={userID}
+          setUserPlaylists={setUserPlaylists}
+        />
+      }
 
       {showDetails &&
         <PlaylistInfo
