@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import Loading from "../Loading";
+import DeleteModal from "../DeleteModal";
 
 // Local imports
 import "./style.scss";
@@ -16,6 +17,12 @@ const Admin = ({ api }) => {
   const [playlistInput, setPlaylistInput] = useState("");
   const [users, setUsers] = useState(null);
   const [userInput, setUserInput] = useState("");
+  const [playlistID, setPlaylistID] = useState(0);
+  const [userID, setUserID] = useState(0);
+  const [playlistOrUser, setPlaylistOrUser] = useState("");
+  const [confirmDeleteUser, setConfirmDeleteUser] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
@@ -51,7 +58,13 @@ const Admin = ({ api }) => {
       });
   }, []);
 
-  const deletePlaylist = async (playlistID, userID) => {
+  useEffect(() => {
+    if (confirmDelete === true) {
+      deletePlaylist();
+    };
+  }, [confirmDelete]);
+
+  const deletePlaylist = async () => {
     setShowLoading(true);
 
     await api.delete(`/playlist`, {
@@ -65,6 +78,7 @@ const Admin = ({ api }) => {
         api.get("/playlists")
           .then((res) => {
             setPlaylists(res.data);
+            setConfirmDelete(false);
             setShowLoading(false);
           })
           .catch((err) => {
@@ -76,15 +90,22 @@ const Admin = ({ api }) => {
       });
   };
 
-  const deleteUser = (id) => {
+  useEffect(() => {
+    if (confirmDeleteUser === true) {
+      deleteUser();
+    };
+  }, [confirmDeleteUser]);
+
+  const deleteUser = () => {
     setShowLoading(true);
 
-    api.delete(`/user/${id}`)
+    api.delete(`/user/${userID}`)
       .then((res) => {
         console.log(res.data);
         api.get("/users")
           .then((res) => {
             setUsers(res.data);
+            setConfirmDelete(false);
             setShowLoading(false);
           })
           .catch((err) => {
@@ -151,7 +172,10 @@ const Admin = ({ api }) => {
                     src={del}
                     className="admin-container-section-button"
                     onClick={() => {
-                      deletePlaylist(playlist.id);
+                      setPlaylistOrUser('cette playlist');
+                      setPlaylistID(playlist.id);
+                      setUserID(playlist.user_id);
+                      setShowDeleteConfirm(true);
                     }}
                   />
                 </li>
@@ -208,7 +232,9 @@ const Admin = ({ api }) => {
                     src={del}
                     className="admin-container-section-button"
                     onClick={() => {
-                      deleteUser(user.id);
+                      setPlaylistOrUser('cet utilisateur');
+                      setUserID(user.id);
+                      setShowDeleteConfirm(true);
                     }}
                   />
                 </li>
@@ -216,6 +242,15 @@ const Admin = ({ api }) => {
             }
           })}
       </section>
+
+      {showDeleteConfirm &&
+        <DeleteModal
+          setShowDeleteConfirm={setShowDeleteConfirm}
+          setConfirmDelete={setConfirmDelete}
+          setConfirmDeleteUser={setConfirmDeleteUser}
+          playlistOrUser={playlistOrUser}
+        />
+      }
     </div>
   );
 };

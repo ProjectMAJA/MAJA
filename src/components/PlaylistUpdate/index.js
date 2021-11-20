@@ -6,6 +6,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 import './styles.scss';
 import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
+import DeleteModal from '../DeleteModal';
+
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import downArrow from '../../../public/img/icons/downArrow.png';
 import deleteImg from '../../../public/img/icons/delete.svg';
@@ -38,6 +40,10 @@ const PlaylistUpdate = ({ api }) => {
   const [showTooLongDesc, setShowTooLongDesc] = useState(false);
   const [showTooLongName, setShowTooLongName] = useState(false);
   const [showTenSongMinMessage, setShowTenSongMinMessage] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [playlistOrUser, setPlaylistOrUser] = useState("playlist");
+  const [confirmDeleteUser, setConfirmDeleteUser] = useState(false);
 
   const [deezerIds, setDeezerIds] = useState([]);
 
@@ -76,7 +82,6 @@ const PlaylistUpdate = ({ api }) => {
     const fetchedTracks = [];
 
     tracksId.map(trackId => {
-
       DZ.api(`/track/${trackId}`, (res) => {
 
         fetchedTracks.push({
@@ -94,7 +99,6 @@ const PlaylistUpdate = ({ api }) => {
   };
 
   useEffect(() => {
-
     DZ.api('/search?q=' + search, (res) => {
       
       setSearchResults(
@@ -161,6 +165,12 @@ const PlaylistUpdate = ({ api }) => {
     setDeezerIds(newIDs);
   };
 
+  useEffect(() => {
+    if (confirmDelete === true) {
+      deletePlaylist();
+    };
+  }, [confirmDelete]);
+
   const deletePlaylist = async () => {
     await api.delete(`/playlist`,
       {
@@ -170,10 +180,10 @@ const PlaylistUpdate = ({ api }) => {
       }
     })
       .then((res) => {
+        setConfirmDelete(false);
         history.push({
           pathname: '/user/playlists',
-        })
-        console.log(res.data);
+        });
       })
       .catch((err) => {
         console.log(err.response);
@@ -278,7 +288,6 @@ const PlaylistUpdate = ({ api }) => {
         { toggle &&
 
           <div className="playlist-update-songs-list">
-
             <section className="playlist-update-songs-list-tracks"> 
 
               <p className="playlist-update-songs-list-tracks-title">Musiques de votre playlist</p>
@@ -312,7 +321,6 @@ const PlaylistUpdate = ({ api }) => {
             </section>
 
             <section className="playlist-update-songs-list-search">
-
               <p className="playlist-update-songs-list-search-title">Ajouter une musique</p>
               <hr />
               <input 
@@ -353,7 +361,6 @@ const PlaylistUpdate = ({ api }) => {
       </section>
 
       <section className="playlist-update-buttons">
-
           <button 
             className="playlist-update-buttons-save" 
             onClick={(event) => {
@@ -372,7 +379,7 @@ const PlaylistUpdate = ({ api }) => {
           <button
             className="playlist-update-buttons-delete"
             onClick={() => {
-              deletePlaylist();
+              setShowDeleteConfirm(true);
             }}
           >
             <img
@@ -382,8 +389,16 @@ const PlaylistUpdate = ({ api }) => {
             />
             Supprimer cette playlist
           </button>
-
       </section>
+
+      {showDeleteConfirm &&
+        <DeleteModal
+          setShowDeleteConfirm={setShowDeleteConfirm}
+          setConfirmDelete={setConfirmDelete}
+          setConfirmDeleteUser={setConfirmDeleteUser}
+          playlistOrUser={playlistOrUser}
+        />
+      }
     </div>
   );
 };

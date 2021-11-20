@@ -25,6 +25,9 @@ const UserPlaylists = ({ api }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [playlistID, setPlaylistID] = useState(0);
   const [userID, setUserID] = useState(0);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [playlistOrUser, setPlaylistOrUser] = useState("playlist");
+  const [confirmDeleteUser, setConfirmDeleteUser] = useState(false);
 
   useEffect(() => {
     const wasPlaying = localStorage.getItem('playlist_id');
@@ -45,6 +48,39 @@ const UserPlaylists = ({ api }) => {
         console.log(err.response);
       })
   }, []);
+
+  useEffect(() => {
+    if (confirmDelete === true) {
+      deletePlaylist();
+    };
+  }, [confirmDelete]);
+
+  const deletePlaylist = async () => {
+    setShowLoading(true);
+    
+    await api.delete(`/playlist`, {
+      data: {
+        id: playlistID,
+        user_id: userID
+      }
+    })
+      .then((res) => {
+        console.log(res.data);
+        api.get('/user/playlists')
+          .then((res) => {
+            setUserPlaylists(res.data);
+            setShowDeleteConfirm(false);
+            setConfirmDelete(false);
+            setShowLoading(false);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          })
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
 
   return(
     <div className="user-playlist-container">
@@ -158,11 +194,10 @@ const UserPlaylists = ({ api }) => {
 
       {showDeleteConfirm &&
         <DeleteModal
-          api={api}
           setShowDeleteConfirm={setShowDeleteConfirm}
-          playlistID={playlistID}
-          userID={userID}
-          setUserPlaylists={setUserPlaylists}
+          setConfirmDelete={setConfirmDelete}
+          setConfirmDeleteUser={setConfirmDeleteUser}
+          playlistOrUser={playlistOrUser}
         />
       }
 
