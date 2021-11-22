@@ -25,9 +25,7 @@ const PlaylistCreate = ({ api }) => {
   {/* useState pour sélectionner la musique */}
   const [selectedTrack, setSelectedTrack] = useState([]);
   {/* useState pour afficher les musiques d'une playlist */}
-
-  const [playlistID, setPlaylistID] = useState(null);
-  const [userID, setUserID] = useState(null);
+  
   const [playlistName, setPlaylistName] = useState('');
   const [playlistDesc, setPlaylistDesc] = useState('');
   const [playlistImg, setPlaylistImg] = useState('');
@@ -122,23 +120,6 @@ const PlaylistCreate = ({ api }) => {
 
     const newIDs = deezerIds.filter(deezerId => deezerId != id);
     setDeezerIds(newIDs);
-  };
-
-  const deletePlaylist = async () => {
-
-    await api.delete(`/playlist`,
-      {
-      data: {
-        id: playlistID,
-        user_id: userID
-      }
-    })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
   };
 
   const changeName = (newName) => {
@@ -326,20 +307,6 @@ const PlaylistCreate = ({ api }) => {
           alt="Bouton de sauvegarde"
           />
           Sauvegarder
-        </button>
-
-        <button
-          className="playlist-update-buttons-delete"
-          onClick={() => {
-            deletePlaylist();
-          }}
-        >
-          <img
-          className="playlist-update-buttons-img"
-          src={deleteImg}
-          alt="Bouton de suppression"
-          />
-          Supprimer cette playlist
         </button>
 
       </section>

@@ -201,13 +201,15 @@
   }
 
   &-buttons {
+    position: fixed;
+    bottom: 2%;
+    width: 85%;
     font-size: 1.5em;
+    display: flex;
+    justify-content: space-evenly;
 
     &-delete {
       font-size: 1em;
-      position: fixed;
-      bottom: 2%;
-      right: 20%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -219,18 +221,16 @@
       border-radius: 25px;
       cursor: pointer;
       color: vars.$secondaryColor;
-      transition: .3s;
 
       &:hover {
+        transition: .3s;
         transform: scale(0.9);
+        color: white;
       }
     }
 
     &-save {
       font-size: 1em;
-      position: fixed;
-      bottom: 2%;
-      right: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -242,10 +242,11 @@
       border-radius: 25px;
       cursor: pointer;
       color: vars.$secondaryColor;
-      transition: .3s;
 
       &:hover {
+        transition: .3s;
         transform: scale(0.9);
+        color: white;
       }
     }
 
@@ -276,6 +277,11 @@
         width: 30em;
       }
     }
+
+    &-buttons {
+      width: 60%;
+      font-size: 1em;
+    }
   }
 }
 
@@ -284,15 +290,17 @@
     margin-left: 3em;
 
     &-buttons {
+      flex-direction: column;
+
       &-delete {
-        font-size: 1.2em;
+        font-size: 1em;
         position: fixed;
         bottom: 10%;
         right: 10%;
       }
 
       &-save {
-        font-size: 1.2em;
+        font-size: 1em;
         position: fixed;
         bottom: 10%;
         left: 10%;
@@ -318,16 +326,6 @@
       
       &-desc-input {
         width: 100%;
-      }
-    }
-
-    &-buttons {
-      &-delete {
-        font-size: 0.8em;
-      }
-
-      &-save {
-        font-size: 0.8em;
       }
     }
   }
