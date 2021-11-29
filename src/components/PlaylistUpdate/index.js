@@ -7,6 +7,7 @@ import './styles.scss';
 import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
 import DeleteModal from '../DeleteModal';
+import Notification from '../Notification';
 
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import downArrow from '../../../public/img/icons/downArrow.png';
@@ -39,7 +40,7 @@ const PlaylistUpdate = ({ api }) => {
 
   const [showTooLongDesc, setShowTooLongDesc] = useState(false);
   const [showTooLongName, setShowTooLongName] = useState(false);
-  const [showTenSongMinMessage, setShowTenSongMinMessage] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [playlistOrUser, setPlaylistOrUser] = useState("playlist");
@@ -153,7 +154,8 @@ const PlaylistUpdate = ({ api }) => {
           console.log(err.response);
         })
     } else {
-      setShowTenSongMinMessage(true);
+      // setShowTenSongMinMessage(true);
+      setShowNotification(true);
     };
   };
 
@@ -267,9 +269,9 @@ const PlaylistUpdate = ({ api }) => {
           
       </div>
 
-      {showTenSongMinMessage &&
+      {/* {showTenSongMinMessage &&
         <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
-      }
+      } */}
 
       <section className="playlist-update-songs">
 
@@ -353,11 +355,11 @@ const PlaylistUpdate = ({ api }) => {
             </section>
           </div>     
         }
-        {showTenSongMinMessage &&
+        {/* {showTenSongMinMessage &&
           <p className="playlist-update-error">
             Votre playlist doit contenir au minimum 10 musiques pour être enregistrée.
           </p>
-        }
+        } */}
       </section>
 
       <section className="playlist-update-buttons">
@@ -390,6 +392,13 @@ const PlaylistUpdate = ({ api }) => {
             Supprimer cette playlist
           </button>
       </section>
+      {showNotification &&
+        <Notification
+          setShowNotification={setShowNotification}
+        >
+          Votre playlist doit contenir au minimum 10 musiques pour être enregistrée.
+        </Notification>
+      }
 
       {showDeleteConfirm &&
         <DeleteModal

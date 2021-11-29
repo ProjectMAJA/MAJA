@@ -1,14 +1,17 @@
 // Import de la lib React
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Loading from 'src/components/Loading';
+import ConfirmModal from '../ConfirmModal';
 
 // Imports locaux
 import imgDefault from '../../../public/img/profil/default.png';
 import './styles.scss';
 
-const Profil = ({ api }) => {
+const Profil = ({ api, setLogged }) => {
+
+  let history = useHistory();
 
   // DOM state
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +19,7 @@ const Profil = ({ api }) => {
   const [showErrorPseudo, setShowErrorPseudo] = useState(false);
   const [showErrorMail, setShowErrorMail] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // State values
   const [userID, setUserID] = useState();
@@ -25,6 +29,7 @@ const Profil = ({ api }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordChange, setPasswordChange] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
   useEffect(async () => {
     const wasPlaying = localStorage.getItem('playlist_id');
@@ -52,6 +57,12 @@ const Profil = ({ api }) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    if (confirm === true) {
+      deleteAccount();
+    };
+  }, [confirm]);
 
   const handleSubmit = () => {
     setShowErrorMail(false);
@@ -102,6 +113,10 @@ const Profil = ({ api }) => {
     api.delete(`/user/${userID}`)
       .then((res) => {
         console.log(res.data);
+        setLogged(false);
+        history.push({
+          pathname: '/'
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -205,17 +220,26 @@ const Profil = ({ api }) => {
 
         <div className="profil-info-delete">
 
-          <NavLink 
-            exact to='/'
+          <button 
+            // exact to='/'
             className="profil-info-delete-button"
             onClick={() => {
-              deleteAccount();
+              setShowConfirmModal(true);
             }}>
               Supprimer mon compte
-          </NavLink>
+          </button>
           
         </div>
       </section>
+
+      {showConfirmModal &&
+        <ConfirmModal
+          setShowConfirmModal={setShowConfirmModal}
+          setConfirm={setConfirm}
+          text='Voulez vous vraiment supprimer votre compte ?'
+          span='Toutes les données et les playlists associées à ce compte seront perdues'
+        />
+      }
     </div>
   );
 };

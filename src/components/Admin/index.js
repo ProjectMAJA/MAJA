@@ -61,6 +61,7 @@ const Admin = ({ api }) => {
   useEffect(() => {
     if (confirmDelete === true) {
       deletePlaylist();
+      setConfirmDelete(false);
     };
   }, [confirmDelete]);
 
@@ -93,6 +94,7 @@ const Admin = ({ api }) => {
   useEffect(() => {
     if (confirmDeleteUser === true) {
       deleteUser();
+      setConfirmDeleteUser(false);
     };
   }, [confirmDeleteUser]);
 

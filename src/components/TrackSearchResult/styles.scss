@@ -11,6 +11,10 @@
   border-radius: 5px;
   background-color: vars.$mainColor;
 
+  &:hover {
+    background-color: #0f0f0f;
+  }
+
   &-img {
     height: 100px;
     width: 100px;

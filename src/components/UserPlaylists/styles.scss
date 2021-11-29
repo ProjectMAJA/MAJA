@@ -51,10 +51,15 @@
     &-input {
       font-size: 1.2em;
       padding: 0.5em;
-      width: 15em;
-      background-color: vars.$mainColor;
+      width: 20em;
+      background-color: rgb(10, 10, 10);
       border: none;
       color: white;
+      text-align: center;
+
+      &:hover {
+        background-color: rgb(5, 5, 5);
+      }
     }
   }
 
@@ -83,7 +88,7 @@
       border-radius: 5px;
 
       &:hover {
-        transform: scale(0.8);
+        transform: scale(0.9);
         background-color: rgb(35, 35, 218);
         transition: .2s;
       }
@@ -95,7 +100,7 @@
       border-radius: 5px;
 
       &:hover {
-        transform: scale(0.8);
+        transform: scale(0.9);
         background-color: rgb(223, 28, 28);
         transition: .2s;
       }
@@ -118,10 +123,10 @@
     height: 320px;
     background-color: rgb(40, 40, 40);
     border-radius: 10px;
+    cursor: pointer;
 
     &:hover {
-      transform: scale(1.1);
-      transition: .3s;
+      background-color: rgb(50, 50, 50);
     }
 
     &-logo {

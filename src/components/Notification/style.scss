@@ -1,0 +1,44 @@
+@use 'src/styles/vars';
+
+.notification {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(10, 10, 10, 0.7);
+  padding: 2em;
+  border-radius: 5px;
+  max-width: 30em;
+  
+  &:hover {
+    background-color: rgba(10, 10, 10);
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    &-img {
+      height: 30px;
+    }
+
+    &-text {
+      margin-top: 1em;
+      color: rgb(240, 240, 240);
+    }
+  }
+
+  &-quit {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    height: 15px;
+    cursor: pointer;
+
+    &:hover {
+      transition: .2s;
+      transform: scale(0.9);
+    }
+  }
+}

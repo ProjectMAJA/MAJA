@@ -1,6 +1,6 @@
 // Packages
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // Components
@@ -22,13 +22,17 @@ import deezer from '../../../public/img/footer/deezer.jpg';
 
 const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
 
+  let history = useHistory();
+
   const [showModal, setShowModal] = useState(false);
 
   const disconnect = () => {
     localStorage.clear();
     setLogged(false);
     setIsAdmin(false);
-    window.location.reload();
+    history.push({
+      pathname: '/'
+    });
   };
 
   return (

@@ -88,7 +88,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/user">
-          { logged ? <Profil api={api} /> : <Error /> }
+          { logged ? <Profil api={api} setLogged={setLogged} /> : <Error /> }
         </Route>
 
         <Route exact path="/user/playlists">

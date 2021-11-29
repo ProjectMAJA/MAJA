@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import './style.scss';
 import cancel from '../../../../public/img/icons/cancel.svg';
 
 const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
+
+  let history = useHistory();
 
   const [showSignInForm, setShowSignInForm] = useState(true);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
@@ -59,7 +62,9 @@ const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
             // Set the tokens in the localStorage
             localStorage.setItem('token', `bearer ${res.data.access_token}`);
             localStorage.setItem('refresh_token', `bearer ${res.data.refresh_token}`);
-            window.location.reload();
+            history.push({
+              pathname: '/'
+            });
           })
           .catch((err) => {
             if (err.response.data === `duplicate key value violates unique constraint "user_pseudo_key"`) {

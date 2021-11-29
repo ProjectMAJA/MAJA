@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import './styles.scss';
 import TrackSearchResult from '../TrackSearchResult';
 import Item from '../Item';
+import Notification from '../Notification';
 import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 import downArrow from '../../../public/img/icons/downArrow.png';
 import deleteImg from '../../../public/img/icons/delete.svg';
@@ -32,7 +33,7 @@ const PlaylistCreate = ({ api }) => {
 
   const [showTooLongDesc, setShowTooLongDesc] = useState(false);
   const [showTooLongName, setShowTooLongName] = useState(false);
-  const [showTenSongMinMessage, setShowTenSongMinMessage] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const [deezerIds, setDeezerIds] = useState([]);
 
@@ -109,7 +110,7 @@ const PlaylistCreate = ({ api }) => {
           console.log(err.response);
         });
     } else {
-      setShowTenSongMinMessage(true);
+      setShowNotification(true);
     };
   };
 
@@ -199,10 +200,6 @@ const PlaylistCreate = ({ api }) => {
           
       </div>
 
-      {showTenSongMinMessage &&
-        <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
-      }
-
       <section className="playlist-update-songs">
 
         <button
@@ -286,10 +283,6 @@ const PlaylistCreate = ({ api }) => {
 
           </div>     
         }
-
-        {showTenSongMinMessage &&
-          <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
-        }
       </section>
 
       <section className="playlist-update-buttons">
@@ -302,15 +295,22 @@ const PlaylistCreate = ({ api }) => {
           }}
         >
           <img
-          className="playlist-update-buttons-img"
-          src={save}
-          alt="Bouton de sauvegarde"
+            className="playlist-update-buttons-img"
+            src={save}
+            alt="Bouton de sauvegarde"
           />
           Sauvegarder
         </button>
 
       </section>
     
+      {showNotification &&
+        <Notification
+          setShowNotification={setShowNotification}
+        >
+          Votre playlist doit contenir au minimum 10 musiques pour être enregistrée.
+        </Notification>
+      }
     </div>
   );
 };

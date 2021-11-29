@@ -13,6 +13,10 @@
   padding: 1em;
   padding-right: 3em;
 
+  &:hover {
+    background-color: #0f0f0f;
+  }
+
   &-img {
     border-radius: 2%;
     height: 100px;
@@ -38,7 +42,7 @@
     
     &:hover {
       background-color: rgb(223, 28, 28);
-      transform: scale(1.1);
+      transform: scale(0.9);
     }
   }
 }

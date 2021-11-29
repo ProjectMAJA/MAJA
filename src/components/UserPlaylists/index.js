@@ -137,11 +137,15 @@ const UserPlaylists = ({ api }) => {
 
           if( name.includes(search) ) {
             return (
-              <li className="user-playlist-card" key={playlist.id}>
-                <a onClick={() => {
+              <li 
+                className="user-playlist-card" 
+                key={playlist.id} 
+                onClick={() => {
                   setPlaylistLink(playlist.id);
                   setShowDetails(true);
-                }}>
+                }}
+              >
+                <section>
                   { playlist.image ? (
                     <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
                     ) : (
@@ -165,7 +169,7 @@ const UserPlaylists = ({ api }) => {
                       })
                     }
                   </div>
-                </a>
+                </section>
                 
                 <div className="user-playlist-options">
                   <input className="user-playlist-options-edit" type="image" src={edit} onClick={() => {

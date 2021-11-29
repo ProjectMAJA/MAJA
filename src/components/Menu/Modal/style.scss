@@ -44,6 +44,10 @@
         background-color: vars.$thirdColor;
         font-size: 1.2em;
         font-weight: bold;
+
+        &:hover {
+          background-color: #202020;;
+        }
       }
 
       &-close {
@@ -51,6 +55,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        &:hover {
+          background-color: #202020;;
+        }
 
         &-button {
           border: none;
@@ -75,6 +83,7 @@
         padding: 1em;
         display: flex;
         flex-direction: column;
+        border-radius: 3px;
       }
 
       &-check {
@@ -95,6 +104,12 @@
         border-left: 1em solid vars.$buttonColor;
         border-right: 1em solid vars.$buttonColor;
         border-radius: 25px;
+
+        &:hover {
+          transition: 0.3s;
+          transform: scale(0.9);
+          color: white;
+        }
       }
     }
   }

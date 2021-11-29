@@ -207,6 +207,7 @@
     font-size: 1.5em;
     display: flex;
     justify-content: space-evenly;
+    z-index: 10;
 
     &-delete {
       font-size: 1em;
