@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './style.scss';
-import warning from '../../../public/img/icons/warning.svg';
+import notif from '../../../public/img/icons/notif.svg';
 import cancel from '../../../public/img/icons/cancel.svg';
 
 const Notification = ( props ) => {
@@ -11,7 +11,7 @@ const Notification = ( props ) => {
       <section className="notification-info">
         <img
           className="notification-info-img"
-          src={warning}
+          src={notif}
           alt="Attention !"
         />
         <p className="notification-info-text">{props.children}</p>

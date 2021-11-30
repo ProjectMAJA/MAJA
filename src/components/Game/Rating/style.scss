@@ -15,14 +15,8 @@
 
     &-item {
       font-size: 1.5em;
-      font-weight: bold;
+      margin: 0.2em;
       cursor: pointer;
-      border: none;
-      background-color: vars.$buttonColor;
-
-      &:hover {
-        color: rgb(223, 198, 59);
-      }
     }
   }
 }

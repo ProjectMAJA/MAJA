@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 // Imports locaux
 import './styles.scss';
 import cancel from '../../../public/img/icons/cancel.svg';
+import imgDefault from '../../../public/img/playlist/playlist-placeholder.png';
 
 const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
 
@@ -34,11 +35,12 @@ const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
       <div className="info-bloc">
         <section className="info-bloc-playlist">
 
-          <img 
-            src={playlistImg}
-            className="info-bloc-playlist-img"
-            alt="Image de la playlist"
-          />
+
+        {playlistImg ? (
+            <img className="playlist-update-container-img-content" src={playlistImg} alt="Image de votre playlist" />
+          ) : (
+            <img className="playlist-update-container-img-content" src={imgDefault} alt="Image par défaut d'une playlist" />
+          )}
 
           <div className="info-bloc-playlist-text">
             <p className="info-bloc-playlist-text-title">{playlistName}</p>
