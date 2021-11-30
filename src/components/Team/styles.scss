@@ -40,12 +40,14 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        transition: .3s;
         background-color: vars.$thirdColor;
         border-radius: 5px;
 
         &:hover {
+          transition: .3s;
+          background-color: rgb(60, 60, 60);
           transform: scale(1.1);
+          color: white;
         }
 
         &-img {

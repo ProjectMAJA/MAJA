@@ -200,6 +200,7 @@ const Profil = ({ api, setLogged }) => {
 
                 <label className="profil-info-form-check">
                   <input
+                    className="profil-info-form-check-input"
                     type="checkbox"
                     onClick={() => {
                       setShowPassword(!showPassword);
@@ -221,7 +222,7 @@ const Profil = ({ api, setLogged }) => {
         <div className="profil-info-delete">
 
           <button 
-            // exact to='/'
+            exact to='/'
             className="profil-info-delete-button"
             onClick={() => {
               setShowConfirmModal(true);

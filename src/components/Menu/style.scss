@@ -29,10 +29,10 @@
           margin-left: 5em;
     
           &:hover {
+            transition: .3s;
             color: white;
             transform: translateX(0.5em);
             font-weight: bold;
-            transition: .3s;
           }
         }
 
@@ -102,7 +102,7 @@
     bottom: 0;
     width: 100vw;
     height: 4em;
-    // Some smartphones have OLED screens, which save some battery with black pixels
+    // Many smartphones have OLED screens, which save some battery with black pixels
     background-color: black;
 
     &:hover {

@@ -23,11 +23,15 @@
       padding-left: 5em;
       border-radius: 5px;
 
+      &:hover {
+        background-color: rgb(50, 50, 50);
+      }
+
       &-input {
         margin-bottom: 2em;
         padding: 1em;
         border: none;
-        border-radius: 5px;
+        border-radius: 3px;
         width: 30em;
         background-color: vars.$secondaryColor;
       } 
@@ -36,7 +40,7 @@
         margin-bottom: 1em;
         padding: 1em;
         border: none;
-        border-radius: 5px;
+        border-radius: 3px;
         width: 30em;
         background-color: vars.$secondaryColor;
         height: 10em;
@@ -54,10 +58,12 @@
         border-right: 1em solid vars.$buttonColor;
         border-radius: 25px;
         cursor: pointer;
-        transition: .3s;
-
+        font-weight: bold;
+        
         &:hover {
+          transition: .3s;
           transform: scale(0.9);
+          color: white;
         }
       }
     }

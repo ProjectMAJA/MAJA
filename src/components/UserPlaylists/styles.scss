@@ -53,14 +53,14 @@
       font-size: 1.2em;
       padding: 0.5em;
       width: 20em;
-      background-color: rgb(10, 10, 10);
+      background-color: vars.$thirdColor;
       border: none;
       border-radius: 5px;
       color: white;
       text-align: center;
 
       &:hover {
-        background-color: rgb(5, 5, 5);
+        background-color: rgb(50, 50, 50);
       }
     }
   }
@@ -123,12 +123,13 @@
     justify-content: center;
     width: 200px;
     height: 320px;
-    background-color: rgb(40, 40, 40);
+    background-color: vars.$thirdColor;
     border-radius: 10px;
     cursor: pointer;
 
     &:hover {
       background-color: rgb(50, 50, 50);
+      color: white;
     }
 
     &-logo {

@@ -22,6 +22,11 @@
       height: 150px;
       object-fit: cover;
       border-radius: 50%;
+
+      &:hover {
+        transition: .3s;
+        transform: scale(1.3);
+      }
     }
     
     &-pseudo {
@@ -71,8 +76,12 @@
         margin-bottom: 1em;
         color: rgb(240, 240, 240);
 
-        & input {
+        &-input {
           margin: 0.6em;
+        }
+
+        &:hover {
+          color: white;
         }
       }
 

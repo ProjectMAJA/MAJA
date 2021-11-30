@@ -112,7 +112,12 @@ const Menu = ({ api, logged, isAdmin, setLogged, setIsAdmin }) => {
       </section>
 
 {showModal && (
-      <Modal api={api} setShowModal={setShowModal} setLogged={setLogged} setIsAdmin={setIsAdmin} />
+      <Modal 
+        api={api}
+        setShowModal={setShowModal}
+        setLogged={setLogged}
+        setIsAdmin={setIsAdmin}
+      />
 )}
     </section>
   );

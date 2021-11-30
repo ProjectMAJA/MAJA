@@ -22,10 +22,15 @@
       padding: 0.5em;
       background-color: vars.$mainColor;
       border: none;
-      color: white;
+      color: vars.$secondaryColor;
       border-radius: 5px;
       background-color: rgb(36, 36, 36);
       text-align: center;
+      width: 20em;
+
+      &:hover {
+        background-color: rgb(50, 50, 50);
+      }
     }
   }
 
@@ -44,8 +49,9 @@
       margin: 0.5em;
 
       &:hover {
-        transform: scale(1.1);
         transition: .3s;
+        transform: scale(1.1);
+        color: white;
       }
     }
   }

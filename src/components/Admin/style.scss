@@ -20,8 +20,15 @@
     &-input {
       margin: 1em;
       padding: 1em;
-      width: 30%;
-      height: 2em;
+      width: 40%;
+      height: 2.5em;
+      border: none;
+      border-radius: 2px;
+      background-color: vars.$thirdColor;
+
+      &:hover {
+        background-color: rgb(50, 50, 50);
+      }
     }
 
     &-section {
@@ -30,6 +37,10 @@
       background-color: vars.$mainColor;
       display: flex;
       border-radius: 2px;
+
+      &:hover {
+        background-color: rgb(50, 50, 50);
+      }
 
       &-img {
         width: 150px;
