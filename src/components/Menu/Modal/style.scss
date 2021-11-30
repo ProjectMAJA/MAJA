@@ -34,6 +34,7 @@
       color: vars.$secondaryColor;
       background-color: vars.$thirdColor;
       display: flex;
+      cursor: pointer;
 
       &-item {
         padding: 2em;

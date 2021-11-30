@@ -20,13 +20,14 @@
       background-color: vars.$thirdColor;
       padding: 3em;
       padding-right: 5em;
-      padding-left: 5em; 
+      padding-left: 5em;
       border-radius: 5px;
 
       &-input {
-        margin-bottom: 1.5em;
+        margin-bottom: 2em;
         padding: 1em;
         border: none;
+        border-radius: 5px;
         width: 30em;
         background-color: vars.$secondaryColor;
       } 
@@ -35,6 +36,7 @@
         margin-bottom: 1em;
         padding: 1em;
         border: none;
+        border-radius: 5px;
         width: 30em;
         background-color: vars.$secondaryColor;
         height: 10em;

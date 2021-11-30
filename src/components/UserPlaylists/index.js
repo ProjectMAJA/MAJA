@@ -139,13 +139,14 @@ const UserPlaylists = ({ api }) => {
             return (
               <li 
                 className="user-playlist-card" 
-                key={playlist.id} 
-                onClick={() => {
-                  setPlaylistLink(playlist.id);
-                  setShowDetails(true);
-                }}
+                key={playlist.id}
               >
-                <section>
+                <section 
+                  onClick={() => {
+                    setPlaylistLink(playlist.id);
+                    setShowDetails(true);
+                  }}
+                >
                   { playlist.image ? (
                     <img className="user-playlist-card-logo" src={playlist.image} alt="user-playlist placeholder" />
                     ) : (

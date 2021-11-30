@@ -166,7 +166,9 @@ const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
                   <input
                     className="modal-display-form-check"
                     type="checkbox"
-                    onClick={showPass}
+                    onClick={() => {
+                      showPass();
+                    }}
                   />
                   Voir le mot de passe
                 </label>
@@ -242,7 +244,9 @@ const Modal = ({ api, setShowModal, setLogged, setIsAdmin }) => {
                   <input
                     className="modal-display-form-check"
                     type="checkbox"
-                    onClick={showPass}
+                    onClick={() => {
+                      showPass();
+                    }}
                   />
                   Voir le mot de passe
                 </label>
