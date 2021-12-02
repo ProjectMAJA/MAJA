@@ -47,13 +47,15 @@ const EndGame = ({
         <hr />
         <span className="end_game-text-score">Votre score est de {score} !</span>
       </div>
-      <NavLink
-        exact to="/"
-        className="end_game-button"
-        onClick={() => {
-          localStorage.removeItem('playlist_id');
-        }}>
+      <NavLink exact to="/">
+        <button
+          className="end_game-button"
+          onClick={() => {
+            localStorage.removeItem('playlist_id');
+          }}
+        >
           Revenir à l'accueil
+        </button>
       </NavLink>
     </section>
   );

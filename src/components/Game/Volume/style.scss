@@ -4,12 +4,26 @@
   position: fixed;
   right: 0%;
   bottom: 0%;
-  background-color: black;
+  background-color: vars.$menuColor;
   padding: 1em;
   border-top-left-radius: 10px;
+  transition: .2s;
+
+  &:hover {
+    padding: 1.5em;
+
+    .volume-value {
+      font-size: 1.1em;
+    }
+
+    .volume-button {
+      font-size: 2em;
+    }
+  }
 
   &-value {
     margin-bottom: 0.5em;
+    transition: .2s;
   }
 
   &-button {
@@ -18,11 +32,16 @@
     border: none;
     width: 1.3em;
     border-radius: 50%;
+    background-color: rgb(200, 200, 200);
     transition: .2s;
 
     &:hover {
-      transform: scale(0.9);
-    } 
+      background-color: white;
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
   }
 }
 

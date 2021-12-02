@@ -34,6 +34,10 @@
         border-radius: 3px;
         width: 30em;
         background-color: vars.$secondaryColor;
+
+        &:hover {
+          background-color: white;
+        }
       } 
 
       &-area {
@@ -44,6 +48,10 @@
         width: 30em;
         background-color: vars.$secondaryColor;
         height: 10em;
+
+        &:hover {
+          background-color: white;
+        }
       }
 
       &-submit {

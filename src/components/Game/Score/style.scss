@@ -11,6 +11,11 @@
   background-color: vars.$buttonColor;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+
+  &:hover {
+    transition: .2s;
+    width: 5em;
+  }
 }
 
 @media screen and (max-width: 850px) {

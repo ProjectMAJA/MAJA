@@ -4,8 +4,8 @@
   position: fixed;
   top: 0%;
   right: 0%;
-  width: 25em;
   padding: 1em;
+  min-width: 25em;
   background-color: vars.$buttonColor;
   font-weight: bold;
   display: flex;
@@ -14,6 +14,19 @@
   justify-content: center;
   z-index: 1;
   border-bottom-left-radius: 5px;
+  transition: .3s;
+
+  &:hover {
+    padding: 2em;
+    
+    .previous-content-img {
+      height: 6em;
+    }
+
+    .previous-content-description {
+      font-size: 1.5em;
+    }
+  }
 
   &-song {
     margin-bottom: 1em;
@@ -25,6 +38,7 @@
     &-img {
       height: 4em;
       margin: 1em;
+      transition: .3s;
     }
 
     &-description {
@@ -33,6 +47,7 @@
       align-items: center;
       justify-content: center;
       margin: 1em;
+      transition: .3s;
     }
   }
 }

@@ -30,18 +30,21 @@ const Volume = ({ musicVolume, setMusicVolume }) => {
 
       <button 
         className="volume-button"
-        onClick={() => {volumeDown()}}
+        onClick={() => {
+          volumeDown();
+        }}
       >
         -
       </button>
 
       <button 
         className="volume-button"
-        onClick={() => {volumeUp()}}
+        onClick={() => {
+          volumeUp();
+        }}
       >
         +
       </button>
-
     </section>
   );
 };
