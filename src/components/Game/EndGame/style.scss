@@ -8,6 +8,7 @@
     font-size: 2em;
     font-weight: bold;
     background-color: vars.$buttonColor;
+    color: vars.$secondaryColor;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -21,7 +22,6 @@
 
   &-button {
     font-size: 1.5em;
-    font-weight: bold;
     padding: 0.5em;
     color: vars.$secondaryColor;
     background-color: vars.$buttonColor;

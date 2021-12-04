@@ -20,6 +20,7 @@ iframe {
     position: fixed;
     bottom: 20%;
     background-color: green;
+    animation: found_one .3s;
 
     &-all {
       padding: 1.5em;
@@ -28,6 +29,7 @@ iframe {
       position: fixed;
       bottom: 20%;
       background-color: dodgerblue;
+      animation: found_all .3s;
     }
   }
   
@@ -38,6 +40,37 @@ iframe {
     position: fixed;
     bottom: 20%;
     background-color: red;
+    animation: not_found .3s;
+  }
+}
+
+@keyframes found_one {
+  0% {
+    transform: translateY(30px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes found_all {
+  0% {
+    transform: translateY(30px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes not_found {
+  0% {
+    transform: translateY(30px);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }
 
@@ -48,7 +81,6 @@ hr {
 
 @media screen and (max-width: 850px) {
   .game {
-
     &-found {
       bottom: 22%;
     }
@@ -61,7 +93,6 @@ hr {
 
 @media screen and (max-width: 700px) {
   .game {
-
     &-found {
       font-size: 1.2em;
     }
