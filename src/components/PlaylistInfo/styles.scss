@@ -19,6 +19,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  animation: playlist_info .3s;
 
   &-bloc {
     display: flex;
@@ -101,6 +102,16 @@
         }
       }
     }
+  }
+}
+
+@keyframes playlist_info {
+  0% {
+    opacity: 0%;
+  }
+  
+  100% {
+    opacity: 100%;
   }
 }
 

@@ -19,6 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: connexion_modal .3s;
 
   &-display {
     background-color: vars.$mainColor;
@@ -113,6 +114,16 @@
         }
       }
     }
+  }
+}
+
+@keyframes connexion_modal {
+  0% {
+    opacity: 0%;
+  }
+  
+  100% {
+    opacity: 100%;
   }
 }
 

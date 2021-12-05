@@ -8,6 +8,7 @@
   padding: 2em;
   border-radius: 5px;
   max-width: 30em;
+  animation: notification 1s;
   
   &:hover {
     background-color: rgba(10, 10, 10);
@@ -40,5 +41,21 @@
       transition: .2s;
       transform: scale(0.9);
     }
+  }
+}
+
+@keyframes notification {
+  0% {
+    transform: translateY(200%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .notification {
+    display: none;
   }
 }

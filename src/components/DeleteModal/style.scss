@@ -19,6 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: delete_modal .3s;
 
   &-modal {
     background-color: vars.$menuColor;
@@ -73,5 +74,15 @@
         transform: scale(0.9);
       }
     }
+  }
+}
+
+@keyframes delete_modal {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
