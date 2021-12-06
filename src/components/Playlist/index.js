@@ -13,8 +13,8 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
   const [leftArrow, setLeftArrow] = useState(false);
   const [positionScroll, setPositionScroll] = useState(0);
 
-  const rowCards = useRef(0);
-  const rowContainer = useRef(0);
+  const rowCards = useRef(null);
+  const rowContainer = useRef(null);
 
   useEffect(() => {
     // Get the client witdh

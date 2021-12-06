@@ -29,19 +29,22 @@ const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
 
   return (
     <div className="info">
-      <div className="behind" onClick={() => {
-        setShowDetails(false);
-      }}></div>
+      <div 
+        className="behind"
+        onClick={() => {
+          setShowDetails(false);
+        }}
+      ></div>
       <div className="info-bloc">
         <section className="info-bloc-playlist">
 
-
-        {playlistImg ? (
-            <img className="playlist-update-container-img-content" src={playlistImg} alt="Image de votre playlist" />
-          ) : (
-            <img className="playlist-update-container-img-content" src={imgDefault} alt="Image par défaut d'une playlist" />
-          )}
-
+          {playlistImg ? 
+            (
+              <img className="playlist-update-container-img-content" src={playlistImg} alt="Image de votre playlist" />
+            ) : (
+              <img className="playlist-update-container-img-content" src={imgDefault} alt="Image par défaut d'une playlist" />
+            )
+          }
           <div className="info-bloc-playlist-text">
             <p className="info-bloc-playlist-text-title">{playlistName}</p>
             <p className="info-bloc-playlist-text-description">{playlistDescription}</p>

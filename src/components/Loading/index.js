@@ -6,7 +6,7 @@ import loading from '../../../public/img/loading/loading.png';
 
 const Loading = () => {
 
-  const loader = useRef(0);
+  const loader = useRef(null);
 
   useEffect(() => {
     loader.current.style.transition = '30000ms';
