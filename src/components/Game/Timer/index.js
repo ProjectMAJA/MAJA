@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import './style.scss';
 
 const Timer = ({ setShowTimer, timer, setTimer }) => {
+
+  const circle = useRef(null);
+  const pulse = useRef(null);
 
   useEffect(() => {
     let timeLeft = timer;
@@ -19,6 +22,16 @@ const Timer = ({ setShowTimer, timer, setTimer }) => {
       } else {
         timeLeft--;
         setTimer(timeLeft);
+
+        if (timeLeft > 10) {
+          circle.current.style.background = "linear-gradient(rgb(46, 92, 10), rgb(112, 170, 49))";
+        } else if (timeLeft > 5) {
+          circle.current.style.background = "linear-gradient(rgb(250, 142, 0), rgb(228, 196, 28))";
+          pulse.current.style.background = "linear-gradient(rgb(250, 142, 0), rgb(228, 196, 28))";
+        } else {
+          circle.current.style.background = "linear-gradient(rgb(191,73,73), rgb(222,15,15))";
+          pulse.current.style.background = "linear-gradient(rgb(191,73,73), rgb(222,15,15))";
+        };
       };
     }, 1000);
 
@@ -29,6 +42,9 @@ const Timer = ({ setShowTimer, timer, setTimer }) => {
 
   return (
     <section className='timer'>
+      <div className="timer-circle" ref={circle}>
+        <div className="timer-circle-pulse" ref={pulse}></div>
+      </div>
       <div className="timer-content">{timer}</div>
     </section>
   );

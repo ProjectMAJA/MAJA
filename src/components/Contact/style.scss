@@ -67,9 +67,9 @@
         border-radius: 25px;
         cursor: pointer;
         font-weight: bold;
+        transition: .3s;
         
         &:hover {
-          transition: .3s;
           transform: scale(0.9);
           color: white;
         }

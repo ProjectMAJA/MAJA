@@ -130,7 +130,7 @@ const PlaylistUpdate = ({ api }) => {
     const newIDs = [...deezerIds, track.id];
     setDeezerIds(newIDs);
   };
- 
+
   function addNewTrack() {
     chooseTrack(track);
   };
@@ -154,7 +154,6 @@ const PlaylistUpdate = ({ api }) => {
           console.log(err.response);
         })
     } else {
-      // setShowTenSongMinMessage(true);
       setShowNotification(true);
     };
   };
@@ -266,15 +265,9 @@ const PlaylistUpdate = ({ api }) => {
               <p className="too_long">Votre description doit faire 100 caractères au maximum</p>
             }
           </section>
-          
       </div>
 
-      {/* {showTenSongMinMessage &&
-        <p className="playlist-update-error"> Votre playlist doit contenir au minimum 10 musiques pour être enregistrée. </p>
-      } */}
-
       <section className="playlist-update-songs">
-
         <button
           onClick={toggleState}
           className="playlist-update-songs-button">
@@ -355,11 +348,6 @@ const PlaylistUpdate = ({ api }) => {
             </section>
           </div>     
         }
-        {/* {showTenSongMinMessage &&
-          <p className="playlist-update-error">
-            Votre playlist doit contenir au minimum 10 musiques pour être enregistrée.
-          </p>
-        } */}
       </section>
 
       <section className="playlist-update-buttons">

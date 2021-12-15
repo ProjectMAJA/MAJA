@@ -24,9 +24,9 @@
     border-left: 1em solid vars.$buttonColor;
     border-right: 1em solid vars.$buttonColor;
     border-radius: 25px;
+    transition: .3s;
 
     &:hover {
-      transition: .3s;
       transform: scale(0.9);
     }
   }

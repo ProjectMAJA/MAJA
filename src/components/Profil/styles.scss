@@ -22,9 +22,9 @@
       height: 150px;
       object-fit: cover;
       border-radius: 50%;
+      transition: .3s;
 
       &:hover {
-        transition: .3s;
         transform: scale(1.3);
       }
     }

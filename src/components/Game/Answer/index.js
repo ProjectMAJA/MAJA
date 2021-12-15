@@ -13,9 +13,9 @@ const Answer = ({ previousImg, previousArtist, previousTrack }) => {
       <img src={previousImg} className="answer-img" alt={imgAlt} />
 
       <div className="answer-content">
-        <p>C'était  " <span className="answer-content-track">{previousTrack}</span> "</p> 
+        <p>C'était<br /><br />" <span className="answer-content-track">{previousTrack}</span> "</p> 
         <hr />
-        <p>de  <span className="answer-content-track">{previousArtist}</span> !</p>
+        <p>de  <span className="answer-content-track">{previousArtist}</span></p>
       </div>
       
     </section>

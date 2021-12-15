@@ -106,9 +106,9 @@
         border-left: 1em solid vars.$buttonColor;
         border-right: 1em solid vars.$buttonColor;
         border-radius: 25px;
+        transition: 0.3s;
 
         &:hover {
-          transition: 0.3s;
           transform: scale(0.9);
           color: white;
         }

@@ -11,9 +11,9 @@
   background-color: vars.$buttonColor;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  transition: .2s;
 
   &:hover {
-    transition: .2s;
     width: 5em;
   }
 }

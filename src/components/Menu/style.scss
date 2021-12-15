@@ -27,9 +27,9 @@
           align-items: center;
           width: 15em;
           margin-left: 5em;
-    
+          transition: .3s;
+          
           &:hover {
-            transition: .3s;
             color: white;
             transform: translateX(0.5em);
             font-weight: bold;
@@ -79,6 +79,7 @@
   &-deezer {
     position: fixed;
     bottom: 1%;
+    transition: .3s;
 
     &-text {
       text-align: center;
@@ -91,7 +92,6 @@
     }
 
     &:hover {
-      transition: .3s;
       transform: scale(1.2);
     }
   }

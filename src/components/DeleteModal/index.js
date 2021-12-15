@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './style.scss';
 
@@ -43,6 +44,13 @@ const DeleteModal = ({ setShowDeleteConfirm, setConfirmDelete, setConfirmDeleteU
       </section>
     </div>
   );
+};
+  
+DeleteModal.propTypes = {
+  setShowDeleteConfirm: PropTypes.func.isRequired,
+  setConfirmDelete: PropTypes.func.isRequired,
+  setConfirmDeleteUser: PropTypes.func.isRequired,
+  playlistOrUser: PropTypes.string.isRequired
 };
 
 export default DeleteModal;

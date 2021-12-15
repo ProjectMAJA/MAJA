@@ -4,16 +4,18 @@
   padding: 2em;
   color: vars.$menuColor;
   margin-top: 30vh;
+  min-width: 25vw;
   font-size: 2em;
   font-weight: bold;
   background-color: vars.$buttonColor;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   border: 5px solid vars.$mainColor;
   border-radius: 10px;
   z-index: 1;
   max-width: 50%;
+  animation: answer .3s linear;
 
   &-img {
     height: 5em;
@@ -31,6 +33,16 @@
       color: vars.$mainColor;
       margin-top: 5vh;
     }
+  }
+}
+
+@keyframes answer {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
 

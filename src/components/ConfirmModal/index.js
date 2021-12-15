@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './style.scss';
 
@@ -39,6 +40,13 @@ const ConfirmModal = ({ setShowConfirmModal, setConfirm, text, span }) => {
       </section>
     </div>
   );
+};
+  
+ConfirmModal.propTypes = {
+  setShowConfirmModal: PropTypes.func.isRequired,
+  setConfirm: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+  span: PropTypes.string.isRequired
 };
 
 export default ConfirmModal;

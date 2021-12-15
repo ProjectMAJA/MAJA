@@ -40,9 +40,9 @@ const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
 
           {playlistImg ? 
             (
-              <img className="playlist-update-container-img-content" src={playlistImg} alt="Image de votre playlist" />
+              <img className="info-bloc-playlist-img" src={playlistImg} alt="Image de votre playlist" />
             ) : (
-              <img className="playlist-update-container-img-content" src={imgDefault} alt="Image par défaut d'une playlist" />
+              <img className="info-bloc-playlist-img" src={imgDefault} alt="Image par défaut d'une playlist" />
             )
           }
           <div className="info-bloc-playlist-text">
@@ -54,17 +54,15 @@ const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
             <input
               type="image"
               src={cancel}
-              className="info-bloc-playlist-close-button" 
+              className="info-bloc-playlist-close-button"
               onClick={() => {
                 setShowDetails(false);
               }}
             />
           </div>
-          
         </section>
 
         <section className="info-bloc-play">
-
           <NavLink
             exact to="/game"
             className="info-bloc-play-button"
@@ -74,16 +72,15 @@ const PlaylistInfo = ({ api, playlistLink, setShowDetails }) => {
           >
             JOUER
           </NavLink>
-
         </section>
       </div>
     </div>
   );
 };
-  
+
 PlaylistInfo.propTypes = {
   playlistLink: PropTypes.number.isRequired,
   setShowDetails: PropTypes.func.isRequired
 };
-  
+
 export default PlaylistInfo;

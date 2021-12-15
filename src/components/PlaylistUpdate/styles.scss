@@ -242,9 +242,9 @@
       border-radius: 25px;
       cursor: pointer;
       color: vars.$secondaryColor;
+      transition: .3s;
 
       &:hover {
-        transition: .3s;
         transform: scale(0.9);
         color: white;
       }
@@ -263,9 +263,9 @@
       border-radius: 25px;
       cursor: pointer;
       color: vars.$secondaryColor;
+      transition: .3s;
 
       &:hover {
-        transition: .3s;
         transform: scale(0.9);
         color: white;
       }

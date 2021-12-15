@@ -10,12 +10,44 @@
   margin-top: 25vh;
   border-radius: 50%;
   width: 20em;
-  height: 20em;
+  height: 20em; 
   padding: 3em;
-  border: 20px solid vars.$buttonColor;
+  border: 20px solid rgb(60, 60, 60);
+  position: relative;
+
+  &:hover {
+    color: white;
+    border: 20px solid rgb(80, 80, 80);
+  }
 
   &-content {
     font-size: 10em;
+  }
+
+  &-circle {
+    width: 30px;
+    height: 10px;
+    background: linear-gradient(rgb(46, 92, 10), rgb(112, 170, 49));
+    position: absolute;
+    border-radius: 10px;
+    border: 1px solid black;
+    top: 0; bottom: 0; left: 0; right: 0;
+    margin: auto;
+    display: grid;
+    place-items: center;
+    z-index: 10;
+    animation: circle 30s linear;
+
+    &-pulse {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border-radius: 10px;
+      z-index: -10;
+      opacity: 0.7;
+      animation: pulse 1s ease-out infinite;
+    }
   }
 }
 
@@ -24,10 +56,27 @@
   .timer {
     width: 15em;
     height: 15em;
-    border: 15px solid vars.$buttonColor;
+    border: 15px solid rgb(60, 60, 60);
 
     &-content {
       font-size: 7.5em;
     }
+  }
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(90deg) translate(-150px);
+  }
+
+  100% {
+    transform: rotate(450deg) translate(-150px);
+  }
+}
+
+@keyframes pulse {
+  100% {
+    transform: scale(2);
+    opacity: 0;
   }
 }

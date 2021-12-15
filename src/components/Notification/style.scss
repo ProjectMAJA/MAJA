@@ -8,7 +8,7 @@
   padding: 2em;
   border-radius: 5px;
   max-width: 30em;
-  animation: notification 1s;
+  animation: notification 1s linear;
   
   &:hover {
     background-color: rgba(10, 10, 10);
@@ -36,9 +36,9 @@
     right: 15px;
     height: 15px;
     cursor: pointer;
+    transition: .2s;
 
     &:hover {
-      transition: .2s;
       transform: scale(0.9);
     }
   }

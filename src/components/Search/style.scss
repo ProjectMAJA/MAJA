@@ -47,9 +47,9 @@
       height: 15em;
       width: 15em;
       margin: 0.5em;
+      transition: .3s;
 
       &:hover {
-        transition: .3s;
         transform: scale(1.1);
         color: white;
       }
