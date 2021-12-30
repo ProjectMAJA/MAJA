@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 
 import './style.scss';
 
 const Contact = () => {
 
+  useEffect(() => {
+    document.title = "MAJA - Contact";
+  }, []);
+
   const [state, handleSubmit] = useForm("mknkynke");
 
   if (state.succeeded) {
-    return <section className="contact">
-      <div className="contact-container">
-        <p className="contact-container-success">Message envoyé à l'équipe !</p>
-      </div>
-    </section>
+    return (
+      <section className="contact">
+        <div className="contact-container">
+          <p className="contact-container-success">Message envoyé à l'équipe !</p>
+        </div>
+      </section>
+    );
   };
 
   return (

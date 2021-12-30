@@ -82,8 +82,8 @@ const Game = ({ api, logged }) => {
       });
 
       return () => {
-        DZ.player.pause();
         DZ.player.playTracks([]);
+        DZ.player.pause();
         window.clearInterval();
         clearInterval(nextTrack.current);
       };

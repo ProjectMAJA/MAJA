@@ -26,18 +26,12 @@ const UserPlaylists = ({ api }) => {
   const [playlistID, setPlaylistID] = useState(0);
   const [userID, setUserID] = useState(0);
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [playlistOrUser, setPlaylistOrUser] = useState("playlist");
+  const [playlistOrUser, setPlaylistOrUser] = useState("cette playlist");
   const [confirmDeleteUser, setConfirmDeleteUser] = useState(false);
 
   useEffect(() => {
-    const wasPlaying = localStorage.getItem('playlist_id');
 
-    if (wasPlaying) {
-      window.location.reload();
-      localStorage.removeItem('playlist_id');
-    };
-
-    document.title = "MAJA - Mes playlist";
+    document.title = "MAJA - Mes playlists";
 
     api.get(`/user/playlists`)
       .then((res) => {
@@ -46,7 +40,7 @@ const UserPlaylists = ({ api }) => {
       })
       .catch((err) => {
         console.log(err.response);
-      })
+      });
   }, []);
 
   useEffect(() => {
@@ -75,7 +69,7 @@ const UserPlaylists = ({ api }) => {
           })
           .catch((err) => {
             console.log(err.response);
-          })
+          });
       })
       .catch((err) => {
         console.log(err.response);
@@ -90,7 +84,7 @@ const UserPlaylists = ({ api }) => {
       }
 
       <div className="user-playlist-add">
-        <input 
+        <input
           className="user-playlist-add-logo"
           name="create"
           id="create"

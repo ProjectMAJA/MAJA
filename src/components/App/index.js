@@ -32,7 +32,7 @@ const App = () => {
       channelUrl: `client/public/channel.html`,
       player: {
         onload: () => {
-          console.log('player loaded');
+          console.log('Player loaded');
         }
       }
     });

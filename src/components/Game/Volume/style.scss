@@ -7,6 +7,8 @@
   background-color: vars.$menuColor;
   padding: 1em;
   border-top-left-radius: 10px;
+  text-align: center;
+  z-index: 2;
   transition: .2s;
 
   &:hover {
@@ -41,6 +43,7 @@
     }
 
     &:active {
+      transition: .2s;
       transform: scale(0.8);
     }
   }

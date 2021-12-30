@@ -2,6 +2,7 @@
 @use 'src/styles/vars';
 
 .team {
+  overflow: hidden;
 
   &-container {
     margin-left: 15em;
@@ -21,10 +22,11 @@
       justify-content: center;
       font-size: 2em;
       color: rgb(150, 150, 150);
+      animation: title_opacity 2s ease-in;
+      cursor: default;
 
-      &-img {
-        margin-left: 0.5em;
-        height: 2em;
+      &:hover {
+        color: rgb(180, 180, 180);
       }
     }
 
@@ -83,6 +85,74 @@
         }
       }
     }
+  }
+}
+
+.crew_member {
+  &-1 {
+    animation: from_left 1s ease-out;
+  }
+
+  &-2 {
+    animation: from_top 1s ease-out;
+  }
+
+  &-3 {
+    animation: from_bottom 1s ease-out;
+  }
+
+  &-4 {
+    animation: from_right 1s ease-out;
+  }
+}
+
+@keyframes from_left {
+  0% {
+    transform: translateX(-100vw);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes from_top {
+  0% {
+    transform: translateY(-100vh);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes from_bottom {
+  0% {
+    transform: translateY(100vh);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes from_right {
+  0% {
+    transform: translateX(100vw);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes title_opacity {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
   }
 }
 

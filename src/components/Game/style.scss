@@ -19,7 +19,7 @@ iframe {
     border-radius: 25px;
     position: fixed;
     bottom: 20%;
-    background-color: green;
+    background: linear-gradient(45deg, (rgb(24, 196, 9), rgb(50, 146, 58)));
     animation: found_one .3s;
 
     &-all {
@@ -28,7 +28,7 @@ iframe {
       border-radius: 25px;
       position: fixed;
       bottom: 20%;
-      background-color: dodgerblue;
+      background: linear-gradient(45deg, (rgb(47, 6, 230), rgb(35, 44, 160)));
       animation: found_all .3s;
     }
   }
@@ -39,7 +39,7 @@ iframe {
     border-radius: 25px;
     position: fixed;
     bottom: 20%;
-    background-color: red;
+    background: linear-gradient(45deg, (rgb(223, 15, 15), rgb(165, 43, 43)));
     animation: not_found .3s;
   }
 }
@@ -47,30 +47,36 @@ iframe {
 @keyframes found_one {
   0% {
     transform: translateY(30px);
+    opacity: 0;
   }
 
   100% {
     transform: translateY(0);
+    opacity: 100;
   }
 }
 
 @keyframes found_all {
   0% {
     transform: translateY(30px);
+    opacity: 0;
   }
 
   100% {
     transform: translateY(0);
+    opacity: 100;
   }
 }
 
 @keyframes not_found {
   0% {
     transform: translateY(30px);
+    opacity: 0;
   }
 
   100% {
     transform: translateY(0);
+    opacity: 100;
   }
 }
 

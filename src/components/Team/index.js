@@ -11,13 +11,6 @@ import team from '../../../data/team.json';
 const Team = () => {
 
   useEffect(() => {
-    const wasPlaying = localStorage.getItem('playlist_id');
-
-    if (wasPlaying) {
-      window.location.reload();
-      localStorage.removeItem('playlist_id');
-    };
-
     document.title = "MAJA - L'équipe";
   }, []);
 
@@ -25,14 +18,9 @@ const Team = () => {
     <section className="team">
 
       <div className="team-container">
-        <div className="team-container-title">
-          <p>La team MAJA</p>
-          {/* <img
-            src={logo}
-            alt="Logo du site MAJA"
-            className="team-container-title-img"
-          /> */}
-        </div>
+        <p className="team-container-title">
+          La team MAJA
+        </p>
 
         <ul className="team-container-list">
 
@@ -40,6 +28,7 @@ const Team = () => {
 
             const altImg = "Avatar de " + member.name;
             const altLink = "Lien vers le Linkedin de " + member.name;
+            const className = "team-container-list-card crew_member-" + member.id;
 
             return (
               <li key={member.id}>
@@ -47,7 +36,7 @@ const Team = () => {
                   href={member.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="team-container-list-card"
+                  className={className}
                 >
 
                   <img src={member.img} alt={altImg} className="team-container-list-card-img" />

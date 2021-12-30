@@ -1,0 +1,60 @@
+@use 'src/styles/vars';
+
+.player {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: vars.$menuColor;
+  min-width: 15vw;
+  padding: 2em;
+  border-bottom-left-radius: 5px;
+  z-index: 2;
+  animation: player .3s linear;
+
+  &-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 2px;
+  }
+
+  &-infos {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+
+    &-name {
+      margin-bottom: 1em;
+    }
+  }
+
+  &-button {
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: vars.$mainColor;
+    }
+  }
+}
+
+@keyframes player {
+  0% {
+    transform: translateY(-200px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .player {
+    display: none;
+  }
+}

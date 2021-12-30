@@ -9,12 +9,7 @@ const Notification = ( props ) => {
   const notification = useRef(null);
 
   const close = () => {
-    notification.current.style.transition = ".3s";
-    notification.current.style.opacity = "0%";
-
-    setTimeout(() => {
-      props.setShowNotification(false);
-    }, 300);
+    props.setShowNotification(false);
   };
 
   return (
@@ -23,7 +18,7 @@ const Notification = ( props ) => {
         <img
           className="notification-info-img"
           src={notif}
-          alt="Attention !"
+          alt="Information"
         />
         <p className="notification-info-text">{props.children}</p>
       </section>

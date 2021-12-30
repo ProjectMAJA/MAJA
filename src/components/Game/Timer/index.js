@@ -24,13 +24,13 @@ const Timer = ({ setShowTimer, timer, setTimer }) => {
         setTimer(timeLeft);
 
         if (timeLeft > 10) {
-          circle.current.style.background = "linear-gradient(rgb(46, 92, 10), rgb(112, 170, 49))";
+          return;
         } else if (timeLeft > 5) {
           circle.current.style.background = "linear-gradient(rgb(250, 142, 0), rgb(228, 196, 28))";
           pulse.current.style.background = "linear-gradient(rgb(250, 142, 0), rgb(228, 196, 28))";
         } else {
-          circle.current.style.background = "linear-gradient(rgb(191,73,73), rgb(222,15,15))";
-          pulse.current.style.background = "linear-gradient(rgb(191,73,73), rgb(222,15,15))";
+          circle.current.style.background = "linear-gradient(rgb(191, 73, 73), rgb(222, 15, 15))";
+          pulse.current.style.background = "linear-gradient(rgb(191, 73, 73), rgb(222, 15, 15))";
         };
       };
     }, 1000);

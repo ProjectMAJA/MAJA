@@ -4,14 +4,16 @@
   position: fixed;
   bottom: 10px;
   right: 10px;
-  background-color: rgba(10, 10, 10, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: 2em;
   border-radius: 5px;
   max-width: 30em;
-  animation: notification 1s linear;
+  animation: notification .5s linear;
+  z-index: 2;
   
   &:hover {
-    background-color: rgba(10, 10, 10);
+    background-color: vars.$menuColor;
+    z-index: 150;
   }
 
   &-info {
@@ -47,10 +49,12 @@
 @keyframes notification {
   0% {
     transform: translateY(200%);
+    opacity: 0;
   }
 
   100% {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import './style.scss';
 
 const Volume = ({ musicVolume, setMusicVolume }) => {
+
+  useEffect(() => {
+    DZ.player.setVolume(musicVolume);
+  }, []);
 
   const volumeUp = () => {
     if (musicVolume < 100) {

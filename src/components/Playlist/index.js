@@ -120,7 +120,7 @@ const Playlist = ({ title, playlists, setPlaylistLink, setShowDetails }) => {
             };
 
             return (
-              <li className="home-playlist-card" key={Math.random()}>
+              <li className="home-playlist-card" key={playlist.id}>
                 <a onClick={() => {
                   setPlaylistLink(playlist.id);
                   setShowDetails(true);

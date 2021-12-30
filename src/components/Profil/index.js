@@ -32,13 +32,6 @@ const Profil = ({ api, setLogged }) => {
   const [confirm, setConfirm] = useState(false);
 
   useEffect(async () => {
-    const wasPlaying = localStorage.getItem('playlist_id');
-
-    if (wasPlaying) {
-      window.location.reload();
-      localStorage.removeItem('playlist_id');
-    };
-
     document.title = "MAJA - Mon profil";
 
     // Get user informations with his token

@@ -3,11 +3,10 @@
 
 .search-result {
   display: flex;
-  margin: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
   padding: 1em;
   align-items: center;
-  cursor: pointer;
-  width: 100%;
   border-radius: 5px;
   background-color: vars.$mainColor;
 
@@ -26,9 +25,40 @@
     color: vars.$secondaryColor;
     flex-direction: column;
     margin-left: 1em;
+    width: 70%;
 
     &-artist {
       margin-bottom: 0.5em;
+    }
+  }
+
+  &-buttons {
+    transition: .3s;
+    height: 100%;
+    width: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    &-add {
+      height: 50px;
+      cursor: pointer;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: vars.$thirdColor;
+      }
+    }
+
+    &-listen {
+      cursor: pointer;
+      padding: 5px;
+      height: 50px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: vars.$thirdColor;
+      }
     }
   }
 }
@@ -44,6 +74,13 @@
     &-info {
       font-size: 0.6em;
     }
+  }
+}
+
+@media screen and (max-width: 850px) {
+
+  .search-result-buttons-listen {
+    display: none;
   }
 }
 
